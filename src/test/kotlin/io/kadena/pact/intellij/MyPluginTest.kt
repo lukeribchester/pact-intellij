@@ -1,4 +1,4 @@
-package com.github.lukeribchester.pactintellij
+package io.kadena.pact.intellij
 
 import com.intellij.ide.highlighter.XmlFileType
 import com.intellij.psi.xml.XmlFile
