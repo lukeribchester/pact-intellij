@@ -9,6 +9,14 @@
     <extensions defaultExtensionNs="com.intellij">
         <applicationService serviceImplementation="io.kadena.pact.intellij.services.MyApplicationService"/>
         <projectService serviceImplementation="io.kadena.pact.intellij.services.MyProjectService"/>
+
+        <fileType
+                name="Pact File"
+                implementationClass="io.kadena.pact.intellij.PactFileType"
+                fieldName="INSTANCE"
+                language="Pact"
+                extensions="pact"
+        />
     </extensions>
 
     <applicationListeners>
