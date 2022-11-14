@@ -17,6 +17,10 @@
                 language="Pact"
                 extensions="pact"
         />
+
+        <lang.parserDefinition
+            language="Pact"
+            implementationClass="io.kadena.pact.intellij.language.PactParserDefinition"/>
     </extensions>
 
     <applicationListeners>
