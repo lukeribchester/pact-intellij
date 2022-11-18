@@ -21,6 +21,14 @@
         <lang.parserDefinition
             language="Pact"
             implementationClass="io.kadena.pact.intellij.language.PactParserDefinition"/>
+
+        <lang.syntaxHighlighterFactory
+                language="Pact"
+                implementationClass="io.kadena.pact.intellij.language.PactSyntaxHighlighterFactory"
+        />
+
+        <colorSettingsPage
+                implementation="io.kadena.pact.intellij.language.PactColorSettingsPage"/>
     </extensions>
 
     <applicationListeners>
