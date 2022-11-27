@@ -7,9 +7,6 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="io.kadena.pact.intellij.services.MyApplicationService"/>
-        <projectService serviceImplementation="io.kadena.pact.intellij.services.MyProjectService"/>
-
         <fileType
                 name="Pact File"
                 implementationClass="io.kadena.pact.intellij.PactFileType"
@@ -30,9 +27,4 @@
         <colorSettingsPage
                 implementation="io.kadena.pact.intellij.language.PactColorSettingsPage"/>
     </extensions>
-
-    <applicationListeners>
-        <listener class="io.kadena.pact.intellij.listeners.MyProjectManagerListener"
-                  topic="com.intellij.openapi.project.ProjectManagerListener"/>
-    </applicationListeners>
 </idea-plugin>
