@@ -23,6 +23,6 @@ public class PactFileType : LanguageFileType(PactLanguage.INSTANCE) {
     }
 
     override fun getIcon(): Icon {
-        return PactIcons.file
+        return PactIcons.FILE
     }
 }

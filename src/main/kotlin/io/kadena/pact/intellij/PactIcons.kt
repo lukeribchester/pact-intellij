@@ -6,5 +6,5 @@ import javax.swing.Icon
 public object PactIcons {
 
     @JvmField
-    public val file: Icon = IconLoader.getIcon("/icons/file.svg", javaClass)
+    public val FILE: Icon = IconLoader.getIcon("/icons/file.svg", javaClass)
 }

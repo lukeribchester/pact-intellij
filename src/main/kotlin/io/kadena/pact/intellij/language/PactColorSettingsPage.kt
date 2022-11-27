@@ -22,7 +22,7 @@ class PactColorSettingsPage : ColorSettingsPage {
 
     @Nullable
     override fun getIcon(): Icon {
-        return PactIcons.file;
+        return PactIcons.FILE;
     }
 
     @NotNull
