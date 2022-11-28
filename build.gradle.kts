@@ -1,6 +1,9 @@
 import org.jetbrains.changelog.markdownToHTML
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+// Include generated sources
+sourceSets["main"].java.srcDirs("src/main/gen")
+
 fun properties(key: String) = project.findProperty(key).toString()
 
 plugins {

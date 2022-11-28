@@ -1,18 +1,30 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.github.lukeribchester.pactintellij</id>
-    <name>pact-intellij</name>
-    <vendor>lukeribchester</vendor>
+    <id>io.kadena.pact.intellij</id>
+    <name>Pact</name>
+    <vendor>Kadena</vendor>
 
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.github.lukeribchester.pactintellij.services.MyApplicationService"/>
-        <projectService serviceImplementation="com.github.lukeribchester.pactintellij.services.MyProjectService"/>
-    </extensions>
+        <fileType
+                name="Pact File"
+                implementationClass="io.kadena.pact.intellij.PactFileType"
+                fieldName="INSTANCE"
+                language="Pact"
+                extensions="pact"
+        />
 
-    <applicationListeners>
-        <listener class="com.github.lukeribchester.pactintellij.listeners.MyProjectManagerListener"
-                  topic="com.intellij.openapi.project.ProjectManagerListener"/>
-    </applicationListeners>
+        <lang.parserDefinition
+            language="Pact"
+            implementationClass="io.kadena.pact.intellij.language.PactParserDefinition"/>
+
+        <lang.syntaxHighlighterFactory
+                language="Pact"
+                implementationClass="io.kadena.pact.intellij.language.PactSyntaxHighlighterFactory"
+        />
+
+        <colorSettingsPage
+                implementation="io.kadena.pact.intellij.language.PactColorSettingsPage"/>
+    </extensions>
 </idea-plugin>
