@@ -54,8 +54,10 @@ class PactLexer implements FlexLexer {
 
   /* The ZZ_CMAP_A table has 320 entries */
   static final char ZZ_CMAP_A[] = zzUnpackCMap(
-    "\11\0\1\3\1\2\1\1\1\2\1\1\22\0\1\3\103\0\1\6\1\11\1\12\5\0\1\10\1\4\1\13\1"+
-    "\5\5\0\1\7\17\0\1\1\242\0\2\1\26\0");
+    "\11\0\1\3\1\2\1\1\1\2\1\1\22\0\1\3\7\0\1\6\1\7\1\45\1\0\1\5\1\17\1\4\2\0\2"+
+    "\46\7\0\1\14\1\15\37\0\1\10\1\0\1\11\1\0\1\16\1\0\1\33\1\37\1\34\1\22\1\25"+
+    "\1\32\1\0\1\40\1\26\1\0\1\42\1\24\1\20\1\27\1\21\1\36\1\0\1\31\1\35\1\30\1"+
+    "\23\1\44\1\41\1\0\1\43\1\0\1\12\1\0\1\13\7\0\1\1\242\0\2\1\26\0");
 
   /** 
    * Translates DFA states to action switch labels.
@@ -63,10 +65,16 @@ class PactLexer implements FlexLexer {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\2\0\1\1\1\2\2\1\2\3\7\0\1\4\1\5";
+    "\2\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7"+
+    "\1\10\1\11\1\12\1\13\1\14\1\15\1\16\13\1"+
+    "\2\17\1\20\16\0\1\21\1\22\20\0\1\23\3\0"+
+    "\1\24\1\25\1\0\1\26\1\0\1\26\1\0\1\27"+
+    "\12\0\1\30\1\0\1\31\2\0\1\32\10\0\1\33"+
+    "\3\0\1\34\6\0\1\35\1\36\5\0\1\37\1\40"+
+    "\1\0\1\41\1\42\1\0\1\43\10\0\1\25";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[17];
+    int [] result = new int[132];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -91,12 +99,26 @@ class PactLexer implements FlexLexer {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\14\0\30\0\44\0\60\0\74\0\44\0\110"+
-    "\0\124\0\140\0\154\0\170\0\204\0\220\0\234\0\30"+
-    "\0\30";
+    "\0\0\0\47\0\116\0\165\0\116\0\116\0\116\0\116"+
+    "\0\116\0\116\0\116\0\116\0\116\0\234\0\116\0\116"+
+    "\0\303\0\352\0\u0111\0\u0138\0\u015f\0\u0186\0\u01ad\0\u01d4"+
+    "\0\u01fb\0\u0222\0\u0249\0\165\0\u0270\0\116\0\u0297\0\u02be"+
+    "\0\u02e5\0\u030c\0\u0333\0\u035a\0\u0381\0\u03a8\0\u03cf\0\u03f6"+
+    "\0\u041d\0\u0444\0\u046b\0\u0492\0\116\0\u04b9\0\u04e0\0\u0507"+
+    "\0\u052e\0\u0555\0\u057c\0\u05a3\0\u05ca\0\u05f1\0\u0618\0\u063f"+
+    "\0\u0666\0\u068d\0\u06b4\0\u06db\0\u0702\0\u0729\0\116\0\u0750"+
+    "\0\u0777\0\u079e\0\116\0\u07c5\0\u07ec\0\116\0\u0813\0\u083a"+
+    "\0\u0861\0\116\0\u0888\0\u08af\0\u08d6\0\u08fd\0\u0924\0\u094b"+
+    "\0\u0972\0\u0999\0\u09c0\0\u09e7\0\116\0\u0a0e\0\116\0\u0a35"+
+    "\0\u0a5c\0\116\0\u0a83\0\u0aaa\0\u0ad1\0\u0af8\0\u0b1f\0\u0b46"+
+    "\0\u0b6d\0\u0b94\0\116\0\u0bbb\0\u0be2\0\u0c09\0\116\0\u0c30"+
+    "\0\u0c57\0\u0c7e\0\u0ca5\0\u0ccc\0\u0cf3\0\116\0\116\0\u0d1a"+
+    "\0\u0d41\0\u0d68\0\u0d8f\0\u0db6\0\116\0\116\0\u0ddd\0\116"+
+    "\0\116\0\u0e04\0\116\0\u0e2b\0\u0e52\0\u0e79\0\u0ea0\0\u0ec7"+
+    "\0\u0eee\0\u0f15\0\u0f3c\0\116";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[17];
+    int [] result = new int[132];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -119,14 +141,41 @@ class PactLexer implements FlexLexer {
   private static final int [] ZZ_TRANS = zzUnpackTrans();
 
   private static final String ZZ_TRANS_PACKED_0 =
-    "\1\3\3\4\1\5\1\3\1\6\6\3\1\4\1\7"+
-    "\1\10\10\3\15\0\3\4\15\0\1\11\17\0\1\12"+
-    "\3\0\1\4\2\10\16\0\1\13\17\0\1\14\10\0"+
-    "\1\15\13\0\1\16\14\0\1\17\16\0\1\20\11\0"+
-    "\1\21\2\0";
+    "\1\3\3\4\1\5\1\6\1\7\1\10\1\11\1\12"+
+    "\1\13\1\14\1\15\1\16\1\17\1\20\1\21\1\3"+
+    "\1\22\1\23\1\24\1\3\1\25\1\3\1\26\1\3"+
+    "\1\27\2\3\1\30\1\31\1\32\2\3\1\33\5\3"+
+    "\1\4\1\34\1\35\43\3\50\0\3\4\60\0\1\36"+
+    "\52\0\1\37\52\0\1\40\56\0\1\41\36\0\1\42"+
+    "\41\0\1\43\6\0\1\44\50\0\1\45\50\0\1\46"+
+    "\43\0\1\47\47\0\1\50\41\0\1\51\47\0\1\52"+
+    "\22\0\1\4\2\35\65\0\1\53\56\0\1\54\41\0"+
+    "\1\55\51\0\1\56\54\0\1\57\40\0\1\60\13\0"+
+    "\1\61\25\0\1\62\47\0\1\63\47\0\1\64\42\0"+
+    "\1\65\3\0\1\66\46\0\1\67\64\0\1\70\26\0"+
+    "\1\71\46\0\1\72\4\0\1\73\3\0\1\74\1\75"+
+    "\1\76\55\0\1\77\25\0\1\100\47\0\1\101\54\0"+
+    "\1\102\40\0\1\103\56\0\1\62\47\0\1\104\46\0"+
+    "\1\105\32\0\1\106\61\0\1\107\46\0\1\110\35\0"+
+    "\1\111\51\0\1\112\52\0\1\113\34\0\1\114\11\0"+
+    "\1\115\47\0\1\116\45\0\1\117\40\0\1\120\52\0"+
+    "\1\121\46\0\1\122\34\0\1\123\54\0\1\124\56\0"+
+    "\1\125\30\0\1\126\54\0\1\127\60\0\1\130\36\0"+
+    "\1\131\55\0\1\132\50\0\1\133\42\0\1\134\32\0"+
+    "\1\135\60\0\1\136\42\0\1\137\61\0\1\140\36\0"+
+    "\1\141\50\0\1\142\12\0\1\143\24\0\1\144\57\0"+
+    "\1\145\36\0\1\146\51\0\1\147\43\0\1\150\54\0"+
+    "\1\151\46\0\1\152\41\0\1\153\50\0\1\154\42\0"+
+    "\1\155\47\0\1\156\51\0\1\157\36\0\1\160\55\0"+
+    "\1\161\53\0\1\162\41\0\1\163\47\0\1\164\61\0"+
+    "\1\165\27\0\1\143\55\0\1\166\43\0\1\167\43\0"+
+    "\1\170\51\0\1\171\56\0\1\172\43\0\1\173\30\0"+
+    "\1\174\60\0\1\175\36\0\1\176\51\0\1\177\46\0"+
+    "\1\200\61\0\1\201\42\0\1\202\47\0\1\203\54\0"+
+    "\1\204\4\0";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[168];
+    int [] result = new int[3939];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -164,10 +213,15 @@ class PactLexer implements FlexLexer {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\2\0\1\11\5\1\7\0\2\11";
+    "\2\0\1\11\1\1\11\11\1\1\2\11\15\1\1\11"+
+    "\16\0\1\11\1\1\20\0\1\11\3\0\1\11\1\1"+
+    "\1\0\1\11\1\0\1\1\1\0\1\11\12\0\1\11"+
+    "\1\0\1\11\2\0\1\11\10\0\1\11\3\0\1\11"+
+    "\6\0\2\11\5\0\2\11\1\0\2\11\1\0\1\11"+
+    "\10\0\1\11";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[17];
+    int [] result = new int[132];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -484,27 +538,177 @@ class PactLexer implements FlexLexer {
             { return TokenType.BAD_CHARACTER;
             } 
             // fall through
-          case 6: break;
+          case 36: break;
           case 2: 
             { yybegin(YYINITIAL); return TokenType.WHITE_SPACE;
             } 
             // fall through
-          case 7: break;
+          case 37: break;
           case 3: 
+            { yybegin(YYINITIAL); return PactTypes.DOT;
+            } 
+            // fall through
+          case 38: break;
+          case 4: 
+            { yybegin(YYINITIAL); return PactTypes.COMMA;
+            } 
+            // fall through
+          case 39: break;
+          case 5: 
+            { yybegin(YYINITIAL); return PactTypes.LPAREN;
+            } 
+            // fall through
+          case 40: break;
+          case 6: 
+            { yybegin(YYINITIAL); return PactTypes.RPAREN;
+            } 
+            // fall through
+          case 41: break;
+          case 7: 
+            { yybegin(YYINITIAL); return PactTypes.LSQUARE;
+            } 
+            // fall through
+          case 42: break;
+          case 8: 
+            { yybegin(YYINITIAL); return PactTypes.RSQUARE;
+            } 
+            // fall through
+          case 43: break;
+          case 9: 
+            { yybegin(YYINITIAL); return PactTypes.LCURL;
+            } 
+            // fall through
+          case 44: break;
+          case 10: 
+            { yybegin(YYINITIAL); return PactTypes.RCURL;
+            } 
+            // fall through
+          case 45: break;
+          case 11: 
+            { yybegin(YYINITIAL); return PactTypes.COLON;
+            } 
+            // fall through
+          case 46: break;
+          case 12: 
+            { yybegin(YYINITIAL); return PactTypes.SEMICOLON;
+            } 
+            // fall through
+          case 47: break;
+          case 13: 
+            { yybegin(YYINITIAL); return PactTypes.UNDERSCORE;
+            } 
+            // fall through
+          case 48: break;
+          case 14: 
+            { yybegin(YYINITIAL); return PactTypes.SUB;
+            } 
+            // fall through
+          case 49: break;
+          case 15: 
             { yybegin(WAITING_VALUE); return TokenType.WHITE_SPACE;
             } 
             // fall through
-          case 8: break;
-          case 4: 
+          case 50: break;
+          case 16: 
+            { yybegin(YYINITIAL); return PactTypes.DOUBLE_SEMICOLON;
+            } 
+            // fall through
+          case 51: break;
+          case 17: 
+            { yybegin(YYINITIAL); return PactTypes.USE;
+            } 
+            // fall through
+          case 52: break;
+          case 18: 
+            { yybegin(YYINITIAL); return PactTypes.LET_BIND;
+            } 
+            // fall through
+          case 53: break;
+          case 19: 
+            { yybegin(YYINITIAL); return PactTypes.LET_STAR_BIND;
+            } 
+            // fall through
+          case 54: break;
+          case 20: 
+            { yybegin(YYINITIAL); return PactTypes.BOOL;
+            } 
+            // fall through
+          case 55: break;
+          case 21: 
+            { yybegin(YYINITIAL); return PactTypes.STEP;
+            } 
+            // fall through
+          case 56: break;
+          case 22: 
+            { yybegin(YYINITIAL); return PactTypes.KSET;
+            } 
+            // fall through
+          case 57: break;
+          case 23: 
             { yybegin(YYINITIAL); return PactTypes.DEFUN;
             } 
             // fall through
-          case 9: break;
-          case 5: 
+          case 58: break;
+          case 24: 
+            { yybegin(YYINITIAL); return PactTypes.BLESS;
+            } 
+            // fall through
+          case 59: break;
+          case 25: 
             { yybegin(YYINITIAL); return PactTypes.MODULE;
             } 
             // fall through
-          case 10: break;
+          case 60: break;
+          case 26: 
+            { yybegin(YYINITIAL); return PactTypes.DEFCAP;
+            } 
+            // fall through
+          case 61: break;
+          case 27: 
+            { yybegin(YYINITIAL); return PactTypes.PRED;
+            } 
+            // fall through
+          case 62: break;
+          case 28: 
+            { yybegin(YYINITIAL); return PactTypes.DEFPACT;
+            } 
+            // fall through
+          case 63: break;
+          case 29: 
+            { yybegin(YYINITIAL); return PactTypes.DEFTABLE;
+            } 
+            // fall through
+          case 64: break;
+          case 30: 
+            { yybegin(YYINITIAL); return PactTypes.DEFCONST;
+            } 
+            // fall through
+          case 65: break;
+          case 31: 
+            { yybegin(YYINITIAL); return PactTypes.PROPERTY;
+            } 
+            // fall through
+          case 66: break;
+          case 32: 
+            { yybegin(YYINITIAL); return PactTypes.DEFSCHEMA;
+            } 
+            // fall through
+          case 67: break;
+          case 33: 
+            { yybegin(YYINITIAL); return PactTypes.INTERFACE;
+            } 
+            // fall through
+          case 68: break;
+          case 34: 
+            { yybegin(YYINITIAL); return PactTypes.INVARIANT;
+            } 
+            // fall through
+          case 69: break;
+          case 35: 
+            { yybegin(YYINITIAL); return PactTypes.IMPLEMENTS;
+            } 
+            // fall through
+          case 70: break;
           default:
             zzScanError(ZZ_NO_MATCH);
           }
