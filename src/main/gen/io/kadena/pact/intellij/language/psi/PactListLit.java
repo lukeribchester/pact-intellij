@@ -7,7 +7,16 @@ import com.intellij.psi.PsiElement;
 
 public interface PactListLit extends PsiElement {
 
+  @Nullable
+  PactComma getComma();
+
   @NotNull
   List<PactExpr> getExprList();
+
+  @NotNull
+  PactLsquare getLsquare();
+
+  @NotNull
+  PactRsquare getRsquare();
 
 }

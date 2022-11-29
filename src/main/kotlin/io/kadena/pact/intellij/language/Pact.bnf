@@ -13,91 +13,121 @@
   tokenTypeClass="io.kadena.pact.intellij.language.psi.PactTokenType"
 }
 
-// (* A program is a collection of modules and expressions *)
+// A program is a collection of modules and expressions
 program        ::= top_level_list
-top_level_list ::=    module top_level_list |
-                     expr top_level_list |
-                interface top_level_list | ε
+top_level_list ::= module_decl top_level_list |
+                          expr top_level_list |
+                interface_decl top_level_list | ε
 
-module ::= '(' 'module' ident module_guard doc_or_meta decl_list ')'
-interface ::= '(' 'interface' ident doc_or_meta sig_list ')'
+module_decl ::= lparen module ident module_guard doc_or_meta decl_list rparen
+interface_decl ::= lparen interface ident doc_or_meta sig_list rparen
 
-// (* top level declarations *)
+// Top-level declarations
 sig_list ::= defconst | defun_sig
 decl_list ::= imports decls
-imports ::= '(' use ')' { '(' use ')' }
-decls ::=  '(' decl ')' { '(' decl ')' }
-decl      ::= defun | defschema | defconst | defcap | defpact |
-           deftable | bless
+imports ::= lparen use_decl rparen { lparen use_decl rparen }
+decls ::=  lparen decl rparen { lparen decl rparen }
+decl      ::= defun_decl | defconst_decl | defcap_decl | defpact_decl | defschema_decl |
+           deftable_decl | bless_decl
 
 module_guard ::= ident | kset
 
-defun_sig ::= 'defun' '(' fun_args ')' doc_or_meta
-defun ::= 'defun' '(' fun_args ')' doc_or_meta expr
-defconst ::= 'defconst' ident expr
-defcap ::= 'defcap' ident '(' fun_args ')' doc_or_meta expr
-bless ::= 'bless' hash
-defpact ::= 'defpact' ident '(' fun_args ')' doc_or_meta { step }
-defschema ::= 'defschema' ident doc_or_meta fields
-deftable ::= 'deftable' ident [':' ident] doc_or_meta
-use ::= 'use' ident
-implements ::= 'implements' ident
-step ::= '(' 'step' [ string_lit ] expr ')'
- | '(' 'step-with-rollback' [ string_lit ] expr expr ')'
+defun_sig ::= defun lparen fun_args rparen doc_or_meta
+defun_decl ::= defun lparen fun_args rparen doc_or_meta expr
+defconst_decl ::= defconst ident expr
+defcap_decl ::= defcap ident lparen fun_args rparen doc_or_meta expr
+defpact_decl ::= defpact ident lparen fun_args rparen doc_or_meta { step_decl }
+defschema_decl ::= defschema ident doc_or_meta fields
+deftable_decl ::= deftable ident [colon ident] doc_or_meta
+bless_decl ::= bless hash
+use_decl ::= use ident
+implements_decl ::= implements ident
+step_decl ::= lparen step [ string_lit ] expr rparen
+ | lparen step_with_rollback [ string_lit ] expr expr rparen
 
 fields ::= { field }
-field ::= ident ':' ident
+field ::= ident colon ident
 
 fun_args ::= arg arg_rest
 arg_rest ::= { arg }
-arg ::= ident [':' ident]
+arg ::= ident [colon ident]
 
-// (* documentation for defuns and modules *)
+// Documentation for defuns and modules
 doc_or_meta ::= doc mta | mta | ε
 doc         ::= '@doc' string
-mta         ::= '@model' '[' models ']'
+mta         ::= '@model' lsquare models rsquare
 models      ::=  property models | invariant models | models | ε
-property    ::= '(' 'property' expr ')'
-invariant   ::= '(' 'invariant' expr ')'
+property    ::= lparen 'property' expr rparen
+invariant   ::= lparen 'invariant' expr rparen
 
-// (* Expressions. note: expr lists are nonempty, as () in lisp is nil literal *)
-expr         ::= '(' ne_expr_list ')' | atom
+// Expressions. note: expr lists are nonempty, as () in lisp is nil literal
+expr         ::= lparen ne_expr_list rparen | atom
 ne_expr_list ::= expr { expr }
 
 atom     ::= type_ann | let_bind | let_star_bind | atom2
-type_ann ::= '(' expr ':' ident ')'
-let_bind ::= '(' 'let' (single_bind | multi_bind) expr ')'
-let_star_bind ::= '(' 'let*' (single_bind | multi_bind) expr ')'
-single_bind ::= '(' ident expr ')'
-multi_bind ::= '(' single_bind { single_bind } ')'
+type_ann ::= lparen expr colon ident rparen
+let_bind ::= lparen 'let' (single_bind | multi_bind) expr rparen
+let_star_bind ::= lparen 'let*' (single_bind | multi_bind) expr rparen
+single_bind ::= lparen ident expr rparen
+multi_bind ::= lparen single_bind { single_bind } rparen
 atom2    ::= ident | lit | op
 
-ident      ::= letter { ('-' | letter | number) }
+ident      ::= letter { (sub | letter | number) }
 
-// (* All literals *)
+// All literals
 lit ::= string_lit | symbol | integer | decimal | bool
      bool | list_lit | object_lit | table | kset
 
 string_lit           ::= '\"' string '\"'
 symbol               ::= "\'" ident
 bool                 ::= 'true' | 'false'
-integer              ::= [ '-' ] numbers
-decimal              ::= [ '-' ] numbers '.' numbers
-list_lit             ::= '[' { expr } ']' | '[' expr { ',' expr } ']'
+integer              ::= [ sub ] numbers
+decimal              ::= [ sub ] numbers dot numbers
+list_lit             ::= lsquare { expr } rsquare | lsquare expr { comma expr } rsquare
 comma_delimited_list ::= expr comma_delimited_rest | ε
-comma_delimited_rest ::= ',' expr | ε
-object_lit           ::= '{' kv { ',' kv } '}'
-kv                   ::= '\"' ident '\"' ':' expr
-kset                 ::= hashes | '{' 'keys' ':' hashes '}' | '{' 'keys' ':' hashes ',' 'pred' ':' pred '}'
+comma_delimited_rest ::= comma expr | ε
+object_lit           ::= lcurl kv { comma kv } rcurl
+kv                   ::= '\"' ident '\"' colon expr
+kset                 ::= hashes | lcurl 'keys' colon hashes rcurl | lcurl 'keys' colon hashes comma 'pred' colon pred rcurl
 pred                 ::= 'keys-all' | 'keys-1' | 'keys-2'
 
 numbers ::= number { number }
-letter ::= { (uc_letter | lc_letter | '_' ) }
+letter ::= { (uc_letter | lc_letter | underscore ) }
 alphanumeric ::= uc_letter | lc_letter | number
 uc_letter ::= 'A' | ' ...' | 'Z'
 lc_letter ::= 'a' | ' ...' | 'z'
 number    ::= '0' | ' ...' | '9'
-op ::= // (* Printable operators *)
-string ::= // (* All printable characters *)
-hash ::= { alphanumeric } // (* yes, this is b64-encoded *)
-hashes ::= '[' { hash } ']'
+op ::= // Printable operators
+string ::= // All printable characters
+hash ::= { alphanumeric } // This is base64-encoded
+hashes ::= lsquare { hash } rsquare
+
+// Separators and operators
+dot ::= '.'
+comma ::= ','
+lparen ::= '('
+rparen ::= ')'
+lsquare ::= '['
+rsquare ::= ']'
+lcurl ::= '{'
+rcurl ::= '}'
+colon ::= ':'
+semicolon ::= ';'
+double_semicolon ::= ';;'
+underscore ::= '_'
+sub ::= '-'
+
+// Keywords
+module ::= 'module'
+interface ::= 'interface'
+defun ::= 'defun'
+defconst ::= 'defconst'
+defcap ::= 'defcap'
+defpact ::= 'defpact'
+defschema ::= 'defschema'
+deftable ::= 'deftable'
+bless ::= 'bless'
+use ::= 'use'
+implements ::= 'implements'
+step ::= 'step'
+step_with_rollback ::= 'step-with-rollback'

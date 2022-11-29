@@ -39,4 +39,10 @@ public class PactIdentImpl extends ASTWrapperPsiElement implements PactIdent {
     return findChildByClass(PactNumber.class);
   }
 
+  @Override
+  @Nullable
+  public PactSub getSub() {
+    return findChildByClass(PactSub.class);
+  }
+
 }

@@ -10,4 +10,10 @@ public interface PactHashes extends PsiElement {
   @NotNull
   PactHash getHash();
 
+  @NotNull
+  PactLsquare getLsquare();
+
+  @NotNull
+  PactRsquare getRsquare();
+
 }

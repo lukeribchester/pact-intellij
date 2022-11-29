@@ -39,4 +39,16 @@ public class PactSingleBindImpl extends ASTWrapperPsiElement implements PactSing
     return findNotNullChildByClass(PactIdent.class);
   }
 
+  @Override
+  @NotNull
+  public PactLparen getLparen() {
+    return findNotNullChildByClass(PactLparen.class);
+  }
+
+  @Override
+  @NotNull
+  public PactRparen getRparen() {
+    return findNotNullChildByClass(PactRparen.class);
+  }
+
 }

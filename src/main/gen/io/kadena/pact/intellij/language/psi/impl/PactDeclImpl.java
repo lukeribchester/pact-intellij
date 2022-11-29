@@ -29,44 +29,44 @@ public class PactDeclImpl extends ASTWrapperPsiElement implements PactDecl {
 
   @Override
   @Nullable
-  public PactBless getBless() {
-    return findChildByClass(PactBless.class);
+  public PactBlessDecl getBlessDecl() {
+    return findChildByClass(PactBlessDecl.class);
   }
 
   @Override
   @Nullable
-  public PactDefcap getDefcap() {
-    return findChildByClass(PactDefcap.class);
+  public PactDefcapDecl getDefcapDecl() {
+    return findChildByClass(PactDefcapDecl.class);
   }
 
   @Override
   @Nullable
-  public PactDefconst getDefconst() {
-    return findChildByClass(PactDefconst.class);
+  public PactDefconstDecl getDefconstDecl() {
+    return findChildByClass(PactDefconstDecl.class);
   }
 
   @Override
   @Nullable
-  public PactDefpact getDefpact() {
-    return findChildByClass(PactDefpact.class);
+  public PactDefpactDecl getDefpactDecl() {
+    return findChildByClass(PactDefpactDecl.class);
   }
 
   @Override
   @Nullable
-  public PactDefschema getDefschema() {
-    return findChildByClass(PactDefschema.class);
+  public PactDefschemaDecl getDefschemaDecl() {
+    return findChildByClass(PactDefschemaDecl.class);
   }
 
   @Override
   @Nullable
-  public PactDeftable getDeftable() {
-    return findChildByClass(PactDeftable.class);
+  public PactDeftableDecl getDeftableDecl() {
+    return findChildByClass(PactDeftableDecl.class);
   }
 
   @Override
   @Nullable
-  public PactDefun getDefun() {
-    return findChildByClass(PactDefun.class);
+  public PactDefunDecl getDefunDecl() {
+    return findChildByClass(PactDefunDecl.class);
   }
 
 }

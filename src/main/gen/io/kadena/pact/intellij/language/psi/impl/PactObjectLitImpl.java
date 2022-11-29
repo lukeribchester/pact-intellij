@@ -29,8 +29,26 @@ public class PactObjectLitImpl extends ASTWrapperPsiElement implements PactObjec
 
   @Override
   @NotNull
+  public PactComma getComma() {
+    return findNotNullChildByClass(PactComma.class);
+  }
+
+  @Override
+  @NotNull
   public List<PactKv> getKvList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, PactKv.class);
+  }
+
+  @Override
+  @NotNull
+  public PactLcurl getLcurl() {
+    return findNotNullChildByClass(PactLcurl.class);
+  }
+
+  @Override
+  @NotNull
+  public PactRcurl getRcurl() {
+    return findNotNullChildByClass(PactRcurl.class);
   }
 
 }

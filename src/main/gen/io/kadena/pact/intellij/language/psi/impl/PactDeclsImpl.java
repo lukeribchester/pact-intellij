@@ -33,4 +33,16 @@ public class PactDeclsImpl extends ASTWrapperPsiElement implements PactDecls {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, PactDecl.class);
   }
 
+  @Override
+  @NotNull
+  public List<PactLparen> getLparenList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactLparen.class);
+  }
+
+  @Override
+  @NotNull
+  public List<PactRparen> getRparenList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactRparen.class);
+  }
+
 }

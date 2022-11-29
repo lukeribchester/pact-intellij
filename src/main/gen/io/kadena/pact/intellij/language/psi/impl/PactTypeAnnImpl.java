@@ -29,6 +29,12 @@ public class PactTypeAnnImpl extends ASTWrapperPsiElement implements PactTypeAnn
 
   @Override
   @NotNull
+  public PactColon getColon() {
+    return findNotNullChildByClass(PactColon.class);
+  }
+
+  @Override
+  @NotNull
   public PactExpr getExpr() {
     return findNotNullChildByClass(PactExpr.class);
   }
@@ -37,6 +43,18 @@ public class PactTypeAnnImpl extends ASTWrapperPsiElement implements PactTypeAnn
   @NotNull
   public PactIdent getIdent() {
     return findNotNullChildByClass(PactIdent.class);
+  }
+
+  @Override
+  @NotNull
+  public PactLparen getLparen() {
+    return findNotNullChildByClass(PactLparen.class);
+  }
+
+  @Override
+  @NotNull
+  public PactRparen getRparen() {
+    return findNotNullChildByClass(PactRparen.class);
   }
 
 }

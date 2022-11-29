@@ -7,13 +7,4 @@ import com.intellij.psi.PsiElement;
 
 public interface PactDefun extends PsiElement {
 
-  @NotNull
-  PactDocOrMeta getDocOrMeta();
-
-  @NotNull
-  PactExpr getExpr();
-
-  @NotNull
-  PactFunArgs getFunArgs();
-
 }

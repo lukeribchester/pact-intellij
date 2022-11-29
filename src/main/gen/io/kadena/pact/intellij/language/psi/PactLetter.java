@@ -13,4 +13,7 @@ public interface PactLetter extends PsiElement {
   @Nullable
   PactUcLetter getUcLetter();
 
+  @Nullable
+  PactUnderscore getUnderscore();
+
 }

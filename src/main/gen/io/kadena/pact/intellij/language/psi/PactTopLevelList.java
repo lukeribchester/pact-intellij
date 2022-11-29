@@ -11,10 +11,10 @@ public interface PactTopLevelList extends PsiElement {
   PactExpr getExpr();
 
   @Nullable
-  PactInterface getInterface();
+  PactInterfaceDecl getInterfaceDecl();
 
   @Nullable
-  PactModule getModule();
+  PactModuleDecl getModuleDecl();
 
   @Nullable
   PactTopLevelList getTopLevelList();

@@ -39,4 +39,10 @@ public class PactLetterImpl extends ASTWrapperPsiElement implements PactLetter {
     return findChildByClass(PactUcLetter.class);
   }
 
+  @Override
+  @Nullable
+  public PactUnderscore getUnderscore() {
+    return findChildByClass(PactUnderscore.class);
+  }
+
 }

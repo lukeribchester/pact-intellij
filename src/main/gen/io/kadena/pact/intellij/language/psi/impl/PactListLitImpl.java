@@ -28,9 +28,27 @@ public class PactListLitImpl extends ASTWrapperPsiElement implements PactListLit
   }
 
   @Override
+  @Nullable
+  public PactComma getComma() {
+    return findChildByClass(PactComma.class);
+  }
+
+  @Override
   @NotNull
   public List<PactExpr> getExprList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, PactExpr.class);
+  }
+
+  @Override
+  @NotNull
+  public PactLsquare getLsquare() {
+    return findNotNullChildByClass(PactLsquare.class);
+  }
+
+  @Override
+  @NotNull
+  public PactRsquare getRsquare() {
+    return findNotNullChildByClass(PactRsquare.class);
   }
 
 }

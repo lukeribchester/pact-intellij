@@ -8,6 +8,15 @@ import com.intellij.psi.PsiElement;
 public interface PactObjectLit extends PsiElement {
 
   @NotNull
+  PactComma getComma();
+
+  @NotNull
   List<PactKv> getKvList();
+
+  @NotNull
+  PactLcurl getLcurl();
+
+  @NotNull
+  PactRcurl getRcurl();
 
 }

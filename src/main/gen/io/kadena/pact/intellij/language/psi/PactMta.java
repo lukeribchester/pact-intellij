@@ -8,6 +8,12 @@ import com.intellij.psi.PsiElement;
 public interface PactMta extends PsiElement {
 
   @NotNull
+  PactLsquare getLsquare();
+
+  @NotNull
   PactModels getModels();
+
+  @NotNull
+  PactRsquare getRsquare();
 
 }

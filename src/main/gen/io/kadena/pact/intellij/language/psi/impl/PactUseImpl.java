@@ -27,10 +27,4 @@ public class PactUseImpl extends ASTWrapperPsiElement implements PactUse {
     else super.accept(visitor);
   }
 
-  @Override
-  @NotNull
-  public PactIdent getIdent() {
-    return findNotNullChildByClass(PactIdent.class);
-  }
-
 }

@@ -7,6 +7,9 @@ import com.intellij.psi.PsiElement;
 
 public interface PactArg extends PsiElement {
 
+  @Nullable
+  PactColon getColon();
+
   @NotNull
   List<PactIdent> getIdentList();
 

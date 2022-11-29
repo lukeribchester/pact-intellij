@@ -35,8 +35,20 @@ public class PactExprImpl extends ASTWrapperPsiElement implements PactExpr {
 
   @Override
   @Nullable
+  public PactLparen getLparen() {
+    return findChildByClass(PactLparen.class);
+  }
+
+  @Override
+  @Nullable
   public PactNeExprList getNeExprList() {
     return findChildByClass(PactNeExprList.class);
+  }
+
+  @Override
+  @Nullable
+  public PactRparen getRparen() {
+    return findChildByClass(PactRparen.class);
   }
 
 }

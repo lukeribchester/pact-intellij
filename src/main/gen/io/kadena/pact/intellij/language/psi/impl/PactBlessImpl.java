@@ -27,10 +27,4 @@ public class PactBlessImpl extends ASTWrapperPsiElement implements PactBless {
     else super.accept(visitor);
   }
 
-  @Override
-  @NotNull
-  public PactHash getHash() {
-    return findNotNullChildByClass(PactHash.class);
-  }
-
 }

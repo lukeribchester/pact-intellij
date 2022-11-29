@@ -29,6 +29,12 @@ public class PactCommaDelimitedRestImpl extends ASTWrapperPsiElement implements 
 
   @Override
   @Nullable
+  public PactComma getComma() {
+    return findChildByClass(PactComma.class);
+  }
+
+  @Override
+  @Nullable
   public PactExpr getExpr() {
     return findChildByClass(PactExpr.class);
   }

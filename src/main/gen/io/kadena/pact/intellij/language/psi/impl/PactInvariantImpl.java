@@ -33,4 +33,16 @@ public class PactInvariantImpl extends ASTWrapperPsiElement implements PactInvar
     return findNotNullChildByClass(PactExpr.class);
   }
 
+  @Override
+  @NotNull
+  public PactLparen getLparen() {
+    return findNotNullChildByClass(PactLparen.class);
+  }
+
+  @Override
+  @NotNull
+  public PactRparen getRparen() {
+    return findNotNullChildByClass(PactRparen.class);
+  }
+
 }

@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface PactCommaDelimitedRest extends PsiElement {
 
   @Nullable
+  PactComma getComma();
+
+  @Nullable
   PactExpr getExpr();
 
 }
