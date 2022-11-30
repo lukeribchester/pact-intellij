@@ -14,20 +14,34 @@ class PactColorSettingsPage : ColorSettingsPage {
 
     companion object {
         private val DESCRIPTORS: Array<AttributesDescriptor> = arrayOf(
-            AttributesDescriptor("Keywords//Module name", PactSyntaxHighlighter.MODULE),
-            AttributesDescriptor("Keywords//Function name", PactSyntaxHighlighter.DEFUN),
+            AttributesDescriptor("Keywords//module", PactSyntaxHighlighter.MODULE),
+            AttributesDescriptor("Keywords//interface", PactSyntaxHighlighter.INTERFACE),
+            AttributesDescriptor("Keywords//defun", PactSyntaxHighlighter.DEFUN),
+            AttributesDescriptor("Keywords//defconst", PactSyntaxHighlighter.DEFCONST),
+            AttributesDescriptor("Keywords//defcap", PactSyntaxHighlighter.DEFCAP),
+            AttributesDescriptor("Keywords//defpact", PactSyntaxHighlighter.DEFPACT),
+            AttributesDescriptor("Keywords//defschema", PactSyntaxHighlighter.DEFSCHEMA),
+            AttributesDescriptor("Keywords//deftable", PactSyntaxHighlighter.DEFTABLE),
+            AttributesDescriptor("Keywords//bless", PactSyntaxHighlighter.BLESS),
+            AttributesDescriptor("Keywords//use", PactSyntaxHighlighter.USE),
+            AttributesDescriptor("Keywords//implements", PactSyntaxHighlighter.IMPLEMENTS),
+            AttributesDescriptor("Keywords//step/step-with-rollback", PactSyntaxHighlighter.STEP),
+            AttributesDescriptor("Keywords//property", PactSyntaxHighlighter.PROPERTY),
+            AttributesDescriptor("Keywords//invariant", PactSyntaxHighlighter.INVARIANT),
+            AttributesDescriptor("Keywords//let", PactSyntaxHighlighter.LET_BIND),
+            AttributesDescriptor("Keywords//let*", PactSyntaxHighlighter.LET_STAR_BIND),
             AttributesDescriptor("Bad character", PactSyntaxHighlighter.BAD_CHARACTER),
-        );
+        )
     }
 
     @Nullable
     override fun getIcon(): Icon {
-        return PactIcons.FILE;
+        return PactIcons.FILE
     }
 
     @NotNull
     override fun getHighlighter(): SyntaxHighlighter {
-        return PactSyntaxHighlighter();
+        return PactSyntaxHighlighter()
     }
 
     @NotNull
@@ -66,19 +80,19 @@ class PactColorSettingsPage : ColorSettingsPage {
 
     @Nullable
     override fun getAdditionalHighlightingTagToDescriptorMap(): MutableMap<String, TextAttributesKey>? {
-        return null;
+        return null
     }
 
     override fun getAttributeDescriptors(): Array<AttributesDescriptor> {
-        return DESCRIPTORS;
+        return DESCRIPTORS
     }
 
     override fun getColorDescriptors(): Array<ColorDescriptor> {
-        return ColorDescriptor.EMPTY_ARRAY;
+        return ColorDescriptor.EMPTY_ARRAY
     }
 
     @NotNull
     override fun getDisplayName(): String {
-        return "Pact";
+        return "Pact"
     }
 }
