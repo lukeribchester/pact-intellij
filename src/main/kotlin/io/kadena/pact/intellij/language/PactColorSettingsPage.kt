@@ -14,6 +14,17 @@ class PactColorSettingsPage : ColorSettingsPage {
 
     companion object {
         private val DESCRIPTORS: Array<AttributesDescriptor> = arrayOf(
+            /* Separators */
+            AttributesDescriptor("Separators//Parentheses", PactSyntaxHighlighter.PARENTHESIS),
+            AttributesDescriptor("Separators//Brackets", PactSyntaxHighlighter.BRACKET),
+            AttributesDescriptor("Separators//Braces", PactSyntaxHighlighter.BRACE),
+            AttributesDescriptor("Separators//Dot", PactSyntaxHighlighter.DOT),
+            AttributesDescriptor("Separators//Comma", PactSyntaxHighlighter.COMMA),
+            AttributesDescriptor("Separators//Colon", PactSyntaxHighlighter.COLON),
+
+            /* Operators */
+
+            /* Keywords */
             AttributesDescriptor("Keywords//module", PactSyntaxHighlighter.MODULE),
             AttributesDescriptor("Keywords//interface", PactSyntaxHighlighter.INTERFACE),
             AttributesDescriptor("Keywords//defun", PactSyntaxHighlighter.DEFUN),

@@ -13,6 +13,40 @@ import org.jetbrains.annotations.NotNull
 class PactSyntaxHighlighter : SyntaxHighlighterBase() {
 
     companion object {
+        /* Separators */
+        @JvmStatic
+        val PARENTHESIS: TextAttributesKey = TextAttributesKey.createTextAttributesKey(
+            "PACT_PARENTHESIS", DefaultLanguageHighlighterColors.PARENTHESES
+        )
+
+        @JvmStatic
+        val BRACKET: TextAttributesKey = TextAttributesKey.createTextAttributesKey(
+            "PACT_BRACKET", DefaultLanguageHighlighterColors.BRACKETS
+        )
+
+        @JvmStatic
+        val BRACE: TextAttributesKey = TextAttributesKey.createTextAttributesKey(
+            "PACT_BRACE", DefaultLanguageHighlighterColors.BRACES
+        )
+
+        @JvmStatic
+        val DOT: TextAttributesKey = TextAttributesKey.createTextAttributesKey(
+            "PACT_DOT", DefaultLanguageHighlighterColors.DOT
+        )
+
+        @JvmStatic
+        val COMMA: TextAttributesKey = TextAttributesKey.createTextAttributesKey(
+            "PACT_COMMA", DefaultLanguageHighlighterColors.COMMA
+        )
+
+        @JvmStatic
+        val COLON: TextAttributesKey = TextAttributesKey.createTextAttributesKey(
+            "PACT_COLON", DefaultLanguageHighlighterColors.OPERATION_SIGN
+        )
+
+        /* Operators */
+
+        /* Keywords */
         @JvmStatic
         val MODULE: TextAttributesKey = TextAttributesKey.createTextAttributesKey(
             "PACT_MODULE", DefaultLanguageHighlighterColors.KEYWORD
@@ -98,6 +132,28 @@ class PactSyntaxHighlighter : SyntaxHighlighterBase() {
             "PACT_BAD_CHARACTER", HighlighterColors.BAD_CHARACTER
         )
 
+        /* Separators */
+        @JvmStatic
+        private val PARENTHESIS_KEYS: Array<TextAttributesKey> = arrayOf(PARENTHESIS)
+
+        @JvmStatic
+        private val BRACKET_KEYS: Array<TextAttributesKey> = arrayOf(BRACKET)
+
+        @JvmStatic
+        private val BRACE_KEYS: Array<TextAttributesKey> = arrayOf(BRACE)
+
+        @JvmStatic
+        private val DOT_KEYS: Array<TextAttributesKey> = arrayOf(DOT)
+
+        @JvmStatic
+        private val COMMA_KEYS: Array<TextAttributesKey> = arrayOf(COMMA)
+
+        @JvmStatic
+        private val COLON_KEYS: Array<TextAttributesKey> = arrayOf(COLON)
+
+        /* Operators */
+
+        /* Keywords */
         @JvmStatic
         private val MODULE_KEYS: Array<TextAttributesKey> = arrayOf(MODULE)
 
@@ -160,6 +216,20 @@ class PactSyntaxHighlighter : SyntaxHighlighterBase() {
 
     @NotNull
     override fun getTokenHighlights(tokenType: IElementType): Array<TextAttributesKey> {
+        /* Separators */
+        if (tokenType == PactTypes.LPAREN) return PARENTHESIS_KEYS
+        if (tokenType == PactTypes.RPAREN) return PARENTHESIS_KEYS
+        if (tokenType == PactTypes.LSQUARE) return BRACKET_KEYS
+        if (tokenType == PactTypes.RSQUARE) return BRACKET_KEYS
+        if (tokenType == PactTypes.LCURL) return BRACE_KEYS
+        if (tokenType == PactTypes.RCURL) return BRACE_KEYS
+        if (tokenType == PactTypes.DOT) return DOT_KEYS
+        if (tokenType == PactTypes.COMMA) return COMMA_KEYS
+        if (tokenType == PactTypes.COLON) return COLON_KEYS
+
+        /* Operators */
+
+        /* Keywords */
         if (tokenType == PactTypes.MODULE) return MODULE_KEYS
         if (tokenType == PactTypes.INTERFACE) return INTERFACE_KEYS
         if (tokenType == PactTypes.DEFUN) return DEFUN_KEYS
@@ -176,7 +246,9 @@ class PactSyntaxHighlighter : SyntaxHighlighterBase() {
         if (tokenType == PactTypes.INVARIANT) return INVARIANT_KEYS
         if (tokenType == PactTypes.LET_BIND) return LET_BIND_KEYS
         if (tokenType == PactTypes.LET_STAR_BIND) return LET_STAR_BIND_KEYS
+
         if (tokenType == TokenType.BAD_CHARACTER) return BAD_CHARACTER_KEYS
+
         return EMPTY_KEYS
     }
 }
