@@ -22,13 +22,15 @@
   RBRACE="}"
   DOT="."
   COMMA=","
+  COLON=":"
+  UNDERSCORE="_"
   // Literals
   STRING="regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\\"|\\\'|\\)*\")"
   SYMBOL="regexp:`\w+"
   // Documentation
   DOC="@doc"
   MODEL="@model"
-  COMMENT="regexp:(';')[^\r\n]*"
+  COMMENT="regexp:(;)[^\r\n]*"
   // Special forms
   BLESS="bless"
   DEFUN="defun"
@@ -44,6 +46,7 @@
   STEP_WITH_ROLLBACK="step-with-rollback"
   USE="use"
   INTERFACE="interface"
+  NAMESPACE="namespace"
   MODULE="module"
   IMPLEMENTS="implements"
   // Numerical operators
@@ -87,22 +90,20 @@
   ]
 }
 
-// A program is a collection of modules and expressions
-program        ::= top_level_list
-top_level_list ::= module_decl top_level_list |
-                          expr top_level_list |
-                interface_decl top_level_list | ε
-
-module_decl ::= lparen module ident module_guard doc_or_meta decl_list rparen
-interface_decl ::= lparen interface ident doc_or_meta sig_list rparen
+// A program is a collection of declarations and expressions
+program ::= namespace_decl | module_decl | interface_decl | expr {extends=program}
 
 // Top-level declarations
-sig_list ::= defconst | defun_sig
+namespace_decl ::= lparen namespace string_lit rparen // TODO: symbol or identifier
+module_decl    ::= lparen module ident module_guard doc_or_meta decl_list rparen
+interface_decl ::= lparen interface ident doc_or_meta sig_list rparen
+
+sig_list  ::= defconst | defun_sig
 decl_list ::= imports decls
-imports ::= lparen use_decl rparen { lparen use_decl rparen }
-decls ::=  lparen decl rparen { lparen decl rparen }
+imports   ::= lparen use_decl rparen { lparen use_decl rparen }
+decls     ::=  lparen decl rparen { lparen decl rparen }
 decl      ::= defun_decl | defconst_decl | defcap_decl | defpact_decl | defschema_decl |
-           deftable_decl | bless_decl
+           deftable_decl | bless_decl // TODO: Refactor to special_form_decls?
 
 module_guard ::= ident | kset
 
@@ -129,7 +130,7 @@ arg ::= ident [colon ident]
 // Documentation for defuns and modules
 doc_or_meta ::= doc mta | mta | ε
 doc         ::= '@doc' string
-mta         ::= '@model' lsquare models rsquare
+mta         ::= '@model' lbracket models rbracket
 models      ::=  property models | invariant models | models | ε
 property    ::= lparen 'property' expr rparen
 invariant   ::= lparen 'invariant' expr rparen
@@ -146,23 +147,23 @@ single_bind ::= lparen ident expr rparen
 multi_bind ::= lparen single_bind { single_bind } rparen
 atom2    ::= ident | lit | op
 
-ident      ::= letter { (sub | letter | number) }
+ident      ::= letter { ('-' | letter | number) }
 
-// All literals
+// All literals TODO: Refactor
 lit ::= string_lit | symbol | integer | decimal | bool
      bool | list_lit | object_lit | table | kset
 
 string_lit           ::= '\"' string '\"'
-symbol               ::= "\'" ident
+symbol               ::= "`" ident
 bool                 ::= 'true' | 'false'
 integer              ::= [ sub ] numbers
 decimal              ::= [ sub ] numbers dot numbers
-list_lit             ::= lsquare { expr } rsquare | lsquare expr { comma expr } rsquare
+list_lit             ::= lbracket { expr } rbracket | lbracket expr { comma expr } rbracket
 comma_delimited_list ::= expr comma_delimited_rest | ε
 comma_delimited_rest ::= comma expr | ε
-object_lit           ::= lcurl kv { comma kv } rcurl
+object_lit           ::= lbrace kv { comma kv } rbrace
 kv                   ::= '\"' ident '\"' colon expr
-kset                 ::= hashes | lcurl 'keys' colon hashes rcurl | lcurl 'keys' colon hashes comma 'pred' colon pred rcurl
+kset                 ::= hashes | lbrace 'keys' colon hashes rbrace | lbrace 'keys' colon hashes comma 'pred' colon pred rbrace
 pred                 ::= 'keys-all' | 'keys-1' | 'keys-2'
 
 numbers ::= number { number }
@@ -174,34 +175,64 @@ number    ::= '0' | ' ...' | '9'
 op ::= // Printable operators
 string ::= // All printable characters
 hash ::= { alphanumeric } // This is base64-encoded
-hashes ::= lsquare { hash } rsquare
+hashes ::= lbracket { hash } rbracket
 
-// Separators and operators
-dot ::= '.'
-comma ::= ','
-lparen ::= '('
-rparen ::= ')'
-lsquare ::= '['
-rsquare ::= ']'
-lcurl ::= '{'
-rcurl ::= '}'
-colon ::= ':'
-semicolon ::= ';'
-double_semicolon ::= ';;'
-underscore ::= '_'
+// TODO: Remove - Separators and operators
 sub ::= '-'
 
-// Keywords
-module ::= 'module'
-interface ::= 'interface'
+// Separators
+lparen ::= '('
+rparen ::= ')'
+lbracket ::= '['
+rbracket ::= ']'
+lbrace ::= '{'
+rbrace ::= '}'
+dot ::= '.'
+comma ::= ','
+colon ::= ':'
+underscore ::= '_'
+
+// Literals
+string ::=
+symbol ::=
+
+// Documentation
+doc ::= '@doc'
+model ::= '@model'
+comment ::=
+
+// Special forms
+special_forms ::= bless
+  | defun
+  | defcap
+  | defconst
+  | defpact
+  | defschema
+  | deftable
+  | let_bind
+  | let_star_bind
+  | cond
+  | step
+  | step_with_rollback
+  | use
+  | interface
+  | module
+  | implements
+
+bless ::= 'bless'
 defun ::= 'defun'
-defconst ::= 'defconst'
 defcap ::= 'defcap'
+defconst ::= 'defconst'
 defpact ::= 'defpact'
 defschema ::= 'defschema'
 deftable ::= 'deftable'
-bless ::= 'bless'
-use ::= 'use'
-implements ::= 'implements'
+let_bind ::= 'let'
+let_star_bind ::= 'let*'
+cond ::= 'cond'
 step ::= 'step'
 step_with_rollback ::= 'step-with-rollback'
+use ::= 'use'
+interface ::= 'interface'
+namespace ::= 'namespace'
+module ::= 'module'
+implements ::= 'implements'
