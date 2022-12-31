@@ -7,16 +7,4 @@ import com.intellij.psi.PsiElement;
 
 public interface PactModule extends PsiElement {
 
-  @NotNull
-  PactDeclList getDeclList();
-
-  @NotNull
-  PactDocOrMeta getDocOrMeta();
-
-  @NotNull
-  PactIdent getIdent();
-
-  @NotNull
-  PactModuleGuard getModuleGuard();
-
 }

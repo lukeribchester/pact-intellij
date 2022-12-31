@@ -33,4 +33,16 @@ public class PactHashesImpl extends ASTWrapperPsiElement implements PactHashes {
     return findNotNullChildByClass(PactHash.class);
   }
 
+  @Override
+  @NotNull
+  public PactLsquare getLsquare() {
+    return findNotNullChildByClass(PactLsquare.class);
+  }
+
+  @Override
+  @NotNull
+  public PactRsquare getRsquare() {
+    return findNotNullChildByClass(PactRsquare.class);
+  }
+
 }

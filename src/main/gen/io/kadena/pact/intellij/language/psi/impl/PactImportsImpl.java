@@ -29,8 +29,20 @@ public class PactImportsImpl extends ASTWrapperPsiElement implements PactImports
 
   @Override
   @NotNull
-  public List<PactUse> getUseList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactUse.class);
+  public List<PactLparen> getLparenList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactLparen.class);
+  }
+
+  @Override
+  @NotNull
+  public List<PactRparen> getRparenList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactRparen.class);
+  }
+
+  @Override
+  @NotNull
+  public List<PactUseDecl> getUseDeclList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactUseDecl.class);
   }
 
 }

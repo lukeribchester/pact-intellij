@@ -27,16 +27,4 @@ public class PactStepImpl extends ASTWrapperPsiElement implements PactStep {
     else super.accept(visitor);
   }
 
-  @Override
-  @NotNull
-  public List<PactExpr> getExprList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactExpr.class);
-  }
-
-  @Override
-  @Nullable
-  public PactStringLit getStringLit() {
-    return findChildByClass(PactStringLit.class);
-  }
-
 }

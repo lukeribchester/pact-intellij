@@ -33,4 +33,16 @@ public class PactPropertyImpl extends ASTWrapperPsiElement implements PactProper
     return findNotNullChildByClass(PactExpr.class);
   }
 
+  @Override
+  @NotNull
+  public PactLparen getLparen() {
+    return findNotNullChildByClass(PactLparen.class);
+  }
+
+  @Override
+  @NotNull
+  public PactRparen getRparen() {
+    return findNotNullChildByClass(PactRparen.class);
+  }
+
 }

@@ -7,10 +7,4 @@ import com.intellij.psi.PsiElement;
 
 public interface PactStep extends PsiElement {
 
-  @NotNull
-  List<PactExpr> getExprList();
-
-  @Nullable
-  PactStringLit getStringLit();
-
 }

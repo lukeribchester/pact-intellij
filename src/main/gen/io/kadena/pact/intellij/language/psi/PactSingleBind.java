@@ -13,4 +13,10 @@ public interface PactSingleBind extends PsiElement {
   @NotNull
   PactIdent getIdent();
 
+  @NotNull
+  PactLparen getLparen();
+
+  @NotNull
+  PactRparen getRparen();
+
 }

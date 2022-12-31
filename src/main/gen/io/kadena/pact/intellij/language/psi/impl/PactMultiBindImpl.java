@@ -29,6 +29,18 @@ public class PactMultiBindImpl extends ASTWrapperPsiElement implements PactMulti
 
   @Override
   @NotNull
+  public PactLparen getLparen() {
+    return findNotNullChildByClass(PactLparen.class);
+  }
+
+  @Override
+  @NotNull
+  public PactRparen getRparen() {
+    return findNotNullChildByClass(PactRparen.class);
+  }
+
+  @Override
+  @NotNull
   public List<PactSingleBind> getSingleBindList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, PactSingleBind.class);
   }

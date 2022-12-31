@@ -29,6 +29,12 @@ public class PactDefunSigImpl extends ASTWrapperPsiElement implements PactDefunS
 
   @Override
   @NotNull
+  public PactDefun getDefun() {
+    return findNotNullChildByClass(PactDefun.class);
+  }
+
+  @Override
+  @NotNull
   public PactDocOrMeta getDocOrMeta() {
     return findNotNullChildByClass(PactDocOrMeta.class);
   }
@@ -37,6 +43,18 @@ public class PactDefunSigImpl extends ASTWrapperPsiElement implements PactDefunS
   @NotNull
   public PactFunArgs getFunArgs() {
     return findNotNullChildByClass(PactFunArgs.class);
+  }
+
+  @Override
+  @NotNull
+  public PactLparen getLparen() {
+    return findNotNullChildByClass(PactLparen.class);
+  }
+
+  @Override
+  @NotNull
+  public PactRparen getRparen() {
+    return findNotNullChildByClass(PactRparen.class);
   }
 
 }

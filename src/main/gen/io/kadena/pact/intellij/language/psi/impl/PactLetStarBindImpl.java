@@ -34,9 +34,21 @@ public class PactLetStarBindImpl extends ASTWrapperPsiElement implements PactLet
   }
 
   @Override
+  @NotNull
+  public PactLparen getLparen() {
+    return findNotNullChildByClass(PactLparen.class);
+  }
+
+  @Override
   @Nullable
   public PactMultiBind getMultiBind() {
     return findChildByClass(PactMultiBind.class);
+  }
+
+  @Override
+  @NotNull
+  public PactRparen getRparen() {
+    return findNotNullChildByClass(PactRparen.class);
   }
 
   @Override

@@ -8,24 +8,24 @@ import com.intellij.psi.PsiElement;
 public interface PactDecl extends PsiElement {
 
   @Nullable
-  PactBless getBless();
+  PactBlessDecl getBlessDecl();
 
   @Nullable
-  PactDefcap getDefcap();
+  PactDefcapDecl getDefcapDecl();
 
   @Nullable
-  PactDefconst getDefconst();
+  PactDefconstDecl getDefconstDecl();
 
   @Nullable
-  PactDefpact getDefpact();
+  PactDefpactDecl getDefpactDecl();
 
   @Nullable
-  PactDefschema getDefschema();
+  PactDefschemaDecl getDefschemaDecl();
 
   @Nullable
-  PactDeftable getDeftable();
+  PactDeftableDecl getDeftableDecl();
 
   @Nullable
-  PactDefun getDefun();
+  PactDefunDecl getDefunDecl();
 
 }

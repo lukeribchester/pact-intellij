@@ -13,4 +13,7 @@ public interface PactIdent extends PsiElement {
   @Nullable
   PactNumber getNumber();
 
+  @Nullable
+  PactSub getSub();
+
 }

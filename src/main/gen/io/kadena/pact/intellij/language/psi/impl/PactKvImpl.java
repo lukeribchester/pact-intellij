@@ -29,6 +29,12 @@ public class PactKvImpl extends ASTWrapperPsiElement implements PactKv {
 
   @Override
   @NotNull
+  public PactColon getColon() {
+    return findNotNullChildByClass(PactColon.class);
+  }
+
+  @Override
+  @NotNull
   public PactExpr getExpr() {
     return findNotNullChildByClass(PactExpr.class);
   }

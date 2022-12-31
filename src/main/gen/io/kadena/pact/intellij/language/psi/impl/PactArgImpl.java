@@ -28,6 +28,12 @@ public class PactArgImpl extends ASTWrapperPsiElement implements PactArg {
   }
 
   @Override
+  @Nullable
+  public PactColon getColon() {
+    return findChildByClass(PactColon.class);
+  }
+
+  @Override
   @NotNull
   public List<PactIdent> getIdentList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, PactIdent.class);

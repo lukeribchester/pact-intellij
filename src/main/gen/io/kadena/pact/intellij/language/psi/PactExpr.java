@@ -11,6 +11,12 @@ public interface PactExpr extends PsiElement {
   PactAtom getAtom();
 
   @Nullable
+  PactLparen getLparen();
+
+  @Nullable
   PactNeExprList getNeExprList();
+
+  @Nullable
+  PactRparen getRparen();
 
 }

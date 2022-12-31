@@ -7,16 +7,4 @@ import com.intellij.psi.PsiElement;
 
 public interface PactDefcap extends PsiElement {
 
-  @NotNull
-  PactDocOrMeta getDocOrMeta();
-
-  @NotNull
-  PactExpr getExpr();
-
-  @NotNull
-  PactFunArgs getFunArgs();
-
-  @NotNull
-  PactIdent getIdent();
-
 }

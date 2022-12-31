@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface PactField extends PsiElement {
 
   @NotNull
+  PactColon getColon();
+
+  @NotNull
   List<PactIdent> getIdentList();
 
 }

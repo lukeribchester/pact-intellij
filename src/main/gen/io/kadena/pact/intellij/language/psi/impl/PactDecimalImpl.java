@@ -29,8 +29,20 @@ public class PactDecimalImpl extends ASTWrapperPsiElement implements PactDecimal
 
   @Override
   @NotNull
+  public PactDot getDot() {
+    return findNotNullChildByClass(PactDot.class);
+  }
+
+  @Override
+  @NotNull
   public List<PactNumbers> getNumbersList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, PactNumbers.class);
+  }
+
+  @Override
+  @Nullable
+  public PactSub getSub() {
+    return findChildByClass(PactSub.class);
   }
 
 }

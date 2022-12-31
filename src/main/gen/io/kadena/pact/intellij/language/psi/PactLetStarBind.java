@@ -10,8 +10,14 @@ public interface PactLetStarBind extends PsiElement {
   @NotNull
   PactExpr getExpr();
 
+  @NotNull
+  PactLparen getLparen();
+
   @Nullable
   PactMultiBind getMultiBind();
+
+  @NotNull
+  PactRparen getRparen();
 
   @Nullable
   PactSingleBind getSingleBind();

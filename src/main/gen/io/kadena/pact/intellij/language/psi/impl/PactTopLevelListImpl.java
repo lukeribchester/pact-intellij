@@ -35,14 +35,14 @@ public class PactTopLevelListImpl extends ASTWrapperPsiElement implements PactTo
 
   @Override
   @Nullable
-  public PactInterface getInterface() {
-    return findChildByClass(PactInterface.class);
+  public PactInterfaceDecl getInterfaceDecl() {
+    return findChildByClass(PactInterfaceDecl.class);
   }
 
   @Override
   @Nullable
-  public PactModule getModule() {
-    return findChildByClass(PactModule.class);
+  public PactModuleDecl getModuleDecl() {
+    return findChildByClass(PactModuleDecl.class);
   }
 
   @Override

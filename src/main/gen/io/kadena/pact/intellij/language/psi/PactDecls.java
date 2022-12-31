@@ -10,4 +10,10 @@ public interface PactDecls extends PsiElement {
   @NotNull
   List<PactDecl> getDeclList();
 
+  @NotNull
+  List<PactLparen> getLparenList();
+
+  @NotNull
+  List<PactRparen> getRparenList();
+
 }

@@ -8,6 +8,12 @@ import com.intellij.psi.PsiElement;
 public interface PactImports extends PsiElement {
 
   @NotNull
-  List<PactUse> getUseList();
+  List<PactLparen> getLparenList();
+
+  @NotNull
+  List<PactRparen> getRparenList();
+
+  @NotNull
+  List<PactUseDecl> getUseDeclList();
 
 }

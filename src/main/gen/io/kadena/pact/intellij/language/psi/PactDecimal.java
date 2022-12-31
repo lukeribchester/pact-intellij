@@ -8,6 +8,12 @@ import com.intellij.psi.PsiElement;
 public interface PactDecimal extends PsiElement {
 
   @NotNull
+  PactDot getDot();
+
+  @NotNull
   List<PactNumbers> getNumbersList();
+
+  @Nullable
+  PactSub getSub();
 
 }

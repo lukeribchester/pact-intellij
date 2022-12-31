@@ -33,4 +33,10 @@ public class PactIntegerImpl extends ASTWrapperPsiElement implements PactInteger
     return findNotNullChildByClass(PactNumbers.class);
   }
 
+  @Override
+  @Nullable
+  public PactSub getSub() {
+    return findChildByClass(PactSub.class);
+  }
+
 }

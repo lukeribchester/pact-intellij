@@ -29,8 +29,20 @@ public class PactMtaImpl extends ASTWrapperPsiElement implements PactMta {
 
   @Override
   @NotNull
+  public PactLsquare getLsquare() {
+    return findNotNullChildByClass(PactLsquare.class);
+  }
+
+  @Override
+  @NotNull
   public PactModels getModels() {
     return findNotNullChildByClass(PactModels.class);
+  }
+
+  @Override
+  @NotNull
+  public PactRsquare getRsquare() {
+    return findNotNullChildByClass(PactRsquare.class);
   }
 
 }

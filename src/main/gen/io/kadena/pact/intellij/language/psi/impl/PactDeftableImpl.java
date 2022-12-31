@@ -27,16 +27,4 @@ public class PactDeftableImpl extends ASTWrapperPsiElement implements PactDeftab
     else super.accept(visitor);
   }
 
-  @Override
-  @NotNull
-  public PactDocOrMeta getDocOrMeta() {
-    return findNotNullChildByClass(PactDocOrMeta.class);
-  }
-
-  @Override
-  @NotNull
-  public List<PactIdent> getIdentList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactIdent.class);
-  }
-
 }

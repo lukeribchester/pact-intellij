@@ -10,4 +10,10 @@ public interface PactProperty extends PsiElement {
   @NotNull
   PactExpr getExpr();
 
+  @NotNull
+  PactLparen getLparen();
+
+  @NotNull
+  PactRparen getRparen();
+
 }

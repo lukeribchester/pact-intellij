@@ -10,4 +10,7 @@ public interface PactInteger extends PsiElement {
   @NotNull
   PactNumbers getNumbers();
 
+  @Nullable
+  PactSub getSub();
+
 }

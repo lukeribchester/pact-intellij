@@ -8,9 +8,18 @@ import com.intellij.psi.PsiElement;
 public interface PactDefunSig extends PsiElement {
 
   @NotNull
+  PactDefun getDefun();
+
+  @NotNull
   PactDocOrMeta getDocOrMeta();
 
   @NotNull
   PactFunArgs getFunArgs();
+
+  @NotNull
+  PactLparen getLparen();
+
+  @NotNull
+  PactRparen getRparen();
 
 }

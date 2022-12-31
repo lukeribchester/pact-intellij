@@ -7,10 +7,22 @@ import com.intellij.psi.PsiElement;
 
 public interface PactKset extends PsiElement {
 
+  @Nullable
+  PactColon getColon();
+
+  @Nullable
+  PactComma getComma();
+
   @NotNull
   PactHashes getHashes();
 
   @Nullable
+  PactLcurl getLcurl();
+
+  @Nullable
   PactPred getPred();
+
+  @Nullable
+  PactRcurl getRcurl();
 
 }

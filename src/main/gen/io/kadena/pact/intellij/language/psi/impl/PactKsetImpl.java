@@ -28,6 +28,18 @@ public class PactKsetImpl extends ASTWrapperPsiElement implements PactKset {
   }
 
   @Override
+  @Nullable
+  public PactColon getColon() {
+    return findChildByClass(PactColon.class);
+  }
+
+  @Override
+  @Nullable
+  public PactComma getComma() {
+    return findChildByClass(PactComma.class);
+  }
+
+  @Override
   @NotNull
   public PactHashes getHashes() {
     return findNotNullChildByClass(PactHashes.class);
@@ -35,8 +47,20 @@ public class PactKsetImpl extends ASTWrapperPsiElement implements PactKset {
 
   @Override
   @Nullable
+  public PactLcurl getLcurl() {
+    return findChildByClass(PactLcurl.class);
+  }
+
+  @Override
+  @Nullable
   public PactPred getPred() {
     return findChildByClass(PactPred.class);
+  }
+
+  @Override
+  @Nullable
+  public PactRcurl getRcurl() {
+    return findChildByClass(PactRcurl.class);
   }
 
 }

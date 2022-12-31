@@ -8,9 +8,18 @@ import com.intellij.psi.PsiElement;
 public interface PactTypeAnn extends PsiElement {
 
   @NotNull
+  PactColon getColon();
+
+  @NotNull
   PactExpr getExpr();
 
   @NotNull
   PactIdent getIdent();
+
+  @NotNull
+  PactLparen getLparen();
+
+  @NotNull
+  PactRparen getRparen();
 
 }

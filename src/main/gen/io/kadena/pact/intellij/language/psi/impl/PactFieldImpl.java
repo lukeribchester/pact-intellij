@@ -29,6 +29,12 @@ public class PactFieldImpl extends ASTWrapperPsiElement implements PactField {
 
   @Override
   @NotNull
+  public PactColon getColon() {
+    return findNotNullChildByClass(PactColon.class);
+  }
+
+  @Override
+  @NotNull
   public List<PactIdent> getIdentList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, PactIdent.class);
   }

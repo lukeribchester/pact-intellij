@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface PactKv extends PsiElement {
 
   @NotNull
+  PactColon getColon();
+
+  @NotNull
   PactExpr getExpr();
 
   @NotNull

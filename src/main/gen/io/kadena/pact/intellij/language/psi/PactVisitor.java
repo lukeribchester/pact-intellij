@@ -31,7 +31,19 @@ public class PactVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitBlessDecl(@NotNull PactBlessDecl o) {
+    visitPsiElement(o);
+  }
+
   public void visitBool(@NotNull PactBool o) {
+    visitPsiElement(o);
+  }
+
+  public void visitColon(@NotNull PactColon o) {
+    visitPsiElement(o);
+  }
+
+  public void visitComma(@NotNull PactComma o) {
     visitPsiElement(o);
   }
 
@@ -63,7 +75,15 @@ public class PactVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitDefcapDecl(@NotNull PactDefcapDecl o) {
+    visitPsiElement(o);
+  }
+
   public void visitDefconst(@NotNull PactDefconst o) {
+    visitPsiElement(o);
+  }
+
+  public void visitDefconstDecl(@NotNull PactDefconstDecl o) {
     visitPsiElement(o);
   }
 
@@ -71,7 +91,15 @@ public class PactVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitDefpactDecl(@NotNull PactDefpactDecl o) {
+    visitPsiElement(o);
+  }
+
   public void visitDefschema(@NotNull PactDefschema o) {
+    visitPsiElement(o);
+  }
+
+  public void visitDefschemaDecl(@NotNull PactDefschemaDecl o) {
     visitPsiElement(o);
   }
 
@@ -79,7 +107,15 @@ public class PactVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitDeftableDecl(@NotNull PactDeftableDecl o) {
+    visitPsiElement(o);
+  }
+
   public void visitDefun(@NotNull PactDefun o) {
+    visitPsiElement(o);
+  }
+
+  public void visitDefunDecl(@NotNull PactDefunDecl o) {
     visitPsiElement(o);
   }
 
@@ -92,6 +128,14 @@ public class PactVisitor extends PsiElementVisitor {
   }
 
   public void visitDocOrMeta(@NotNull PactDocOrMeta o) {
+    visitPsiElement(o);
+  }
+
+  public void visitDot(@NotNull PactDot o) {
+    visitPsiElement(o);
+  }
+
+  public void visitDoubleSemicolon(@NotNull PactDoubleSemicolon o) {
     visitPsiElement(o);
   }
 
@@ -127,6 +171,10 @@ public class PactVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitImplementsDecl(@NotNull PactImplementsDecl o) {
+    visitPsiElement(o);
+  }
+
   public void visitImports(@NotNull PactImports o) {
     visitPsiElement(o);
   }
@@ -136,6 +184,10 @@ public class PactVisitor extends PsiElementVisitor {
   }
 
   public void visitInterface(@NotNull PactInterface o) {
+    visitPsiElement(o);
+  }
+
+  public void visitInterfaceDecl(@NotNull PactInterfaceDecl o) {
     visitPsiElement(o);
   }
 
@@ -152,6 +204,10 @@ public class PactVisitor extends PsiElementVisitor {
   }
 
   public void visitLcLetter(@NotNull PactLcLetter o) {
+    visitPsiElement(o);
+  }
+
+  public void visitLcurl(@NotNull PactLcurl o) {
     visitPsiElement(o);
   }
 
@@ -175,11 +231,23 @@ public class PactVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitLparen(@NotNull PactLparen o) {
+    visitPsiElement(o);
+  }
+
+  public void visitLsquare(@NotNull PactLsquare o) {
+    visitPsiElement(o);
+  }
+
   public void visitModels(@NotNull PactModels o) {
     visitPsiElement(o);
   }
 
   public void visitModule(@NotNull PactModule o) {
+    visitPsiElement(o);
+  }
+
+  public void visitModuleDecl(@NotNull PactModuleDecl o) {
     visitPsiElement(o);
   }
 
@@ -223,6 +291,22 @@ public class PactVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitRcurl(@NotNull PactRcurl o) {
+    visitPsiElement(o);
+  }
+
+  public void visitRparen(@NotNull PactRparen o) {
+    visitPsiElement(o);
+  }
+
+  public void visitRsquare(@NotNull PactRsquare o) {
+    visitPsiElement(o);
+  }
+
+  public void visitSemicolon(@NotNull PactSemicolon o) {
+    visitPsiElement(o);
+  }
+
   public void visitSigList(@NotNull PactSigList o) {
     visitPsiElement(o);
   }
@@ -235,11 +319,23 @@ public class PactVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitStepDecl(@NotNull PactStepDecl o) {
+    visitPsiElement(o);
+  }
+
+  public void visitStepWithRollback(@NotNull PactStepWithRollback o) {
+    visitPsiElement(o);
+  }
+
   public void visitString(@NotNull PactString o) {
     visitPsiElement(o);
   }
 
   public void visitStringLit(@NotNull PactStringLit o) {
+    visitPsiElement(o);
+  }
+
+  public void visitSub(@NotNull PactSub o) {
     visitPsiElement(o);
   }
 
@@ -259,7 +355,15 @@ public class PactVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitUnderscore(@NotNull PactUnderscore o) {
+    visitPsiElement(o);
+  }
+
   public void visitUse(@NotNull PactUse o) {
+    visitPsiElement(o);
+  }
+
+  public void visitUseDecl(@NotNull PactUseDecl o) {
     visitPsiElement(o);
   }
 

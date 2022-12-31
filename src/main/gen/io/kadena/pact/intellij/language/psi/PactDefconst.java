@@ -7,10 +7,4 @@ import com.intellij.psi.PsiElement;
 
 public interface PactDefconst extends PsiElement {
 
-  @NotNull
-  PactExpr getExpr();
-
-  @NotNull
-  PactIdent getIdent();
-
 }

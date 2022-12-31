@@ -8,6 +8,12 @@ import com.intellij.psi.PsiElement;
 public interface PactMultiBind extends PsiElement {
 
   @NotNull
+  PactLparen getLparen();
+
+  @NotNull
+  PactRparen getRparen();
+
+  @NotNull
   List<PactSingleBind> getSingleBindList();
 
 }

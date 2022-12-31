@@ -27,28 +27,4 @@ public class PactDefcapImpl extends ASTWrapperPsiElement implements PactDefcap {
     else super.accept(visitor);
   }
 
-  @Override
-  @NotNull
-  public PactDocOrMeta getDocOrMeta() {
-    return findNotNullChildByClass(PactDocOrMeta.class);
-  }
-
-  @Override
-  @NotNull
-  public PactExpr getExpr() {
-    return findNotNullChildByClass(PactExpr.class);
-  }
-
-  @Override
-  @NotNull
-  public PactFunArgs getFunArgs() {
-    return findNotNullChildByClass(PactFunArgs.class);
-  }
-
-  @Override
-  @NotNull
-  public PactIdent getIdent() {
-    return findNotNullChildByClass(PactIdent.class);
-  }
-
 }

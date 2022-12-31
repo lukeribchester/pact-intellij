@@ -7,7 +7,4 @@ import com.intellij.psi.PsiElement;
 
 public interface PactImplements extends PsiElement {
 
-  @NotNull
-  PactIdent getIdent();
-
 }
