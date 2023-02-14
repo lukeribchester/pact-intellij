@@ -22,8 +22,8 @@ plugins {
     id("org.jetbrains.kotlinx.kover") version "0.6.1"
 }
 
-group = properties("pluginGroup")
-version = properties("pluginVersion")
+group = properties("pluginGroup").get()
+version = properties("pluginVersion").get()
 
 // Configure project's dependencies
 repositories {
