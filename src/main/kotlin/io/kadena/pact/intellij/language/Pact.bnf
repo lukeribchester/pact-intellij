@@ -25,8 +25,12 @@
   COLON=":"
   UNDERSCORE="_"
   // Literals
+  // TODO: Finalise and create identifier token.
   STRING="regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\\"|\\\'|\\)*\")"
   SYMBOL="regexp:`\w+"
+  INTEGER="regexp:([0-9])"
+  DECIMAL=""
+  BOOLEAN="regexp:(true|false)"
   // Documentation
   DOC="@doc"
   MODEL="@model"
@@ -39,8 +43,8 @@
   DEFPACT="defpact"
   DEFSCHEMA="defschema"
   DEFTABLE="deftable"
-  LET_BIND="let"
-  LET_STAR_BIND="let*"
+  LET="let"
+  LET_STAR="let*"
   COND="cond"
   STEP="step"
   STEP_WITH_ROLLBACK="step-with-rollback"
@@ -85,154 +89,141 @@
   NOT_APP="not?"
   WHEN="when"
   // Miscellaneous
+  IDENTIFIER="regexp:([a-zA-Z0-9_-]+)"
+  ATOM="regexp:([a-zA-Z0-9_-]+)"
   CRLF="regexp:\R"
   WHITE_SPACE="regexp:[\ \n\t\f]"
   ]
 }
 
-// A program is a collection of declarations and expressions
-program ::= namespace_decl | module_decl | interface_decl | expr {extends=program}
+// A program is a collection of top-level declarations and/or expressions.
+// program ::= { defun_decl | namespace_decl | module_decl | interface_decl | expr } * {extends=program}
+program ::= { expression } * {extends=program}
 
-// Top-level declarations
-namespace_decl ::= lparen namespace string_lit rparen // TODO: symbol or identifier
-module_decl    ::= lparen module ident module_guard doc_or_meta decl_list rparen
-interface_decl ::= lparen interface ident doc_or_meta sig_list rparen
+// Top-level declarations.
+declaration    ::= defun_declaration
+                   // namespace_declaration |
+                   // module_declaration |
+                   // interface_declaration |
+namespace_declaration ::= LPAREN NAMESPACE STRING RPAREN
+module_declaration    ::= LPAREN MODULE IDENTIFIER module_guard [ doc_or_meta ] [ decl_list ] RPAREN
+interface_declaration ::= LPAREN INTERFACE IDENTIFIER [ doc_or_meta ] sig_list RPAREN
 
-sig_list  ::= defconst | defun_sig
+sig_list  ::= DEFCONST | defun_sig
 decl_list ::= imports decls
-imports   ::= lparen use_decl rparen { lparen use_decl rparen }
-decls     ::=  lparen decl rparen { lparen decl rparen }
+imports   ::= LPAREN use_decl RPAREN { LPAREN use_decl RPAREN }
+decls     ::=  LPAREN decl RPAREN { LPAREN decl RPAREN }
 decl      ::= defun_decl | defconst_decl | defcap_decl | defpact_decl | defschema_decl |
            deftable_decl | bless_decl // TODO: Refactor to special_form_decls?
 
-module_guard ::= ident | kset
+module_guard ::= IDENTIFIER | kset
 
-defun_sig ::= defun lparen fun_args rparen doc_or_meta
-defun_decl ::= defun lparen fun_args rparen doc_or_meta expr
-defconst_decl ::= defconst ident expr
-defcap_decl ::= defcap ident lparen fun_args rparen doc_or_meta expr
-defpact_decl ::= defpact ident lparen fun_args rparen doc_or_meta { step_decl }
-defschema_decl ::= defschema ident doc_or_meta fields
-deftable_decl ::= deftable ident [colon ident] doc_or_meta
-bless_decl ::= bless hash
-use_decl ::= use ident
-implements_decl ::= implements ident
-step_decl ::= lparen step [ string_lit ] expr rparen
- | lparen step_with_rollback [ string_lit ] expr expr rparen
+defun_sig ::= DEFUN LPAREN fun_args RPAREN [ doc_or_meta ]
+
+// TODO: Next Steps.
+// 1. Define an expression.
+// https://pact-language.readthedocs.io/en/stable/pact-reference.html#expressions
+// 2. Handle escaped strings.
+// TODO: Finalise. STRING = Docs or metadata.
+defun_declaration ::= LPAREN DEFUN IDENTIFIER [ LPAREN (fun_args) RPAREN ] [ STRING ] expr RPAREN
+
+// ########## EXPRESSION / START ##########
+expression ::= literal | atoms | s_expression | reference
+
+atoms ::= ATOM | SYMBOL | let_bind | let_star_bind
+symbol_expression ::= (LPAREN s_expression { s_expression } RPAREN) | atoms
+reference ::= atoms [ '.' reference ]
+
+// ########## LITERAL / START ##########
+
+literal ::= string_literal |
+            symbol_literal |
+            integer_literal |
+            decimal_literal |
+            boolean_literal |
+            list_literal |
+            object_literal |
+            binding_literal |
+            lambda_literal
+
+string_literal ::= STRING
+symbol_literal ::= SYMBOL
+integer_literal ::= [ SUB ] numbers
+decimal_literal ::= [ SUB ] numbers DOT numbers
+boolean_literal ::= 'true' | 'false'
+list_literal ::= 'TODO'
+object_literal ::= LBRACE key_value { COMMA key_value } RBRACE
+binding_literal ::= 'TODO'
+lambda_literal ::= 'TODO'
+
+number ::= '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'
+numbers ::= number { number }
+
+key_value ::= '"' IDENTIFIER '"' COLON expression
+
+// ########## LITERAL / END ##########
+
+// ########## END ##########
+
+defconst_decl ::= DEFCONST IDENTIFIER expr
+defcap_decl ::= DEFCAP IDENTIFIER LPAREN fun_args RPAREN [ doc_or_meta ] expr
+defpact_decl ::= DEFPACT IDENTIFIER LPAREN fun_args RPAREN [ doc_or_meta ] { step_decl }
+defschema_decl ::= DEFSCHEMA IDENTIFIER [ doc_or_meta ] fields
+deftable_decl ::= DEFTABLE IDENTIFIER [COLON IDENTIFIER] [ doc_or_meta ]
+bless_decl ::= BLESS hash
+use_decl ::= USE IDENTIFIER
+implements_decl ::= IMPLEMENTS IDENTIFIER
+step_decl ::= LPAREN STEP [ string_lit ] expr RPAREN
+ | LPAREN STEP_WITH_ROLLBACK [ string_lit ] expr expr RPAREN
 
 fields ::= { field }
-field ::= ident colon ident
+field ::= IDENTIFIER COLON IDENTIFIER
 
-fun_args ::= arg arg_rest
-arg_rest ::= { arg }
-arg ::= ident [colon ident]
+fun_args ::= arg { arg } *
+arg ::= IDENTIFIER [ COLON IDENTIFIER ]
 
 // Documentation for defuns and modules
 doc_or_meta ::= doc mta | mta | ε
-doc         ::= '@doc' string
-mta         ::= '@model' lbracket models rbracket
+doc         ::= '@doc' STRING
+mta         ::= '@model' LBRACKET models RBRACKET
 models      ::=  property models | invariant models | models | ε
-property    ::= lparen 'property' expr rparen
-invariant   ::= lparen 'invariant' expr rparen
+property    ::= LPAREN 'property' expr RPAREN
+invariant   ::= LPAREN 'invariant' expr RPAREN
 
 // Expressions. note: expr lists are nonempty, as () in lisp is nil literal
-expr         ::= lparen ne_expr_list rparen | atom
-ne_expr_list ::= expr { expr }
+//expr         ::= LPAREN ne_expr_list RPAREN | atom
+//ne_expr_list ::= expr { expr }
 
 atom     ::= type_ann | let_bind | let_star_bind | atom2
-type_ann ::= lparen expr colon ident rparen
-let_bind ::= lparen 'let' (single_bind | multi_bind) expr rparen
-let_star_bind ::= lparen 'let*' (single_bind | multi_bind) expr rparen
-single_bind ::= lparen ident expr rparen
-multi_bind ::= lparen single_bind { single_bind } rparen
-atom2    ::= ident | lit | op
-
-ident      ::= letter { ('-' | letter | number) }
+type_ann ::= LPAREN expr COLON IDENTIFIER RPAREN
+let_bind ::= LPAREN LET (single_bind | multi_bind) expr RPAREN
+let_star_bind ::= LPAREN LET_STAR (single_bind | multi_bind) expr RPAREN
+single_bind ::= LPAREN IDENTIFIER expr RPAREN
+multi_bind ::= LPAREN single_bind { single_bind } RPAREN
+atom2    ::= IDENTIFIER | lit | op
 
 // All literals TODO: Refactor
 lit ::= string_lit | symbol | integer | decimal | bool
      bool | list_lit | object_lit | table | kset
 
-string_lit           ::= '\"' string '\"'
-symbol               ::= "`" ident
-bool                 ::= 'true' | 'false'
-integer              ::= [ sub ] numbers
-decimal              ::= [ sub ] numbers dot numbers
-list_lit             ::= lbracket { expr } rbracket | lbracket expr { comma expr } rbracket
+//string_lit           ::= ('"') + string_lit_t + ('"')
+//string_lit_t         ::= 'free'
+//symbol               ::= "`" IDENTIFIER
+//bool                 ::= 'true' | 'false'
+//integer              ::= [ SUB ] numbers
+//decimal              ::= [ SUB ] numbers DOT numbers
+list_lit             ::= LBRACKET { expr } RBRACKET | LBRACKET expr { COMMA expr } RBRACKET
 comma_delimited_list ::= expr comma_delimited_rest | ε
-comma_delimited_rest ::= comma expr | ε
-object_lit           ::= lbrace kv { comma kv } rbrace
-kv                   ::= '\"' ident '\"' colon expr
-kset                 ::= hashes | lbrace 'keys' colon hashes rbrace | lbrace 'keys' colon hashes comma 'pred' colon pred rbrace
+comma_delimited_rest ::= COMMA expr | ε
+//object_lit           ::= LBRACE kv { COMMA kv } RBRACE
+//kv                   ::= '\"' IDENTIFIER '\"' COLON expr
+kset                 ::= hashes | LBRACE 'keys' COLON hashes RBRACE | LBRACE 'keys' COLON hashes COMMA 'pred' COLON pred RBRACE
 pred                 ::= 'keys-all' | 'keys-1' | 'keys-2'
 
-numbers ::= number { number }
-letter ::= { (uc_letter | lc_letter | underscore ) }
 alphanumeric ::= uc_letter | lc_letter | number
-uc_letter ::= 'A' | ' ...' | 'Z'
-lc_letter ::= 'a' | ' ...' | 'z'
-number    ::= '0' | ' ...' | '9'
+//uc_letter ::= 'A' | ' ...' | 'Z'
+//lc_letter ::= 'a' | ' ...' | 'z'
+
 op ::= // Printable operators
-string ::= // All printable characters
 hash ::= { alphanumeric } // This is base64-encoded
-hashes ::= lbracket { hash } rbracket
-
-// TODO: Remove - Separators and operators
-sub ::= '-'
-
-// Separators
-lparen ::= '('
-rparen ::= ')'
-lbracket ::= '['
-rbracket ::= ']'
-lbrace ::= '{'
-rbrace ::= '}'
-dot ::= '.'
-comma ::= ','
-colon ::= ':'
-underscore ::= '_'
-
-// Literals
-string ::=
-symbol ::=
-
-// Documentation
-doc ::= '@doc'
-model ::= '@model'
-comment ::=
-
-// Special forms
-special_forms ::= bless
-  | defun
-  | defcap
-  | defconst
-  | defpact
-  | defschema
-  | deftable
-  | let_bind
-  | let_star_bind
-  | cond
-  | step
-  | step_with_rollback
-  | use
-  | interface
-  | module
-  | implements
-
-bless ::= 'bless'
-defun ::= 'defun'
-defcap ::= 'defcap'
-defconst ::= 'defconst'
-defpact ::= 'defpact'
-defschema ::= 'defschema'
-deftable ::= 'deftable'
-let_bind ::= 'let'
-let_star_bind ::= 'let*'
-cond ::= 'cond'
-step ::= 'step'
-step_with_rollback ::= 'step-with-rollback'
-use ::= 'use'
-interface ::= 'interface'
-namespace ::= 'namespace'
-module ::= 'module'
-implements ::= 'implements'
+hashes ::= LBRACKET { hash } RBRACKET
