@@ -3,7 +3,7 @@
 <p align="center">
     <picture>
         <source srcset="./images/kadena-logotype-light.svg" media="(prefers-color-scheme: dark)"/>
-        <img src="./images/kadena-logotype-dark.svg" width="480" alt="Kadena logo" />
+        <img src="./images/kadena-logotype-dark.svg" width="830" alt="Kadena logo" />
     </picture>
 </p>
 
