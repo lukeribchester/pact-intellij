@@ -45,6 +45,8 @@ Install using your IDE's built-in plugin marketplace:
 3. Search for <kbd>'Pact'</kbd>
 4. Select <kbd>Install Plugin</kbd>
 
+View on the [JetBrains Marketplace](https://plugins.jetbrains.com/plugin/20532-pact).
+
 ### Manual
 
 Download the [latest release](https://github.com/lukeribchester/pact-intellij/releases/latest) and install it manually 
