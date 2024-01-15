@@ -1,9 +1,11 @@
 # Pact Language Support for the IntelliJ Platform 🚀
 
-<picture>
-  <source srcset="./images/kadena-logotype-light.svg" media="(prefers-color-scheme: dark)"/>
-  <img src="./images/kadena-logotype-dark.svg" width="480" alt="Kadena logo" />
-</picture>
+<p align="center">
+    <picture>
+        <source srcset="./images/kadena-logotype-light.svg" media="(prefers-color-scheme: dark)"/>
+        <img src="./images/kadena-logotype-dark.svg" width="480" alt="Kadena logo" />
+    </picture>
+</p>
 
 ![Build](https://github.com/lukeribchester/pact-intellij/workflows/Build/badge.svg)
 [![Version](https://img.shields.io/jetbrains/plugin/v/20532.svg)](https://plugins.jetbrains.com/plugin/20532)
