@@ -5,6 +5,7 @@
     <vendor>Kadena</vendor>
 
     <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.ultimate</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <fileType
@@ -15,9 +16,8 @@
                 extensions="pact"
         />
 
-        <lang.parserDefinition
-            language="Pact"
-            implementationClass="io.kadena.pact.intellij.language.PactParserDefinition"/>
+        <!-- LSP -->
+        <platform.lsp.serverSupportProvider implementation="io.kadena.pact.intellij.ide.lsp.PactLspServerSupportProvider"/>
 
         <lang.syntaxHighlighterFactory
                 language="Pact"
