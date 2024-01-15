@@ -17,14 +17,16 @@
         />
 
         <!-- LSP -->
-        <platform.lsp.serverSupportProvider implementation="io.kadena.pact.intellij.ide.lsp.PactLspServerSupportProvider"/>
-
-        <lang.syntaxHighlighterFactory
-                language="Pact"
-                implementationClass="io.kadena.pact.intellij.language.PactSyntaxHighlighterFactory"
+        <platform.lsp.serverSupportProvider
+                implementation="io.kadena.pact.intellij.ide.lsp.PactLspServerSupportProvider"
         />
 
-        <colorSettingsPage
-                implementation="io.kadena.pact.intellij.language.PactColorSettingsPage"/>
+<!--        <lang.syntaxHighlighterFactory-->
+<!--                language="Pact"-->
+<!--                implementationClass="io.kadena.pact.intellij.language.PactSyntaxHighlighterFactory"-->
+<!--        />-->
+
+<!--        <colorSettingsPage-->
+<!--                implementation="io.kadena.pact.intellij.language.PactColorSettingsPage"/>-->
     </extensions>
 </idea-plugin>
