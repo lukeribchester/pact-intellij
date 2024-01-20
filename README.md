@@ -25,7 +25,7 @@ create meaningful solutions to real-world problems.
 
 In other words, Kadena is operating on a whole other layer: Layer H, the Human Layer.
 
-## What is Pact? 🤝
+### What is Pact? 🤝
 Pact is a human-readable smart contract language. It allows anyone to write clearly, directly and safely onto a 
 blockchain — a true innovation for secure and simple smart contract development. Pact will enable you to create 
 entirely new business models and on-chain services.
@@ -39,6 +39,30 @@ humans. Imagine if a baseball player received an automatic bonus in his next pay
 of home runs.
 
 Smart contracts are the next generation of legal contracts. And Pact is the next generation of smart contracts.
+
+## Features
+
+### Pact Language Server (LSP)
+
+- Error highlighting
+- Code completion
+- Documentation
+
+Please refer to the [documentation](https://github.com/kadena-io/pact-lsp/tree/main#supported-features) for a full list
+of supported features.
+
+### Native (IntelliJ Platform)
+
+- Coming soon
+
+## Roadmap
+
+1. Support for the [Pact Language Server (LSP)](https://github.com/kadena-io/pact-lsp/tree/main#supported-features)
+2. Pact support via the
+   [IntelliJ Platform Language API](https://plugins.jetbrains.com/docs/intellij/custom-language-support.html)
+<!-- Plugin description end -->
+
+---
 
 ## Requirements
 
@@ -64,48 +88,6 @@ Install the [Pact Language Server](https://github.com/kadena-io/pact-lsp) by dow
 [prebuilt binary](https://github.com/kadena-io/pact-lsp/releases/latest) from the latest release or by 
 [building from source](https://github.com/kadena-io/pact-lsp#building-from-source).
 
-## Configuration
-
-Configuration is required to enable functionality from the Pact Language Server:
-
-1. Navigate to <kbd>Settings/Preferences</kbd>
-2. Select <kbd>Languages & Frameworks</kbd> > <kbd>Pact</kbd>
-3. Specify your <kbd>Pact</kbd> and <kbd>Pact Language Server</kbd> paths
-
-#### Homebrew
-
-If you installed Pact via Homebrew then run the following command to retrieve the path of the executable:
-
-```bash
-brew info pact
-```
-
----
-
-## Features
-
-### Pact Language Server (LSP)
-
-- Error highlighting
-- Code completion
-- Documentation
-
-Please refer to the [documentation](https://github.com/kadena-io/pact-lsp/tree/main#supported-features) for a full list 
-of supported features.
-
-### Native (IntelliJ Platform)
-
-- Coming soon
-
-## Roadmap
-
-1. Support for the [Pact Language Server (LSP)](https://github.com/kadena-io/pact-lsp/tree/main#supported-features)
-2. Pact support via the 
-[IntelliJ Platform Language API](https://plugins.jetbrains.com/docs/intellij/custom-language-support.html)
-<!-- Plugin description end -->
-
----
-
 ## Installation
 
 ### JetBrains Marketplace
@@ -121,9 +103,25 @@ View on the [JetBrains Marketplace](https://plugins.jetbrains.com/plugin/20532-p
 
 ### Manual
 
-Download the [latest release](https://github.com/lukeribchester/pact-intellij/releases/latest) and install it manually 
+Download the [latest release](https://github.com/lukeribchester/pact-intellij/releases/latest) and install it manually
 from disk through your IDE:
 
 1. Navigate to <kbd>Settings/Preferences</kbd>
 2. Select <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install Plugin from Disk...</kbd>
 3. Open the downloaded `.zip` file
+
+## Configuration
+
+Configuration is required to enable functionality from the Pact Language Server:
+
+1. Navigate to <kbd>Settings/Preferences</kbd>
+2. Select <kbd>Languages & Frameworks</kbd> > <kbd>Pact</kbd>
+3. Specify your <kbd>Pact</kbd> and <kbd>Pact Language Server</kbd> paths
+
+#### Homebrew
+
+If you installed Pact via Homebrew then run the following command to retrieve the path of the executable:
+
+```bash
+brew info pact
+```
