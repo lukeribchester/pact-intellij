@@ -99,7 +99,7 @@ Install using your IDE's built-in plugin marketplace:
 3. Search for <kbd>'Pact'</kbd>
 4. Select <kbd>Install Plugin</kbd>
 
-View on the [JetBrains Marketplace](https://plugins.jetbrains.com/plugin/20532-pact).
+View on the [JetBrains Marketplace](https://plugins.jetbrains.com/plugin/23581-pact).
 
 ### Manual
 
