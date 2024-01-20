@@ -72,6 +72,15 @@ koverReport {
 }
 
 tasks {
+    prepareSandbox {
+        doLast {
+            copy {
+                from("${project.projectDir}/language-server")
+                into("${destinationDir.path}/${properties("pluginName").get()}/language-server")
+            }
+        }
+    }
+
     wrapper {
         gradleVersion = properties("gradleVersion").get()
     }
