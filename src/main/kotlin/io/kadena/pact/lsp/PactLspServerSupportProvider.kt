@@ -1,4 +1,4 @@
-package io.kadena.pact.intellij.ide.lsp
+package io.kadena.pact.lsp
 
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile

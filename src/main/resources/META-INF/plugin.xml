@@ -1,6 +1,6 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>io.kadena.pact.intellij</id>
+    <id>io.kadena.pact</id>
     <name>Pact</name>
     <vendor>Kadena</vendor>
 
@@ -10,7 +10,7 @@
     <extensions defaultExtensionNs="com.intellij">
         <fileType
                 name="Pact File"
-                implementationClass="io.kadena.pact.intellij.PactFileType"
+                implementationClass="io.kadena.pact.PactFileType"
                 fieldName="INSTANCE"
                 language="Pact"
                 extensions="pact"
@@ -18,15 +18,15 @@
 
         <!-- LSP -->
         <platform.lsp.serverSupportProvider
-                implementation="io.kadena.pact.intellij.ide.lsp.PactLspServerSupportProvider"
+                implementation="io.kadena.pact.lsp.PactLspServerSupportProvider"
         />
 
 <!--        <lang.syntaxHighlighterFactory-->
 <!--                language="Pact"-->
-<!--                implementationClass="io.kadena.pact.intellij.language.PactSyntaxHighlighterFactory"-->
+<!--                implementationClass="io.kadena.pact.language.PactSyntaxHighlighterFactory"-->
 <!--        />-->
 
 <!--        <colorSettingsPage-->
-<!--                implementation="io.kadena.pact.intellij.language.PactColorSettingsPage"/>-->
+<!--                implementation="io.kadena.pact.language.PactColorSettingsPage"/>-->
     </extensions>
 </idea-plugin>
