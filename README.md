@@ -8,8 +8,8 @@
 </p>
 
 ![Build](https://github.com/lukeribchester/pact-intellij/workflows/Build/badge.svg)
-[![Version](https://img.shields.io/jetbrains/plugin/v/20532.svg)](https://plugins.jetbrains.com/plugin/20532)
-[![Downloads](https://img.shields.io/jetbrains/plugin/d/20532.svg)](https://plugins.jetbrains.com/plugin/20532)
+[![Version](https://img.shields.io/jetbrains/plugin/v/23581.svg)](https://plugins.jetbrains.com/plugin/23581)
+[![Downloads](https://img.shields.io/jetbrains/plugin/d/23581.svg)](https://plugins.jetbrains.com/plugin/23581)
 
 <!-- Plugin description -->
 This plugin provides support for [Kadena's](https://kadena.io/) Pact smart contract language to the IntelliJ Platform.
