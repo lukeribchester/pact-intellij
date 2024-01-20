@@ -1,4 +1,4 @@
-package io.kadena.pact.intellij
+package io.kadena.pact
 
 import com.intellij.lang.Language
 

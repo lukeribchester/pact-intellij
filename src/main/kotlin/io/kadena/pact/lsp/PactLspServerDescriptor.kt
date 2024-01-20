@@ -1,4 +1,4 @@
-package io.kadena.pact.intellij.ide.lsp
+package io.kadena.pact.lsp
 
 import com.google.gson.JsonObject
 import com.intellij.execution.configurations.GeneralCommandLine
