@@ -73,10 +73,17 @@ koverReport {
 
 tasks {
     prepareSandbox {
+        // Bundle the Pact and Pact Language Server executables
         doLast {
+            val destinationPath = "${destinationDir.path}/${properties("pluginName").get()}/language-server"
+            fileTree("${project.projectDir}/language-server").forEach { file ->
+                if (file.isFile && (file.name.startsWith("pact"))) {
+                    file.setExecutable(true)
+                }
+            }
             copy {
                 from("${project.projectDir}/language-server")
-                into("${destinationDir.path}/${properties("pluginName").get()}/language-server")
+                into(destinationPath)
             }
         }
     }
