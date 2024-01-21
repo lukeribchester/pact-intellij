@@ -20,8 +20,6 @@ import org.jetbrains.annotations.Nullable
 )
 internal class AppSettingsState : PersistentStateComponent<AppSettingsState> {
     var pactPath: String = ""
-
-    var useBundledLanguageServer: Boolean = true
     var pactLanguageServerPath: String = ""
 
     @Nullable

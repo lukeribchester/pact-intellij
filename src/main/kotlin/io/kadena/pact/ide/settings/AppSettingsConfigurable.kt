@@ -28,7 +28,6 @@ internal class AppSettingsConfigurable : Configurable {
     override fun isModified(): Boolean {
         val settings: AppSettingsState = AppSettingsState.instance
         var modified: Boolean = !appSettingsComponent?.pactPath.equals(settings.pactPath)
-        modified = modified or (appSettingsComponent?.useBundledLanguageServer != settings.useBundledLanguageServer)
         modified = modified or (!appSettingsComponent?.pactLanguageServerPath.equals(settings.pactLanguageServerPath))
         return modified
     }
@@ -36,14 +35,12 @@ internal class AppSettingsConfigurable : Configurable {
     override fun apply() {
         val settings: AppSettingsState = AppSettingsState.instance
         settings.pactPath = appSettingsComponent?.pactPath.toString()
-        settings.useBundledLanguageServer = appSettingsComponent!!.useBundledLanguageServer
         settings.pactLanguageServerPath = appSettingsComponent?.pactLanguageServerPath.toString()
     }
 
     override fun reset() {
         val settings: AppSettingsState = AppSettingsState.instance
         appSettingsComponent?.pactPath = settings.pactPath
-        appSettingsComponent?.useBundledLanguageServer = settings.useBundledLanguageServer
         appSettingsComponent?.pactLanguageServerPath = settings.pactLanguageServerPath
     }
 

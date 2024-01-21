@@ -1,10 +1,20 @@
 package io.kadena.pact.ide.settings
 
-import com.intellij.ui.components.JBCheckBox
+import com.intellij.openapi.fileChooser.FileChooser
+import com.intellij.openapi.fileChooser.FileChooserDescriptor
+import com.intellij.openapi.ui.ComboBox
+import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.ui.components.JBLabel
-import com.intellij.ui.components.JBTextField
+import com.intellij.ui.components.JBPanel
+import com.intellij.ui.util.maximumWidth
+import com.intellij.ui.util.minimumWidth
+import com.intellij.ui.util.preferredWidth
 import com.intellij.util.ui.FormBuilder
 import org.jetbrains.annotations.NotNull
+import java.awt.Dimension
+import javax.swing.Box
+import javax.swing.BoxLayout
+import javax.swing.JButton
 import javax.swing.JComponent
 import javax.swing.JPanel
 
@@ -15,39 +25,120 @@ import javax.swing.JPanel
 class AppSettingsComponent {
     val panel: JPanel
 
-    private val _pactPath = JBTextField()
-    private val _useBundledLanguageServer = JBCheckBox("Use the bundled language server executable?")
-    private val _pactLanguageServerPath = JBTextField()
+    private val pactPathLabel = JBLabel("Pact:")
+    private val pactPathField = ComboBox<String>()
+    private val pactPathBrowseButton = JButton("...")
+
+    private val pactLanguageServerPathLabel = JBLabel("Language Server (LSP):")
+    private val pactLanguageServerPathField = ComboBox<String>()
+    private val pactLanguageServerPathBrowseButton = JButton("...")
 
     init {
         panel = FormBuilder.createFormBuilder()
-            .addLabeledComponent(JBLabel("Pact path: "), _pactPath, 1, false)
-            .addComponent(_useBundledLanguageServer, 1)
-            .addLabeledComponent(JBLabel("Pact Language Server (LSP) path: "), _pactLanguageServerPath, 1, false)
+            .addComponent(pactPathPanel())
+            .addComponent(pactLanguageServerPathPanel())
             .addComponentFillVertically(JPanel(), 0)
             .getPanel()
     }
 
     val preferredFocusedComponent: JComponent
-        get() = _pactPath
+        get() = pactPathField
 
     @get:NotNull
     var pactPath: String?
-        get() = _pactPath.text
-        set(newText) {
-            _pactPath.text = newText
-        }
-
-    var useBundledLanguageServer: Boolean
-        get() = _useBundledLanguageServer.isSelected
-        set(newStatus) {
-            _useBundledLanguageServer.isSelected = newStatus
+        get() = pactPathField.selectedItem?.toString()
+        set(newPath) {
+            pactPathField.selectedItem = newPath
         }
 
     @get:NotNull
     var pactLanguageServerPath: String?
-        get() = _pactLanguageServerPath.text
-        set(newText) {
-            _pactLanguageServerPath.text = newText
+        get() = pactLanguageServerPathField.selectedItem?.toString()
+        set(newPath) {
+            pactLanguageServerPathField.selectedItem = newPath
         }
+
+    private fun pactPathPanel(): JBPanel<JBPanel<*>> {
+        pactPathField.addItem("/opt/homebrew/Cellar/pact/4.10.0/bin/pact")
+        pactPathBrowseButton.addActionListener {
+            onBrowseForPactPath(
+                "Select a Pact Compiler",
+                "Choose an executable file",
+                pactPathField
+            )
+        }
+        pactPathBrowseButton.apply {
+            preferredWidth = 30
+            minimumWidth = 30
+            maximumWidth = 30
+        }
+
+        val pactPathPanel = JBPanel<JBPanel<*>>().apply {
+            // Align the components horizontally
+            layout = BoxLayout(this, BoxLayout.X_AXIS)
+
+            val gap = Box.createRigidArea(Dimension(10, 0))
+
+            add(pactPathLabel)
+            add(gap)
+            add(pactPathField)
+            add(pactPathBrowseButton)
+        }
+
+        return pactPathPanel
+    }
+
+    private fun pactLanguageServerPathPanel(): JBPanel<JBPanel<*>> {
+        pactLanguageServerPathField.addItem("/Users/lgr/development/professional/kda/pact-intellij/language-server/pact-lsp-v0.0.1")
+        pactLanguageServerPathBrowseButton.addActionListener {
+            onBrowseForPactPath(
+                "Select a Pact Language Server (LSP)",
+                "Choose an executable file",
+                pactLanguageServerPathField
+            )
+        }
+        pactLanguageServerPathBrowseButton.apply {
+            preferredWidth = 30
+            minimumWidth = 30
+            maximumWidth = 30
+        }
+
+        val pactPathPanel = JBPanel<JBPanel<*>>().apply {
+            // Align the components horizontally
+            layout = BoxLayout(this, BoxLayout.X_AXIS)
+
+            val gap = Box.createRigidArea(Dimension(10, 0))
+
+            add(pactLanguageServerPathLabel)
+            add(gap)
+            add(pactLanguageServerPathField)
+            add(pactLanguageServerPathBrowseButton)
+        }
+
+        return pactPathPanel
+    }
+
+    private fun onBrowseForPactPath(title: String, description: String, field: ComboBox<String>) {
+        // Configure the file browser window
+        val fileChooserDescriptor = FileChooserDescriptor(
+            true,
+            true,
+            false,
+            false,
+            false,
+            false
+        )
+            .withTitle(title)
+            .withDescription(description)
+
+        // Open the file browser window
+        val file: VirtualFile? = FileChooser.chooseFile(fileChooserDescriptor, null, null)
+        file?.let {
+            val path = it.path
+
+            // Add the path to the ComboBox and select it
+            field.addItem(path)
+            field.selectedItem = path
+        }
+    }
 }
