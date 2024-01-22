@@ -36,6 +36,7 @@ internal class AppSettingsConfigurable : Configurable {
         val settings: AppSettingsState = AppSettingsState.instance
         settings.pactPath = appSettingsComponent?.pactPath.toString()
         settings.pactLanguageServerPath = appSettingsComponent?.pactLanguageServerPath.toString()
+        settings.notifyAppSettingsStateChanged(settings)
     }
 
     override fun reset() {

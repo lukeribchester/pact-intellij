@@ -18,9 +18,11 @@ import org.jetbrains.annotations.Nullable
     name = "io.kadena.pact.ide.settings.AppSettingsState",
     storages = [Storage("PactPlugin.xml")]
 )
-internal class AppSettingsState : PersistentStateComponent<AppSettingsState> {
+class AppSettingsState : PersistentStateComponent<AppSettingsState> {
     var pactPath: String = ""
     var pactLanguageServerPath: String = ""
+
+    private val listeners = mutableSetOf<AppSettingsStateListener>()
 
     @Nullable
     override fun getState(): AppSettingsState {
@@ -34,5 +36,19 @@ internal class AppSettingsState : PersistentStateComponent<AppSettingsState> {
     companion object {
         val instance: AppSettingsState
             get() = ApplicationManager.getApplication().getService(AppSettingsState::class.java)
+    }
+
+    fun addAppSettingsStateListener(listener: AppSettingsStateListener) {
+        listeners.add(listener)
+    }
+
+    fun notifyAppSettingsStateChanged(state: AppSettingsState) {
+        for (listener in listeners) {
+            listener.onAppSettingsStateChanged(state)
+        }
+    }
+
+    interface AppSettingsStateListener {
+        fun onAppSettingsStateChanged(state: AppSettingsState)
     }
 }
