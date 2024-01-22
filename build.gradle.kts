@@ -1,5 +1,6 @@
 import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.markdownToHTML
+import org.jetbrains.intellij.IntelliJPluginExtension
 
 // Include generated sources
 sourceSets["main"].java.srcDirs("src/main/gen")
@@ -71,14 +72,25 @@ koverReport {
     }
 }
 
+// Bundle the Pact Language Server (LSP) executables
+val bundleExecutables by tasks.registering(Copy::class) {
+    val source = "${layout.projectDirectory}/bundled"
+
+    val sandboxDir = project.extensions.getByType((IntelliJPluginExtension::class.java)).sandboxDir.get()
+    val pluginName = properties("pluginName").get()
+    val destination = "${sandboxDir}/plugins/${pluginName}"
+
+    from(source)
+    into(destination)
+}
+
 tasks {
+    buildSearchableOptions {
+        mustRunAfter("bundleExecutables")
+    }
+
     prepareSandbox {
-        doLast {
-            copy {
-                from("${project.projectDir}/language-server")
-                into("${destinationDir.path}/${properties("pluginName").get()}/language-server")
-            }
-        }
+        finalizedBy(bundleExecutables)
     }
 
     wrapper {
