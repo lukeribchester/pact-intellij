@@ -85,12 +85,12 @@ val bundleExecutables by tasks.registering(Copy::class) {
 }
 
 tasks {
-    buildSearchableOptions {
-        mustRunAfter("bundleExecutables")
-    }
-
     prepareSandbox {
         finalizedBy(bundleExecutables)
+    }
+
+    buildSearchableOptions {
+        mustRunAfter("bundleExecutables")
     }
 
     wrapper {
@@ -107,7 +107,7 @@ tasks {
             val start = "<!-- Plugin description -->"
             val end = "<!-- Plugin description end -->"
 
-            with (it.lines()) {
+            with(it.lines()) {
                 if (!containsAll(listOf(start, end))) {
                     throw GradleException("Plugin description section not found in README.md:\n$start ... $end")
                 }
@@ -129,6 +129,10 @@ tasks {
         }
     }
 
+    runIde {
+        mustRunAfter("bundleExecutables")
+    }
+
     // Configure UI tests plugin
     // Read more: https://github.com/JetBrains/intellij-ui-test-robot
     runIdeForUiTests {
@@ -136,6 +140,10 @@ tasks {
         systemProperty("ide.mac.message.dialogs.as.sheets", "false")
         systemProperty("jb.privacy.policy.text", "<!--999.999-->")
         systemProperty("jb.consents.confirmation.enabled", "false")
+    }
+
+    verifyPlugin {
+        mustRunAfter("bundleExecutables")
     }
 
     signPlugin {
