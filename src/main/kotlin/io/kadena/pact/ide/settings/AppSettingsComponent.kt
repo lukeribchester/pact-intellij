@@ -38,7 +38,7 @@ class AppSettingsComponent {
             .addComponent(pactPathPanel())
             .addComponent(pactLanguageServerPathPanel())
             .addComponentFillVertically(JPanel(), 0)
-            .getPanel()
+            .panel
     }
 
     val preferredFocusedComponent: JComponent
@@ -59,7 +59,11 @@ class AppSettingsComponent {
         }
 
     private fun pactPathPanel(): JBPanel<JBPanel<*>> {
-        pactPathField.addItem("/opt/homebrew/Cellar/pact/4.10.0/bin/pact")
+        pactPathField.apply {
+            addItem("/opt/homebrew/Cellar/pact/4.10.0/bin/pact")
+            isEditable = true
+            preferredWidth = 300
+        }
         pactPathBrowseButton.addActionListener {
             onBrowseForPactPath(
                 "Select a Pact Compiler",
@@ -73,7 +77,7 @@ class AppSettingsComponent {
             maximumWidth = 30
         }
 
-        val pactPathPanel = JBPanel<JBPanel<*>>().apply {
+        return JBPanel<JBPanel<*>>().apply {
             // Align the components horizontally
             layout = BoxLayout(this, BoxLayout.X_AXIS)
 
@@ -84,12 +88,14 @@ class AppSettingsComponent {
             add(pactPathField)
             add(pactPathBrowseButton)
         }
-
-        return pactPathPanel
     }
 
     private fun pactLanguageServerPathPanel(): JBPanel<JBPanel<*>> {
-        pactLanguageServerPathField.addItem("/Users/lgr/development/professional/kda/pact-intellij/language-server/pact-lsp-v0.0.1")
+        pactLanguageServerPathField.apply {
+            addItem("/Users/lgr/development/professional/kda/pact-intellij/language-server/pact-lsp-v0.0.1")
+            isEditable = true
+            preferredWidth = 300
+        }
         pactLanguageServerPathBrowseButton.addActionListener {
             onBrowseForPactPath(
                 "Select a Pact Language Server (LSP)",
@@ -103,7 +109,7 @@ class AppSettingsComponent {
             maximumWidth = 30
         }
 
-        val pactPathPanel = JBPanel<JBPanel<*>>().apply {
+        return JBPanel<JBPanel<*>>().apply {
             // Align the components horizontally
             layout = BoxLayout(this, BoxLayout.X_AXIS)
 
@@ -114,8 +120,6 @@ class AppSettingsComponent {
             add(pactLanguageServerPathField)
             add(pactLanguageServerPathBrowseButton)
         }
-
-        return pactPathPanel
     }
 
     private fun onBrowseForPactPath(title: String, description: String, field: ComboBox<String>) {
