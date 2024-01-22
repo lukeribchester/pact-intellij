@@ -60,7 +60,7 @@ class AppSettingsComponent {
 
     private fun pactPathPanel(): JBPanel<JBPanel<*>> {
         pactPathField.apply {
-            addItem("/opt/homebrew/Cellar/pact/4.10.0/bin/pact")
+            addItem("/path/to/pact")
             isEditable = true
             preferredWidth = 300
         }
@@ -92,7 +92,7 @@ class AppSettingsComponent {
 
     private fun pactLanguageServerPathPanel(): JBPanel<JBPanel<*>> {
         pactLanguageServerPathField.apply {
-            addItem("/Users/lgr/development/professional/kda/pact-intellij/language-server/pact-lsp-v0.0.1")
+            addItem("/path/to/pact-lsp")
             isEditable = true
             preferredWidth = 300
         }
