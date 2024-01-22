@@ -14,8 +14,8 @@
 <!-- Plugin description -->
 This plugin provides support for [Kadena's](https://kadena.io/) Pact smart contract language to the IntelliJ Platform.
 
-**Warning:** While effort is made to ensure a stable and reliable user experience, this plugin is under heavy 
-development and includes features based on the experimental IntelliJ Platform Language Server API.
+_**Warning:** While effort is made to ensure a stable and reliable user experience, this plugin is under heavy 
+development and includes features based on the experimental IntelliJ Platform Language Server API._
 
 ## What is Kadena?
 Kadena is the industry’s only truly scalable Layer-1 Proof-of-Work blockchain. More to the point, it’s the only 
@@ -54,7 +54,7 @@ Smart contracts are the next generation of legal contracts. And Pact is the next
 Please refer to the [documentation](https://github.com/kadena-io/pact-lsp/tree/main#supported-features) for a full list
 of supported features.
 
-**Note:** Support for Language Server Protocol features on the IntelliJ Platform is currently experimental.
+_**Note:** Support for Language Server Protocol features on the IntelliJ Platform is currently experimental._
 
 ### Native (IntelliJ Platform)
 
