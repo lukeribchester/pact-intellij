@@ -8,6 +8,7 @@
     <depends>com.intellij.modules.ultimate</depends>
 
     <extensions defaultExtensionNs="com.intellij">
+        <!-- File Type -->
         <fileType
                 name="Pact File"
                 implementationClass="io.kadena.pact.PactFileType"
@@ -16,17 +17,20 @@
                 extensions="pact"
         />
 
-        <!-- LSP -->
+        <!-- Application Settings -->
+        <applicationService
+                serviceImplementation="io.kadena.pact.ide.settings.AppSettingsState"
+        />
+
+        <applicationConfigurable
+                parentId="language"
+                instance="io.kadena.pact.ide.settings.AppSettingsConfigurable"
+                id="io.kadena.pact.ide.settings.AppSettingsConfigurable"
+                displayName="Pact"/>
+
+        <!-- Language Server (LSP) -->
         <platform.lsp.serverSupportProvider
                 implementation="io.kadena.pact.lsp.PactLspServerSupportProvider"
         />
-
-<!--        <lang.syntaxHighlighterFactory-->
-<!--                language="Pact"-->
-<!--                implementationClass="io.kadena.pact.language.PactSyntaxHighlighterFactory"-->
-<!--        />-->
-
-<!--        <colorSettingsPage-->
-<!--                implementation="io.kadena.pact.language.PactColorSettingsPage"/>-->
     </extensions>
 </idea-plugin>
