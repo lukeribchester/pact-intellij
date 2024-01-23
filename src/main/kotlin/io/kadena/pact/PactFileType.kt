@@ -15,7 +15,7 @@ class PactFileType : LanguageFileType(PactLanguage.INSTANCE) {
     }
 
     override fun getDescription(): String {
-        return "Pact smart contract language file"
+        return "Pact smart contract file"
     }
 
     override fun getDefaultExtension(): String {
