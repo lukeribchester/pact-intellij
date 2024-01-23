@@ -2,10 +2,9 @@ package io.kadena.pact
 
 import com.intellij.lang.Language
 
-class PactLanguage : Language("Pact") {
 
-    companion object {
-        @JvmStatic
-        val INSTANCE = PactLanguage()
-    }
+object PactLanguage : Language("Pact") {
+    private fun readResolve(): Any = PactLanguage
+
+    val INSTANCE: PactLanguage = PactLanguage
 }
