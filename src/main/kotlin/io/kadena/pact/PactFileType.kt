@@ -3,11 +3,11 @@ package io.kadena.pact
 import com.intellij.openapi.fileTypes.LanguageFileType
 import javax.swing.Icon
 
-public class PactFileType : LanguageFileType(PactLanguage.INSTANCE) {
+class PactFileType : LanguageFileType(PactLanguage.INSTANCE) {
 
     companion object {
         @JvmStatic
-        public val INSTANCE = PactFileType()
+        val INSTANCE = PactFileType()
     }
 
     override fun getName(): String {
