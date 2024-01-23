@@ -1,0 +1,14 @@
+{
+  parserClass="io.kadena.pact.language.parser.PactParser"
+
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="Pact"
+  psiImplClassSuffix="Impl"
+  psiPackage="io.kadena.pact.language.psi"
+  psiImplPackage="io.kadena.pact.language.psi.impl"
+
+  elementTypeHolderClass="io.kadena.pact.language.psi.PactTypes"
+  elementTypeClass="io.kadena.pact.language.psi.PactElementType"
+  tokenTypeClass="io.kadena.pact.language.psi.PactTokenType"
+}
