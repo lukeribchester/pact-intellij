@@ -1,6 +1,7 @@
-package io.kadena.pact
+package io.kadena.pact.language
 
 import com.intellij.openapi.fileTypes.LanguageFileType
+import io.kadena.pact.PactIcons
 import org.jetbrains.annotations.NotNull
 import org.jetbrains.annotations.Nullable
 import javax.swing.Icon

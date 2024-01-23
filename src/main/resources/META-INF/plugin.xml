@@ -11,7 +11,7 @@
         <!-- File Type -->
         <fileType
                 name="Pact File"
-                implementationClass="io.kadena.pact.PactFileType"
+                implementationClass="io.kadena.pact.language.PactFileType"
                 fieldName="INSTANCE"
                 language="Pact"
                 extensions="pact"
