@@ -14,13 +14,11 @@
                 implementationClass="io.kadena.pact.language.PactFileType"
                 fieldName="INSTANCE"
                 language="Pact"
-                extensions="pact"
-        />
+                extensions="pact"/>
 
         <!-- Application Settings -->
         <applicationService
-                serviceImplementation="io.kadena.pact.ide.settings.AppSettingsState"
-        />
+                serviceImplementation="io.kadena.pact.ide.settings.AppSettingsState"/>
 
         <applicationConfigurable
                 parentId="language"
@@ -28,9 +26,13 @@
                 id="io.kadena.pact.ide.settings.AppSettingsConfigurable"
                 displayName="Pact"/>
 
+        <!-- Parser -->
+        <lang.parserDefinition
+                language="Pact"
+                implementationClass="io.kadena.pact.language.PactParserDefinition"/>
+
         <!-- Language Server (LSP) -->
         <platform.lsp.serverSupportProvider
-                implementation="io.kadena.pact.lsp.PactLspServerSupportProvider"
-        />
+                implementation="io.kadena.pact.lsp.PactLspServerSupportProvider"/>
     </extensions>
 </idea-plugin>
