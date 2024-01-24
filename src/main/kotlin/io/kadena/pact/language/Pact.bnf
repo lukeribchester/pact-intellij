@@ -13,6 +13,62 @@
   tokenTypeClass="io.kadena.pact.language.psi.PactTokenType"
 
   tokens = [
+    String="regexp:(\"([^\"\\]|\\\"|\\)*\")"
+
+    // Lexer.x
+    Comment="regexp:(;.*\n)"
+
+    Let="let*"
+    Let="let"
+    If="if"
+    Defun="defun"
+    DefCap="defcap"
+    DefConst="defconst"
+    DefSchema="defschema"
+    DefTable="deftable"
+    DefPact="defpact"
+    Interface="interface"
+    Module="module"
+    Bless="bless"
+    Implements="implements"
+    Import="use"
+    True="true"
+    False="false"
+    Lambda="lambda"
+
+    And="and"
+    Or="or"
+    Load="load"
+    DocAnn="@doc"
+    ModelAnn="@model"
+    EventAnn="@event"
+    ManagedAnn="@managed"
+    StepWithRollback="step-with-rollback"
+    Enforce="enforce"
+    EnforceOne="enforce-one"
+    Step="step"
+    WithCapability="with-capability"
+    CreateUserGuard="create-user-guard"
+    Try="try"
+    BlockIntro="progn"
+    Suspend="suspend"
+
+    Number="regexp:([0-9])"
+
+    SingleTick="`"
+    OpenParens="("
+    CloseParens=")"
+    OpenBrace="{"
+    CloseBrace="}"
+    OpenBracket="["
+    CloseBracket="]"
+    Comma=","
+    Dot="."
+    BindAssign=":="
+    DynAcc="::"
+    Colon=":"
+
+    // Parser.y
     Let="let"
     If="if"
     Lambda="lam"
@@ -56,6 +112,12 @@
     Or="or"
     Enforce="enforce"
     EnforceOne="enforceOne"
+
+    Identifier="regexp:[a-zA-Z\%\#\+\-\_\&\$\@\<\>\=\^\?\*\!\|\/\~][a-zA-Z0-9\%\#\+\-\_\&\$\@\<\>\=\^\?\*\!\|\/\~]*"
+
+    // Reference
+    CRLF="regexp:\R"
+    WhiteSpace="regexp:[ \n\t\f]"
   ]
 }
 
