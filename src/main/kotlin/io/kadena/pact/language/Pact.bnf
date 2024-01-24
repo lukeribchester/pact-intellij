@@ -55,7 +55,7 @@
 
     Number="regexp:([0-9])"
 
-    SingleTick="`"
+    SingleTick="'" // Investigate
     OpenParens="("
     CloseParens=")"
     OpenBrace="{"
@@ -112,6 +112,44 @@
     Or="or"
     Enforce="enforce"
     EnforceOne="enforceOne"
+
+// Numerical operators
+//  ADD="+"
+//  SUB="-"
+//  MULT="*"
+//  DIV="/"
+//  CARET="^"
+//  LOG="log"
+//  SQRT="sqrt"
+//  LN="ln"
+//  EXP="exp"
+//  ABS="abs"
+//  ROUND="round"
+//  CEILING="ceiling"
+//  FLOOR="floor"
+//  MOD="mod"
+
+// Bitwise operators
+//  AMP="&"
+//  PIPE="|"
+//  XOR="xor"
+//  SHIFT="shift"
+//  TILDE="~"
+
+    // Logical operators
+//      GT=">"
+//      LT="<"
+//      GE=">="
+//      LE="<="
+//      EQ="="
+//      EXCL_EQ="!="
+//      AND="and"
+//      AND_APP="and?"
+//      OR="or"
+//      OR_APP="or?"
+//      NOT="not"
+//      NOT_APP="not?"
+//      WHEN="when"
 
     Identifier="regexp:[a-zA-Z\%\#\+\-\_\&\$\@\<\>\=\^\?\*\!\|\/\~][a-zA-Z0-9\%\#\+\-\_\&\$\@\<\>\=\^\?\*\!\|\/\~]*"
 
