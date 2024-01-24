@@ -1,8 +1,8 @@
-package org.intellij.sdk.language;
+package io.kadena.pact.language;
 
 import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
-import org.intellij.sdk.language.psi.PactTypes;
+import io.kadena.pact.language.psi.PactTypes;
 import com.intellij.psi.TokenType;
 
 %%
