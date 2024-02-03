@@ -19,7 +19,8 @@ CRLF=\R
 WHITE_SPACE=[\ \n\t\f]
 
 // Lexer.x
-STRING="regexp:(\"([^\"\\]|\\\"|\\)*\")"
+STR="regexp:(\"([^\"\\]|\\\"|\\)*\")"
+NUM="regexp:([0-9])"
 COMMENT="regexp:(;.*\n)"
 
 LET="let*" | "let"
@@ -56,9 +57,7 @@ TRY="try"
 BLOCK_INTRO="progn"
 SUSPEND="suspend"
 
-NUMBER="regexp:([0-9])"
-
-SINGLE_TICK="'" // Investigate
+TICK="'"
 OPEN_PARENS="("
 CLOSE_PARENS=")"
 OPEN_BRACE="{"
@@ -75,7 +74,7 @@ COLON=":"
 
 %%
 // Lexer.x
-<YYINITIAL> {STRING}                           { yybegin(YYINITIAL); return PactTypes.STRING; }
+<YYINITIAL> {STR}                           { yybegin(YYINITIAL); return PactTypes.STR; }
 <YYINITIAL> {COMMENT}                           { yybegin(YYINITIAL); return PactTypes.COMMENT; }
 
 <YYINITIAL> {LET}                           { yybegin(YYINITIAL); return PactTypes.LET; }
@@ -112,9 +111,9 @@ COLON=":"
 <YYINITIAL> {BLOCK_INTRO}                           { yybegin(YYINITIAL); return PactTypes.BLOCK_INTRO; }
 <YYINITIAL> {SUSPEND}                           { yybegin(YYINITIAL); return PactTypes.SUSPEND; }
 
-<YYINITIAL> {NUMBER}                           { yybegin(YYINITIAL); return PactTypes.NUMBER; }
+<YYINITIAL> {NUM}                           { yybegin(YYINITIAL); return PactTypes.NUM; }
 
-<YYINITIAL> {SINGLE_TICK}                           { yybegin(YYINITIAL); return PactTypes.SINGLE_TICK; }
+<YYINITIAL> {TICK}                           { yybegin(YYINITIAL); return PactTypes.TICK; }
 <YYINITIAL> {OPEN_PARENS}                           { yybegin(YYINITIAL); return PactTypes.OPEN_PARENS; }
 <YYINITIAL> {CLOSE_PARENS}                           { yybegin(YYINITIAL); return PactTypes.CLOSE_PARENS; }
 <YYINITIAL> {OPEN_BRACE}                           { yybegin(YYINITIAL); return PactTypes.OPEN_BRACE; }
