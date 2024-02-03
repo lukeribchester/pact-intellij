@@ -7,10 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface PactLamArgs extends PsiElement {
 
-  @Nullable
-  PactLamArgs getLamArgs();
-
-  @Nullable
-  PactType getType();
+  @NotNull
+  List<PactLamArg> getLamArgList();
 
 }

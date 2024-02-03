@@ -33,4 +33,10 @@ public class PactMArgImpl extends ASTWrapperPsiElement implements PactMArg {
     return findChildByClass(PactType.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getIdent() {
+    return findNotNullChildByType(IDENT);
+  }
+
 }

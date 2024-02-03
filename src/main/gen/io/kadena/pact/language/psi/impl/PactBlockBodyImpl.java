@@ -28,15 +28,9 @@ public class PactBlockBodyImpl extends ASTWrapperPsiElement implements PactBlock
   }
 
   @Override
-  @Nullable
-  public PactBlockBody getBlockBody() {
-    return findChildByClass(PactBlockBody.class);
-  }
-
-  @Override
   @NotNull
-  public PactExpr getExpr() {
-    return findNotNullChildByClass(PactExpr.class);
+  public List<PactExpr> getExprList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactExpr.class);
   }
 
 }

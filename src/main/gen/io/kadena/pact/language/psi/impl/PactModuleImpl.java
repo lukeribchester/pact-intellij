@@ -40,9 +40,15 @@ public class PactModuleImpl extends ASTWrapperPsiElement implements PactModule {
   }
 
   @Override
-  @NotNull
+  @Nullable
   public PactMDocOrModel getMDocOrModel() {
-    return findNotNullChildByClass(PactMDocOrModel.class);
+    return findChildByClass(PactMDocOrModel.class);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getIdent() {
+    return findNotNullChildByType(IDENT);
   }
 
 }

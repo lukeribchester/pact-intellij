@@ -10,7 +10,7 @@ public interface PactStep extends PsiElement {
   @NotNull
   List<PactExpr> getExprList();
 
-  @NotNull
+  @Nullable
   PactMModel getMModel();
 
 }

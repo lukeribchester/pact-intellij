@@ -11,6 +11,7 @@ public interface PactTypes {
   IElementType APP_BIND_LIST = new PactElementType("APP_BIND_LIST");
   IElementType APP_LIST = new PactElementType("APP_LIST");
   IElementType ATOM = new PactElementType("ATOM");
+  IElementType BINDER = new PactElementType("BINDER");
   IElementType BINDERS = new PactElementType("BINDERS");
   IElementType BINDING_FORM = new PactElementType("BINDING_FORM");
   IElementType BIND_PAIR = new PactElementType("BIND_PAIR");
@@ -53,6 +54,7 @@ public interface PactTypes {
   IElementType IMPORT_NAMES = new PactElementType("IMPORT_NAMES");
   IElementType IMPORT_OR_IF_DEF = new PactElementType("IMPORT_OR_IF_DEF");
   IElementType INTERFACE = new PactElementType("INTERFACE");
+  IElementType LAM_ARG = new PactElementType("LAM_ARG");
   IElementType LAM_ARGS = new PactElementType("LAM_ARGS");
   IElementType LAM_EXPR = new PactElementType("LAM_EXPR");
   IElementType LET_EXPR = new PactElementType("LET_EXPR");
@@ -83,6 +85,11 @@ public interface PactTypes {
   IElementType PROP_ATOM = new PactElementType("PROP_ATOM");
   IElementType PROP_EXPR = new PactElementType("PROP_EXPR");
   IElementType PROP_EXPR_LIST = new PactElementType("PROP_EXPR_LIST");
+  IElementType REPL_PROGRAM_LIST = new PactElementType("REPL_PROGRAM_LIST");
+  IElementType REPL_SPECIAL = new PactElementType("REPL_SPECIAL");
+  IElementType REPL_TOP_LEVEL = new PactElementType("REPL_TOP_LEVEL");
+  IElementType RTL = new PactElementType("RTL");
+  IElementType SCHEMA_ARG = new PactElementType("SCHEMA_ARG");
   IElementType SCHEMA_ARG_LIST = new PactElementType("SCHEMA_ARG_LIST");
   IElementType STEP = new PactElementType("STEP");
   IElementType STEPS = new PactElementType("STEPS");
@@ -96,107 +103,55 @@ public interface PactTypes {
   IElementType USE = new PactElementType("USE");
   IElementType VAR = new PactElementType("VAR");
 
-  IElementType AND = new PactTokenType("and");
+  IElementType AND_KEYWORD = new PactTokenType("and");
   IElementType BIND_ASSIGN = new PactTokenType(":=");
-  IElementType BLESS = new PactTokenType("bless");
-  IElementType BLOCK_INTRO = new PactTokenType("progn");
+  IElementType BLESS_KEYWORD = new PactTokenType("bless");
+  IElementType BLOCK_INTRO_KEYWORD = new PactTokenType("progn");
+  IElementType BOOLEAN = new PactTokenType("BOOLEAN");
   IElementType CLOSE_BRACE = new PactTokenType("}");
   IElementType CLOSE_BRACKET = new PactTokenType("]");
   IElementType CLOSE_PARENS = new PactTokenType(")");
   IElementType COLON = new PactTokenType(":");
   IElementType COMMA = new PactTokenType(",");
   IElementType COMMENT = new PactTokenType("COMMENT");
-  IElementType CREATE_USER_GUARD = new PactTokenType("create-user-guard");
-  IElementType DEFUN = new PactTokenType("defun");
-  IElementType DEF_CAP = new PactTokenType("defcap");
-  IElementType DEF_CONST = new PactTokenType("defconst");
-  IElementType DEF_PACT = new PactTokenType("defpact");
-  IElementType DEF_SCHEMA = new PactTokenType("defschema");
-  IElementType DEF_TABLE = new PactTokenType("deftable");
-  IElementType DOC_ANN = new PactTokenType("@doc");
+  IElementType CREATE_USER_GUARD_KEYWORD = new PactTokenType("create-user-guard");
+  IElementType DEFUN_KEYWORD = new PactTokenType("defun");
+  IElementType DEF_CAP_KEYWORD = new PactTokenType("defcap");
+  IElementType DEF_CONST_KEYWORD = new PactTokenType("defconst");
+  IElementType DEF_PACT_KEYWORD = new PactTokenType("defpact");
+  IElementType DEF_SCHEMA_KEYWORD = new PactTokenType("defschema");
+  IElementType DEF_TABLE_KEYWORD = new PactTokenType("deftable");
+  IElementType DOC_ANN_KEYWORD = new PactTokenType("@doc");
   IElementType DOT = new PactTokenType(".");
   IElementType DYN_ACC = new PactTokenType("::");
-  IElementType ENFORCE = new PactTokenType("enforce");
-  IElementType ENFORCE_ONE = new PactTokenType("enforce-one");
-  IElementType EVENT_ANN = new PactTokenType("@event");
-  IElementType FALSE = new PactTokenType("false");
+  IElementType ENFORCE_KEYWORD = new PactTokenType("enforce");
+  IElementType ENFORCE_ONE_KEYWORD = new PactTokenType("enforce-one");
+  IElementType EVENT_ANN_KEYWORD = new PactTokenType("@event");
+  IElementType FALSE_KEYWORD = new PactTokenType("false");
   IElementType IDENT = new PactTokenType("IDENT");
-  IElementType IF = new PactTokenType("if");
-  IElementType IMPLEMENTS = new PactTokenType("implements");
-  IElementType IMPORT = new PactTokenType("use");
-  IElementType INTERFACE = new PactTokenType("interface");
-  IElementType LAMBDA = new PactTokenType("lambda");
-  IElementType LET = new PactTokenType("LET");
-  IElementType LOAD = new PactTokenType("load");
-  IElementType MANAGED_ANN = new PactTokenType("@managed");
-  IElementType MODEL_ANN = new PactTokenType("@model");
-  IElementType MODULE = new PactTokenType("module");
+  IElementType IF_KEYWORD = new PactTokenType("if");
+  IElementType IMPLEMENTS_KEYWORD = new PactTokenType("implements");
+  IElementType IMPORT_KEYWORD = new PactTokenType("use");
+  IElementType INTERFACE_KEYWORD = new PactTokenType("interface");
+  IElementType LAMBDA_KEYWORD = new PactTokenType("lambda");
+  IElementType LET_KEYWORD = new PactTokenType("LET_KEYWORD");
+  IElementType LOAD_KEYWORD = new PactTokenType("load");
+  IElementType MANAGED_ANN_KEYWORD = new PactTokenType("@managed");
+  IElementType MODEL_ANN_KEYWORD = new PactTokenType("@model");
+  IElementType MODULE_KEYWORD = new PactTokenType("module");
   IElementType NUM = new PactTokenType("NUM");
   IElementType OPEN_BRACE = new PactTokenType("{");
   IElementType OPEN_BRACKET = new PactTokenType("[");
   IElementType OPEN_PARENS = new PactTokenType("(");
-  IElementType OR = new PactTokenType("or");
-  IElementType STEP = new PactTokenType("step");
-  IElementType STEP_WITH_ROLLBACK = new PactTokenType("step-with-rollback");
+  IElementType OR_KEYWORD = new PactTokenType("or");
+  IElementType STEP_KEYWORD = new PactTokenType("step");
+  IElementType STEP_WITH_ROLLBACK_KEYWORD = new PactTokenType("step-with-rollback");
   IElementType STR = new PactTokenType("STR");
-  IElementType SUSPEND = new PactTokenType("suspend");
+  IElementType SUSPEND_KEYWORD = new PactTokenType("suspend");
   IElementType TICK = new PactTokenType("'");
-  IElementType TRUE = new PactTokenType("true");
-  IElementType TRY = new PactTokenType("try");
-  IElementType WITH_CAPABILITY = new PactTokenType("with-capability");
-  IElementType _APPBINDLIST_ = new PactTokenType("<AppBindList>");
-  IElementType _APPLIST_ = new PactTokenType("<AppList>");
-  IElementType _BINDERS_ = new PactTokenType("<Binders>");
-  IElementType _BINDINGFORM_ = new PactTokenType("<BindingForm>");
-  IElementType _BINDPAIRS_ = new PactTokenType("<BindPairs>");
-  IElementType _BINDPAIR_ = new PactTokenType("<BindPair>");
-  IElementType _BLOCKBODY_ = new PactTokenType("<BlockBody>");
-  IElementType _DEFCAP_ = new PactTokenType("<Defcap>");
-  IElementType _DEFCONST_ = new PactTokenType("<DefConst>");
-  IElementType _DEFPACT_ = new PactTokenType("<DefPact>");
-  IElementType _DEFSCHEMA_ = new PactTokenType("<Defschema>");
-  IElementType _DEFTABLE_ = new PactTokenType("<Deftable>");
-  IElementType _DEFUN_ = new PactTokenType("<Defun>");
-  IElementType _DEF_ = new PactTokenType("<Def>");
-  IElementType _DOCANN_ = new PactTokenType("<DocAnn>");
-  IElementType _EXPRCOMMASEP_ = new PactTokenType("<ExprCommaSep>");
-  IElementType _EXPR_ = new PactTokenType("<Expr>");
-  IElementType _EXTORDEFS_ = new PactTokenType("<ExtOrDefs>");
-  IElementType _EXT_ = new PactTokenType("<Ext>");
-  IElementType _FIELDPAIRS_ = new PactTokenType("<FieldPairs>");
-  IElementType _FIELDPAIR_ = new PactTokenType("<FieldPair>");
-  IElementType _IDENT_ = new PactTokenType("<IDENT>");
-  IElementType _IFDEFCAP_ = new PactTokenType("<IfDefCap>");
-  IElementType _IFDEFPACT_ = new PactTokenType("<IfDefPact>");
-  IElementType _IFDEFUN_ = new PactTokenType("<IfDefun>");
-  IElementType _IFDEF_ = new PactTokenType("<IfDef>");
-  IElementType _IMPORTNAMES_ = new PactTokenType("<ImportNames>");
-  IElementType _IMPORTORIFDEF_ = new PactTokenType("<ImportOrIfDef>");
-  IElementType _LAMARGS_ = new PactTokenType("<LamArgs>");
-  IElementType _MARGS_ = new PactTokenType("<MArgs>");
-  IElementType _MARG_ = new PactTokenType("<MArg>");
-  IElementType _MCOMMAEXPR_ = new PactTokenType("<MCommaExpr>");
-  IElementType _MMODEL_ = new PactTokenType("<MModel>");
-  IElementType _MODELANN_ = new PactTokenType("<ModelAnn>");
-  IElementType _MODQUAL_ = new PactTokenType("<ModQual>");
-  IElementType _MODULENAMES_ = new PactTokenType("<ModuleNames>");
-  IElementType _MTYPEANN_ = new PactTokenType("<MTypeAnn>");
-  IElementType _NUM_ = new PactTokenType("<NUM>");
-  IElementType _PARSEDTYNAME_ = new PactTokenType("<ParsedTyName>");
-  IElementType _PROGRAMLIST_ = new PactTokenType("<ProgramList>");
-  IElementType _PROPEXPRLIST_ = new PactTokenType("<PropExprList>");
-  IElementType _PROPEXPR_ = new PactTokenType("<PropExpr>");
-  IElementType _SCHEMAARGLIST_ = new PactTokenType("<SchemaArgList>");
-  IElementType _SEXPR_ = new PactTokenType("<SExpr>");
-  IElementType _STEPS_ = new PactTokenType("<Steps>");
-  IElementType _STEP_ = new PactTokenType("<Step>");
-  IElementType _STRINGRAW_ = new PactTokenType("<StringRaw>");
-  IElementType _STR_ = new PactTokenType("<STR>");
-  IElementType _TICK_ = new PactTokenType("<TICK>");
-  IElementType _TOPLEVEL_ = new PactTokenType("<TopLevel>");
-  IElementType _TYPE_ = new PactTokenType("<Type>");
-  IElementType _USE_ = new PactTokenType("<Use>");
-  IElementType Ε = new PactTokenType("ε");
+  IElementType TRUE_KEYWORD = new PactTokenType("true");
+  IElementType TRY_KEYWORD = new PactTokenType("try");
+  IElementType WITH_CAPABILITY_KEYWORD = new PactTokenType("with-capability");
 
   class Factory {
     public static PsiElement createElement(ASTNode node) {
@@ -209,6 +164,9 @@ public interface PactTypes {
       }
       else if (type == ATOM) {
         return new PactAtomImpl(node);
+      }
+      else if (type == BINDER) {
+        return new PactBinderImpl(node);
       }
       else if (type == BINDERS) {
         return new PactBindersImpl(node);
@@ -336,6 +294,9 @@ public interface PactTypes {
       else if (type == INTERFACE) {
         return new PactInterfaceImpl(node);
       }
+      else if (type == LAM_ARG) {
+        return new PactLamArgImpl(node);
+      }
       else if (type == LAM_ARGS) {
         return new PactLamArgsImpl(node);
       }
@@ -425,6 +386,21 @@ public interface PactTypes {
       }
       else if (type == PROP_EXPR_LIST) {
         return new PactPropExprListImpl(node);
+      }
+      else if (type == REPL_PROGRAM_LIST) {
+        return new PactReplProgramListImpl(node);
+      }
+      else if (type == REPL_SPECIAL) {
+        return new PactReplSpecialImpl(node);
+      }
+      else if (type == REPL_TOP_LEVEL) {
+        return new PactReplTopLevelImpl(node);
+      }
+      else if (type == RTL) {
+        return new PactRtlImpl(node);
+      }
+      else if (type == SCHEMA_ARG) {
+        return new PactSchemaArgImpl(node);
       }
       else if (type == SCHEMA_ARG_LIST) {
         return new PactSchemaArgListImpl(node);

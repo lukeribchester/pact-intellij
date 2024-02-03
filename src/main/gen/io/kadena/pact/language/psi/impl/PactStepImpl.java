@@ -34,9 +34,9 @@ public class PactStepImpl extends ASTWrapperPsiElement implements PactStep {
   }
 
   @Override
-  @NotNull
+  @Nullable
   public PactMModel getMModel() {
-    return findNotNullChildByClass(PactMModel.class);
+    return findChildByClass(PactMModel.class);
   }
 
 }

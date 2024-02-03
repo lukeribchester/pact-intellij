@@ -10,4 +10,7 @@ public interface PactFieldPair extends PsiElement {
   @NotNull
   PactExpr getExpr();
 
+  @Nullable
+  PsiElement getStr();
+
 }

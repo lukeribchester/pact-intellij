@@ -7,10 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface PactPropExprList extends PsiElement {
 
-  @Nullable
-  PactPropExpr getPropExpr();
-
-  @Nullable
-  PactPropExprList getPropExprList();
+  @NotNull
+  List<PactPropExpr> getPropExprList();
 
 }

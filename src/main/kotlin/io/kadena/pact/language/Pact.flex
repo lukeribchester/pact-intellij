@@ -19,43 +19,43 @@ CRLF=\R
 WHITE_SPACE=[\ \n\t\f]
 
 // Lexer.x
-STR="regexp:(\"([^\"\\]|\\\"|\\)*\")"
-NUM="regexp:([0-9])"
-COMMENT="regexp:(;.*\n)"
+STR=(\"([^\"\\]|\\\"|\\)*\")
+NUM=([0-9])
+COMMENT=(;.*\n)
 
-LET="let*" | "let"
-IF="if"
-DEFUN="defun"
-DEF_CAP="defcap"
-DEF_CONST="defconst"
-DEF_SCHEMA="defschema"
-DEF_TABLE="deftable"
-DEF_PACT="defpact"
-INTERFACE="interface"
-MODULE="module"
-BLESS="bless"
-IMPLEMENTS="implements"
-IMPORT="use"
-TRUE="true"
-FALSE="false"
-LAMBDA="lambda"
+LET_KEYWORD=([let*]|[let])
+IF_KEYWORD="if"
+DEFUN_KEYWORD="defun"
+DEF_CAP_KEYWORD="defcap"
+DEF_CONST_KEYWORD="defconst"
+DEF_SCHEMA_KEYWORD="defschema"
+DEF_TABLE_KEYWORD="deftable"
+DEF_PACT_KEYWORD="defpact"
+INTERFACE_KEYWORD="interface"
+MODULE_KEYWORD="module"
+BLESS_KEYWORD="bless"
+IMPLEMENTS_KEYWORD="implements"
+IMPORT_KEYWORD="use"
+TRUE_KEYWORD="true"
+FALSE_KEYWORD="false"
+LAMBDA_KEYWORD="lambda"
 
-AND="and"
-OR="or"
-LOAD="load"
-DOC_ANN="@doc"
-MODEL_ANN="@model"
-EVENT_ANN="@event"
-MANAGED_ANN="@managed"
-STEP_WITH_ROLLBACK="step-with-rollback"
-ENFORCE="enforce"
-ENFORCE_ONE="enforce-one"
-STEP="step"
-WITH_CAPABILITY="with-capability"
-CREATE_USER_GUARD="create-user-guard"
-TRY="try"
-BLOCK_INTRO="progn"
-SUSPEND="suspend"
+AND_KEYWORD="and"
+OR_KEYWORD="or"
+LOAD_KEYWORD="load"
+DOC_ANN_KEYWORD="@doc"
+MODEL_ANN_KEYWORD="@model"
+EVENT_ANN_KEYWORD="@event"
+MANAGED_ANN_KEYWORD="@managed"
+STEP_WITH_ROLLBACK_KEYWORD="step-with-rollback"
+ENFORCE_KEYWORD="enforce"
+ENFORCE_ONE_KEYWORD="enforce-one"
+STEP_KEYWORD="step"
+WITH_CAPABILITY_KEYWORD="with-capability"
+CREATE_USER_GUARD_KEYWORD="create-user-guard"
+TRY_KEYWORD="try"
+BLOCK_INTRO_KEYWORD="progn"
+SUSPEND_KEYWORD="suspend"
 
 TICK="'"
 OPEN_PARENS="("
@@ -70,6 +70,8 @@ BIND_ASSIGN=":="
 DYN_ACC="::"
 COLON=":"
 
+IDENT=[a-zA-Z%#+\-_&$@<>=\^?*!|/~][a-zA-Z0-9%#+\-_&$@<>=\^?*!|/~]*
+
 %state WAITING_VALUE
 
 %%
@@ -77,39 +79,39 @@ COLON=":"
 <YYINITIAL> {STR}                           { yybegin(YYINITIAL); return PactTypes.STR; }
 <YYINITIAL> {COMMENT}                           { yybegin(YYINITIAL); return PactTypes.COMMENT; }
 
-<YYINITIAL> {LET}                           { yybegin(YYINITIAL); return PactTypes.LET; }
-<YYINITIAL> {IF}                           { yybegin(YYINITIAL); return PactTypes.IF; }
-<YYINITIAL> {DEFUN}                           { yybegin(YYINITIAL); return PactTypes.DEFUN; }
-<YYINITIAL> {DEF_CAP}                           { yybegin(YYINITIAL); return PactTypes.DEF_CAP; }
-<YYINITIAL> {DEF_CONST}                           { yybegin(YYINITIAL); return PactTypes.DEF_CONST; }
-<YYINITIAL> {DEF_SCHEMA}                           { yybegin(YYINITIAL); return PactTypes.DEF_SCHEMA; }
-<YYINITIAL> {DEF_TABLE}                           { yybegin(YYINITIAL); return PactTypes.DEF_TABLE; }
-<YYINITIAL> {DEF_PACT}                           { yybegin(YYINITIAL); return PactTypes.DEF_PACT; }
-<YYINITIAL> {INTERFACE}                           { yybegin(YYINITIAL); return PactTypes.INTERFACE; }
-<YYINITIAL> {MODULE}                           { yybegin(YYINITIAL); return PactTypes.MODULE; }
-<YYINITIAL> {BLESS}                           { yybegin(YYINITIAL); return PactTypes.BLESS; }
-<YYINITIAL> {IMPLEMENTS}                           { yybegin(YYINITIAL); return PactTypes.IMPLEMENTS; }
-<YYINITIAL> {IMPORT}                           { yybegin(YYINITIAL); return PactTypes.IMPORT; }
-<YYINITIAL> {TRUE}                           { yybegin(YYINITIAL); return PactTypes.TRUE; }
-<YYINITIAL> {FALSE}                           { yybegin(YYINITIAL); return PactTypes.FALSE; }
-<YYINITIAL> {LAMBDA}                           { yybegin(YYINITIAL); return PactTypes.LAMBDA; }
+<YYINITIAL> {LET_KEYWORD}                           { yybegin(YYINITIAL); return PactTypes.LET_KEYWORD; }
+<YYINITIAL> {IF_KEYWORD}                           { yybegin(YYINITIAL); return PactTypes.IF_KEYWORD; }
+<YYINITIAL> {DEFUN_KEYWORD}                           { yybegin(YYINITIAL); return PactTypes.DEFUN_KEYWORD; }
+<YYINITIAL> {DEF_CAP_KEYWORD}                           { yybegin(YYINITIAL); return PactTypes.DEF_CAP_KEYWORD; }
+<YYINITIAL> {DEF_CONST_KEYWORD}                           { yybegin(YYINITIAL); return PactTypes.DEF_CONST_KEYWORD; }
+<YYINITIAL> {DEF_SCHEMA_KEYWORD}                           { yybegin(YYINITIAL); return PactTypes.DEF_SCHEMA_KEYWORD; }
+<YYINITIAL> {DEF_TABLE_KEYWORD}                           { yybegin(YYINITIAL); return PactTypes.DEF_TABLE_KEYWORD; }
+<YYINITIAL> {DEF_PACT_KEYWORD}                           { yybegin(YYINITIAL); return PactTypes.DEF_PACT_KEYWORD; }
+<YYINITIAL> {INTERFACE_KEYWORD}                           { yybegin(YYINITIAL); return PactTypes.INTERFACE_KEYWORD; }
+<YYINITIAL> {MODULE_KEYWORD}                           { yybegin(YYINITIAL); return PactTypes.MODULE_KEYWORD; }
+<YYINITIAL> {BLESS_KEYWORD}                           { yybegin(YYINITIAL); return PactTypes.BLESS_KEYWORD; }
+<YYINITIAL> {IMPLEMENTS_KEYWORD}                           { yybegin(YYINITIAL); return PactTypes.IMPLEMENTS_KEYWORD; }
+<YYINITIAL> {IMPORT_KEYWORD}                           { yybegin(YYINITIAL); return PactTypes.IMPORT_KEYWORD; }
+<YYINITIAL> {TRUE_KEYWORD}                           { yybegin(YYINITIAL); return PactTypes.TRUE_KEYWORD; }
+<YYINITIAL> {FALSE_KEYWORD}                           { yybegin(YYINITIAL); return PactTypes.FALSE_KEYWORD; }
+<YYINITIAL> {LAMBDA_KEYWORD}                           { yybegin(YYINITIAL); return PactTypes.LAMBDA_KEYWORD; }
 
-<YYINITIAL> {AND}                           { yybegin(YYINITIAL); return PactTypes.AND; }
-<YYINITIAL> {OR}                           { yybegin(YYINITIAL); return PactTypes.OR; }
-<YYINITIAL> {LOAD}                           { yybegin(YYINITIAL); return PactTypes.LOAD; }
-<YYINITIAL> {DOC_ANN}                           { yybegin(YYINITIAL); return PactTypes.DOC_ANN; }
-<YYINITIAL> {MODEL_ANN}                           { yybegin(YYINITIAL); return PactTypes.MODEL_ANN; }
-<YYINITIAL> {EVENT_ANN}                           { yybegin(YYINITIAL); return PactTypes.EVENT_ANN; }
-<YYINITIAL> {MANAGED_ANN}                           { yybegin(YYINITIAL); return PactTypes.MANAGED_ANN; }
-<YYINITIAL> {STEP_WITH_ROLLBACK}                           { yybegin(YYINITIAL); return PactTypes.STEP_WITH_ROLLBACK; }
-<YYINITIAL> {ENFORCE}                           { yybegin(YYINITIAL); return PactTypes.ENFORCE; }
-<YYINITIAL> {ENFORCE_ONE}                           { yybegin(YYINITIAL); return PactTypes.ENFORCE_ONE; }
-<YYINITIAL> {STEP}                           { yybegin(YYINITIAL); return PactTypes.STEP; }
-<YYINITIAL> {WITH_CAPABILITY}                           { yybegin(YYINITIAL); return PactTypes.WITH_CAPABILITY; }
-<YYINITIAL> {CREATE_USER_GUARD}                           { yybegin(YYINITIAL); return PactTypes.CREATE_USER_GUARD; }
-<YYINITIAL> {TRY}                           { yybegin(YYINITIAL); return PactTypes.TRY; }
-<YYINITIAL> {BLOCK_INTRO}                           { yybegin(YYINITIAL); return PactTypes.BLOCK_INTRO; }
-<YYINITIAL> {SUSPEND}                           { yybegin(YYINITIAL); return PactTypes.SUSPEND; }
+<YYINITIAL> {AND_KEYWORD}                           { yybegin(YYINITIAL); return PactTypes.AND_KEYWORD; }
+<YYINITIAL> {OR_KEYWORD}                           { yybegin(YYINITIAL); return PactTypes.OR_KEYWORD; }
+<YYINITIAL> {LOAD_KEYWORD}                           { yybegin(YYINITIAL); return PactTypes.LOAD_KEYWORD; }
+<YYINITIAL> {DOC_ANN_KEYWORD}                           { yybegin(YYINITIAL); return PactTypes.DOC_ANN_KEYWORD; }
+<YYINITIAL> {MODEL_ANN_KEYWORD}                           { yybegin(YYINITIAL); return PactTypes.MODEL_ANN_KEYWORD; }
+<YYINITIAL> {EVENT_ANN_KEYWORD}                           { yybegin(YYINITIAL); return PactTypes.EVENT_ANN_KEYWORD; }
+<YYINITIAL> {MANAGED_ANN_KEYWORD}                           { yybegin(YYINITIAL); return PactTypes.MANAGED_ANN_KEYWORD; }
+<YYINITIAL> {STEP_WITH_ROLLBACK_KEYWORD}                           { yybegin(YYINITIAL); return PactTypes.STEP_WITH_ROLLBACK_KEYWORD; }
+<YYINITIAL> {ENFORCE_KEYWORD}                           { yybegin(YYINITIAL); return PactTypes.ENFORCE_KEYWORD; }
+<YYINITIAL> {ENFORCE_ONE_KEYWORD}                           { yybegin(YYINITIAL); return PactTypes.ENFORCE_ONE_KEYWORD; }
+<YYINITIAL> {STEP_KEYWORD}                           { yybegin(YYINITIAL); return PactTypes.STEP_KEYWORD; }
+<YYINITIAL> {WITH_CAPABILITY_KEYWORD}                           { yybegin(YYINITIAL); return PactTypes.WITH_CAPABILITY_KEYWORD; }
+<YYINITIAL> {CREATE_USER_GUARD_KEYWORD}                           { yybegin(YYINITIAL); return PactTypes.CREATE_USER_GUARD_KEYWORD; }
+<YYINITIAL> {TRY_KEYWORD}                           { yybegin(YYINITIAL); return PactTypes.TRY_KEYWORD; }
+<YYINITIAL> {BLOCK_INTRO_KEYWORD}                           { yybegin(YYINITIAL); return PactTypes.BLOCK_INTRO_KEYWORD; }
+<YYINITIAL> {SUSPEND_KEYWORD}                           { yybegin(YYINITIAL); return PactTypes.SUSPEND_KEYWORD; }
 
 <YYINITIAL> {NUM}                           { yybegin(YYINITIAL); return PactTypes.NUM; }
 
@@ -125,6 +127,8 @@ COLON=":"
 <YYINITIAL> {BIND_ASSIGN}                           { yybegin(YYINITIAL); return PactTypes.BIND_ASSIGN; }
 <YYINITIAL> {DYN_ACC}                           { yybegin(YYINITIAL); return PactTypes.DYN_ACC; }
 <YYINITIAL> {COLON}                           { yybegin(YYINITIAL); return PactTypes.COLON; }
+
+<YYINITIAL> {IDENT}                           { yybegin(YYINITIAL); return PactTypes.IDENT; }
 
 // Reference
 <WAITING_VALUE> {CRLF}({CRLF}|{WHITE_SPACE})+               { yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }

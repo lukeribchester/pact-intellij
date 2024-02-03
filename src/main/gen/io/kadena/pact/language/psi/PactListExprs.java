@@ -7,10 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface PactListExprs extends PsiElement {
 
-  @Nullable
+  @NotNull
   PactExpr getExpr();
 
-  @Nullable
-  PactMCommaExpr getMCommaExpr();
+  @NotNull
+  List<PactMCommaExpr> getMCommaExprList();
 
 }

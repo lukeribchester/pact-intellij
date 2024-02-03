@@ -10,4 +10,7 @@ public interface PactGovernance extends PsiElement {
   @Nullable
   PactStringRaw getStringRaw();
 
+  @Nullable
+  PsiElement getIdent();
+
 }

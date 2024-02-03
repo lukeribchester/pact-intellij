@@ -8,9 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface PactBindPairs extends PsiElement {
 
   @NotNull
-  PactBindPair getBindPair();
-
-  @Nullable
-  PactBindPairs getBindPairs();
+  List<PactBindPair> getBindPairList();
 
 }

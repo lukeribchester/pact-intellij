@@ -7,13 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface PactExtOrDefs extends PsiElement {
 
-  @Nullable
-  PactDef getDef();
+  @NotNull
+  List<PactDef> getDefList();
 
-  @Nullable
-  PactExt getExt();
-
-  @Nullable
-  PactExtOrDefs getExtOrDefs();
+  @NotNull
+  List<PactExt> getExtList();
 
 }

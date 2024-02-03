@@ -7,13 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface PactAppBindList extends PsiElement {
 
-  @Nullable
-  PactAppBindList getAppBindList();
+  @NotNull
+  List<PactBindingForm> getBindingFormList();
 
-  @Nullable
-  PactBindingForm getBindingForm();
-
-  @Nullable
-  PactExpr getExpr();
+  @NotNull
+  List<PactExpr> getExprList();
 
 }

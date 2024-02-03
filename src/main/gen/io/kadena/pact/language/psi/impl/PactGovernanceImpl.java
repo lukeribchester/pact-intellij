@@ -33,4 +33,10 @@ public class PactGovernanceImpl extends ASTWrapperPsiElement implements PactGove
     return findChildByClass(PactStringRaw.class);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getIdent() {
+    return findChildByType(IDENT);
+  }
+
 }

@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface PactMModel extends PsiElement {
 
-  @Nullable
+  @NotNull
   PactModelAnn getModelAnn();
 
 }

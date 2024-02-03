@@ -27,4 +27,10 @@ public class PactDocAnnImpl extends ASTWrapperPsiElement implements PactDocAnn {
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getStr() {
+    return findNotNullChildByType(STR);
+  }
+
 }

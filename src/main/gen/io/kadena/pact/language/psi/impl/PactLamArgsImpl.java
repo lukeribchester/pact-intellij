@@ -28,15 +28,9 @@ public class PactLamArgsImpl extends ASTWrapperPsiElement implements PactLamArgs
   }
 
   @Override
-  @Nullable
-  public PactLamArgs getLamArgs() {
-    return findChildByClass(PactLamArgs.class);
-  }
-
-  @Override
-  @Nullable
-  public PactType getType() {
-    return findChildByClass(PactType.class);
+  @NotNull
+  public List<PactLamArg> getLamArgList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactLamArg.class);
   }
 
 }

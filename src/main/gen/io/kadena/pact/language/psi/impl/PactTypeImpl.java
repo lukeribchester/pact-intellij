@@ -45,4 +45,10 @@ public class PactTypeImpl extends ASTWrapperPsiElement implements PactType {
     return findChildByClass(PactType.class);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getIdent() {
+    return findChildByType(IDENT);
+  }
+
 }

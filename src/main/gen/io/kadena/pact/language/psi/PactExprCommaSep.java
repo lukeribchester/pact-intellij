@@ -8,9 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface PactExprCommaSep extends PsiElement {
 
   @NotNull
-  PactExpr getExpr();
-
-  @Nullable
-  PactExprCommaSep getExprCommaSep();
+  List<PactExpr> getExprList();
 
 }

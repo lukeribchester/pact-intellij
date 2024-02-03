@@ -10,4 +10,7 @@ public interface PactParsedTyName extends PsiElement {
   @Nullable
   PactModQual getModQual();
 
+  @NotNull
+  PsiElement getIdent();
+
 }

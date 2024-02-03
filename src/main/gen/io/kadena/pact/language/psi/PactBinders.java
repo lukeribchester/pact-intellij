@@ -7,13 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface PactBinders extends PsiElement {
 
-  @Nullable
-  PactBinders getBinders();
-
   @NotNull
-  PactExpr getExpr();
-
-  @NotNull
-  PactMTypeAnn getMTypeAnn();
+  List<PactBinder> getBinderList();
 
 }

@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface PactMTypeAnn extends PsiElement {
 
-  @Nullable
+  @NotNull
   PactType getType();
 
 }

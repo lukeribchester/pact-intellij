@@ -28,9 +28,9 @@ public class PactMTypeAnnImpl extends ASTWrapperPsiElement implements PactMTypeA
   }
 
   @Override
-  @Nullable
+  @NotNull
   public PactType getType() {
-    return findChildByClass(PactType.class);
+    return findNotNullChildByClass(PactType.class);
   }
 
 }

@@ -13,10 +13,13 @@ public interface PactIfDefCap extends PsiElement {
   @NotNull
   PactMDCapMeta getMDCapMeta();
 
-  @NotNull
+  @Nullable
   PactMDocOrModel getMDocOrModel();
 
-  @NotNull
+  @Nullable
   PactMTypeAnn getMTypeAnn();
+
+  @NotNull
+  PsiElement getIdent();
 
 }

@@ -10,4 +10,7 @@ public interface PactManaged extends PsiElement {
   @Nullable
   PactParsedName getParsedName();
 
+  @Nullable
+  PsiElement getIdent();
+
 }

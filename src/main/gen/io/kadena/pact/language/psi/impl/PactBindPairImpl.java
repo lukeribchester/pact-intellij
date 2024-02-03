@@ -33,4 +33,10 @@ public class PactBindPairImpl extends ASTWrapperPsiElement implements PactBindPa
     return findNotNullChildByClass(PactMArg.class);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getStr() {
+    return findChildByType(STR);
+  }
+
 }

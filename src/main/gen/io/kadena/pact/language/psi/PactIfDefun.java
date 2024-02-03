@@ -10,10 +10,13 @@ public interface PactIfDefun extends PsiElement {
   @NotNull
   PactMArgs getMArgs();
 
-  @NotNull
+  @Nullable
   PactMDocOrModel getMDocOrModel();
 
-  @NotNull
+  @Nullable
   PactMTypeAnn getMTypeAnn();
+
+  @NotNull
+  PsiElement getIdent();
 
 }

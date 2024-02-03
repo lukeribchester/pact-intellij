@@ -7,10 +7,13 @@ import com.intellij.psi.PsiElement;
 
 public interface PactDefschema extends PsiElement {
 
-  @NotNull
+  @Nullable
   PactMDocOrModel getMDocOrModel();
 
   @NotNull
   PactSchemaArgList getSchemaArgList();
+
+  @NotNull
+  PsiElement getIdent();
 
 }

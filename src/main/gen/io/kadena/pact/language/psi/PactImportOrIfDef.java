@@ -7,13 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface PactImportOrIfDef extends PsiElement {
 
-  @Nullable
-  PactIfDef getIfDef();
+  @NotNull
+  List<PactIfDef> getIfDefList();
 
-  @Nullable
-  PactImportOrIfDef getImportOrIfDef();
-
-  @Nullable
-  PactUse getUse();
+  @NotNull
+  List<PactUse> getUseList();
 
 }

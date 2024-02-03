@@ -28,15 +28,9 @@ public class PactAppListImpl extends ASTWrapperPsiElement implements PactAppList
   }
 
   @Override
-  @Nullable
-  public PactAppList getAppList() {
-    return findChildByClass(PactAppList.class);
-  }
-
-  @Override
-  @Nullable
-  public PactExpr getExpr() {
-    return findChildByClass(PactExpr.class);
+  @NotNull
+  public List<PactExpr> getExprList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactExpr.class);
   }
 
 }

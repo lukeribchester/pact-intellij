@@ -29,14 +29,8 @@ public class PactBindPairsImpl extends ASTWrapperPsiElement implements PactBindP
 
   @Override
   @NotNull
-  public PactBindPair getBindPair() {
-    return findNotNullChildByClass(PactBindPair.class);
-  }
-
-  @Override
-  @Nullable
-  public PactBindPairs getBindPairs() {
-    return findChildByClass(PactBindPairs.class);
+  public List<PactBindPair> getBindPairList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactBindPair.class);
   }
 
 }

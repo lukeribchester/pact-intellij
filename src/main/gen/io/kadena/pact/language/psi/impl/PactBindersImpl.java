@@ -28,21 +28,9 @@ public class PactBindersImpl extends ASTWrapperPsiElement implements PactBinders
   }
 
   @Override
-  @Nullable
-  public PactBinders getBinders() {
-    return findChildByClass(PactBinders.class);
-  }
-
-  @Override
   @NotNull
-  public PactExpr getExpr() {
-    return findNotNullChildByClass(PactExpr.class);
-  }
-
-  @Override
-  @NotNull
-  public PactMTypeAnn getMTypeAnn() {
-    return findNotNullChildByClass(PactMTypeAnn.class);
+  public List<PactBinder> getBinderList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactBinder.class);
   }
 
 }

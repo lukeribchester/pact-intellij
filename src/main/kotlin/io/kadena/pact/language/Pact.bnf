@@ -15,42 +15,46 @@
   tokens = [
     // Lexer.x
     STR="regexp:(\"([^\"\\]|\\\"|\\)*\")"
-    NUM="regexp:([0-9])"
+    //  NUM="regexp:([0-9])"
+    NUM="regexp:[-+]?[0-9]*\.?[0-9]+"
     COMMENT="regexp:(;.*\n)"
 
-    LET="regexp:([let*]|[let])"
-    IF="if"
-    DEFUN="defun"
-    DEF_CAP="defcap"
-    DEF_CONST="defconst"
-    DEF_SCHEMA="defschema"
-    DEF_TABLE="deftable"
-    DEF_PACT="defpact"
-    INTERFACE="interface"
-    MODULE="module"
-    BLESS="bless"
-    IMPLEMENTS="implements"
-    IMPORT="use"
-    TRUE="true"
-    FALSE="false"
-    LAMBDA="lambda"
+    // Keywords
+    DEFUN_KEYWORD="defun"
+    DEF_CAP_KEYWORD="defcap"
+    DEF_CONST_KEYWORD="defconst"
+    DEF_SCHEMA_KEYWORD="defschema"
+    DEF_TABLE_KEYWORD="deftable"
+    DEF_PACT_KEYWORD="defpact"
+    IMPORT_KEYWORD="use"
+    MODULE_KEYWORD="module"
+    IMPLEMENTS_KEYWORD="implements"
+    INTERFACE_KEYWORD="interface"
+    BLESS_KEYWORD="bless"
+    LET_KEYWORD="regexp:([let*]|[let])"
+    LAMBDA_KEYWORD="lambda"
 
-    AND="and"
-    OR="or"
-    LOAD="load"
-    DOC_ANN="@doc"
-    MODEL_ANN="@model"
-    EVENT_ANN="@event"
-    MANAGED_ANN="@managed"
-    STEP="step"
-    STEP_WITH_ROLLBACK="step-with-rollback"
-    ENFORCE="enforce"
-    ENFORCE_ONE="enforce-one"
-    WITH_CAPABILITY="with-capability"
-    CREATE_USER_GUARD="create-user-guard"
-    TRY="try"
-    BLOCK_INTRO="progn"
-    SUSPEND="suspend"
+
+    TRUE_KEYWORD="true"
+    FALSE_KEYWORD="false"
+    AND_KEYWORD="and"
+    OR_KEYWORD="or"
+
+    IF_KEYWORD="if"
+    LOAD_KEYWORD="load"
+    DOC_ANN_KEYWORD="@doc"
+    MODEL_ANN_KEYWORD="@model"
+    EVENT_ANN_KEYWORD="@event"
+    MANAGED_ANN_KEYWORD="@managed"
+    STEP_KEYWORD="step"
+    STEP_WITH_ROLLBACK_KEYWORD="step-with-rollback"
+    ENFORCE_KEYWORD="enforce"
+    ENFORCE_ONE_KEYWORD="enforce-one"
+    WITH_CAPABILITY_KEYWORD="with-capability"
+    CREATE_USER_GUARD_KEYWORD="create-user-guard"
+    TRY_KEYWORD="try"
+    BLOCK_INTRO_KEYWORD="progn"
+    SUSPEND_KEYWORD="suspend"
 
     TICK="'"
     OPEN_PARENS="("
@@ -105,7 +109,7 @@
     //   NOT_APP="not?"
     //   WHEN="when"
 
-    IDENT="regexp:[a-zA-Z\%\#\+\-\_\&\$\@\<\>\=\^\?\*\!\|\/\~][a-zA-Z0-9\%\#\+\-\_\&\$\@\<\>\=\^\?\*\!\|\/\~]*"
+    IDENT="regexp:[a-zA-Z%#+\-_&$@<>=^?*!|/~][a-zA-Z0-9%#+\-_&$@<>=^?*!|/~]*"
 
     // Reference
     CRLF="regexp:\R"
@@ -113,297 +117,269 @@
   ]
 }
 
-<Program> ::= <ProgramList>
-<ProgramList> ::= <ProgramList> <TopLevel>
-                | ε
+<Program> ::= ProgramList | ReplProgramList
 
-//<ReplProgram> ::= <ReplProgramList>
-//
-//<ReplProgramList> ::= <ReplProgramList> <RTL>
-//                    | ε
+<ProgramList> ::= TopLevel+
 
-<TopLevel> ::= <Module>
-             | <Interface>
-             | <Expr>
-             | <Use>
+<ReplProgramList> ::= RTL+
 
-//<RTL> ::= <ReplTopLevel>
-//        | "(" <ReplSpecial> ")"
-//
-//<ReplTopLevel> ::= <TopLevel>
-//                 | "(" <Defun> ")"
-//                 | "(" <DefConst> ")"
-//
-//<ReplSpecial> ::= "load" <STR> <BOOLEAN>
-//                 | "load" <STR>
+<TopLevel> ::= Module
+             | Interface
+             | Expr
+             | Use
 
-<Governance> ::= <StringRaw>
-               | <IDENT>
+<RTL> ::= ReplTopLevel
+        | "(" ReplSpecial ")"
 
-<StringRaw> ::= <STR>
-              | <TICK>
+<ReplTopLevel> ::= TopLevel
+                 | "(" Defun ")"
+                 | "(" DefConst ")"
 
-<Module> ::= "(" "module" <IDENT> <Governance> <MDocOrModel> <ExtOrDefs> ")"
+<ReplSpecial> ::= "load" STR BOOLEAN
+                 | "load" STR
 
-<Interface> ::= "(" "interface" <IDENT> <MDocOrModel> <ImportOrIfDef> ")"
+<Governance> ::= StringRaw
+               | IDENT
 
-<Ext> ::= <Use>
-        | "(" "implements" <ModQual> ")"
-        | "(" "bless" <StringRaw> ")"
+<StringRaw> ::= STR
+              | TICK
 
-<Use> ::= "(" "import" <ModQual> <ImportList> ")"
-        | "(" "import" <ModQual> <STR> <ImportList> ")"
+<Module> ::= "(" "module" IDENT Governance [MDocOrModel] ExtOrDefs ")"
 
-<ExtOrDefs> ::= <ExtOrDefs> <Def>
-              | <ExtOrDefs> <Ext>
-              | <Def>
-              | <Ext>
+<Interface> ::= "(" "interface" IDENT [MDocOrModel] ImportOrIfDef ")"
 
-<Def> ::= "(" <Defun> ")"
-        | "(" <DefConst> ")"
-        | "(" <Defcap> ")"
-        | "(" <Defschema> ")"
-        | "(" <Deftable> ")"
-        | "(" <DefPact> ")"
+<Ext> ::= Use
+        | "(" "implements" ModQual ")"
+        | "(" "bless" StringRaw ")"
 
-<ImportOrIfDef> ::= <ImportOrIfDef> <IfDef>
-                  | <ImportOrIfDef> <Use>
-                  | <IfDef>
-                  | <Use>
+<Use> ::= "(" "import" ModQual ImportList ")"
+        | "(" "import" ModQual STR ImportList ")"
 
-<IfDef> ::= "(" <IfDefun> ")"
-          | "(" <DefConst> ")"
-          | "(" <IfDefCap> ")"
-          | "(" <Defschema> ")"
-          | "(" <IfDefPact> ")"
+<ExtOrDefs> ::= (Def | Ext)+
 
-<IfDefun> ::= "defun" <IDENT> <MTypeAnn> "(" <MArgs> ")" <MDocOrModel>
+<Def> ::= "(" Defun ")"
+        | "(" DefConst ")"
+        | "(" Defcap ")"
+        | "(" Defschema ")"
+        | "(" Deftable ")"
+        | "(" DefPact ")"
 
-<IfDefCap> ::= "defcap" <IDENT> <MTypeAnn> "(" <MArgs> ")" <MDocOrModel> <MDCapMeta>
 
-<IfDefPact> ::= "defpact" <IDENT> <MTypeAnn> "(" <MArgs> ")" <MDocOrModel>
+<ImportOrIfDef> ::= (IfDef | Use)+
 
-<ImportList> ::= "[" <ImportNames> "]"
-               | ε
 
-<ImportNames> ::= <ImportNames> <IDENT>
-                | ε
+<IfDef> ::= "(" IfDefun ")"
+          | "(" DefConst ")"
+          | "(" IfDefCap ")"
+          | "(" Defschema ")"
+          | "(" IfDefPact ")"
 
-<DefConst> ::= "defconst" <IDENT> <MTypeAnn> <Expr> <MDoc>
+<IfDefun> ::= "defun" IDENT [MTypeAnn] "(" MArgs ")" [MDocOrModel]
 
-<Defun> ::= "defun" <IDENT> <MTypeAnn> "(" <MArgs> ")" <MDocOrModel> <Block>
+<IfDefCap> ::= "defcap" IDENT [MTypeAnn] "(" MArgs ")" [MDocOrModel] MDCapMeta
 
-<Defschema> ::= "defschema" <IDENT> <MDocOrModel> <SchemaArgList>
+<IfDefPact> ::= "defpact" IDENT [MTypeAnn] "(" MArgs ")" [MDocOrModel]
 
-<Deftable> ::= "deftable" <IDENT> ":" "{" <ParsedName> "}" <MDoc>
+<ImportList> ::= "[" ImportNames "]"
 
-<Defcap> ::= "defcap" <IDENT> <MTypeAnn> "(" <MArgs> ")" <MDocOrModel> <MDCapMeta> <Block>
+<ImportNames> ::= IDENT+
 
-<DefPact> ::= "defpact" <IDENT> <MTypeAnn> "(" <MArgs> ")" <MDocOrModel> <Steps>
+<DefConst> ::= "defconst" IDENT [MTypeAnn] Expr [MDoc]
 
-<Steps> ::= <Steps> <Step>
-          | <Step>
+<Defun> ::= "defun" IDENT [MTypeAnn] "(" [MArgs] ")" [MDocOrModel] Block
 
-<Step> ::= "(" "step" <Expr> <MModel> ")"
-         | "(" "step" <Expr> <Expr> <MModel> ")"
-         | "(" "steprb" <Expr> <Expr> <MModel> ")"
-         | "(" "steprb" <Expr> <Expr> <Expr> <MModel> ")"
+<Defschema> ::= "defschema" IDENT [MDocOrModel] SchemaArgList
 
-<MDCapMeta> ::= <Managed>
-              | <Event>
-              | ε
+<Deftable> ::= "deftable" IDENT ":" "{" ParsedName "}" [MDoc]
 
-<Managed> ::= "managedAnn"
-            | "managedAnn" <IDENT> <ParsedName>
+<Defcap> ::= "defcap" IDENT [MTypeAnn] "(" [MArgs] ")" [MDocOrModel] [MDCapMeta] Block
 
-<Event> ::= "eventAnn"
+<DefPact> ::= "defpact" IDENT [MTypeAnn] "(" MArgs ")" [MDocOrModel] Steps
 
-<MArgs> ::= <MArgs> <MArg>
-          | ε
+<Steps> ::= Step+
 
-<MArg> ::= <IDENT> ":" <Type>
-         | <IDENT>
+<Step> ::= "(" "step" Expr [MModel] ")"
+         | "(" "step" Expr Expr [MModel] ")"
+         | "(" "step-with-rollback" Expr Expr [MModel] ")"
+         | "(" "step-with-rollback" Expr Expr Expr [MModel] ")"
 
-<SchemaArgList> ::= <SchemaArgList> <IDENT> ":" <Type>
-                  | <SchemaArgList> <IDENT>
-                  | ε
+<MDCapMeta> ::= Managed
+              | Event
 
-<Type> ::= "[" <Type> "]"
-         | "module" "{" <ModuleNames> "}"
-         | <IDENT> "{" <ParsedTyName> "}"
-         | <IDENT>
+<Managed> ::= "@managed"
+            | "@managed" IDENT ParsedName
 
-<ModuleNames> ::= <ModuleNames> "," <ModQual>
-                | <ModQual>
+<Event> ::= "@event"
 
-<DocAnn> ::= "docAnn" <STR>
+<MArgs> ::= MArg+
 
-<DocStr> ::= <STR>
+<MArg> ::= IDENT ":" Type
+         | IDENT
 
-<MModel> ::= <ModelAnn>
-           | ε
+<SchemaArgList> ::= SchemaArg (SchemaArg)*
 
-<ModelAnn> ::= "modelAnn" "[" <PactFVModels> "]"
+<SchemaArg> ::= IDENT (":" Type)?
 
-<MDocOrModel> ::= <DocAnn> <ModelAnn>
-                | <ModelAnn> <DocAnn>
-                | <DocAnn>
-                | <ModelAnn>
-                | <DocStr>
-                | ε
+<Type> ::= "[" Type "]"
+         | "module" "{" ModuleNames "}"
+         | IDENT "{" ParsedTyName "}"
+         | IDENT
 
-<MDoc> ::= <DocAnn>
-         | <DocStr>
-         | ε
+<ModuleNames> ::= ModQual ("," ModQual)*
 
-<MTypeAnn> ::= ":" <Type>
-             | ε
+<DocAnn> ::= "@doc" STR
 
-<Block> ::= <BlockBody>
+<DocStr> ::= STR
 
-<BlockBody> ::= <BlockBody> <Expr>
-              | <Expr>
+<MModel> ::= ModelAnn
 
-<Expr> ::= "(" <SExpr> ")"
-         | <Atom>
+<ModelAnn> ::= "@model" "[" PactFVModels "]"
 
-<SExpr> ::= <LamExpr>
-          | <LetExpr>
-          | <IfExpr>
-          | <TryExpr>
-          | <ProgNExpr>
-          | <GenAppExpr>
-          | <SuspendExpr>
-          | <CapExpr>
+<MDocOrModel> ::= DocAnn ModelAnn
+                | ModelAnn DocAnn
+                | DocAnn
+                | ModelAnn
+                | DocStr
 
-<List> ::= "[" <ListExprs> "]"
+<MDoc> ::= DocAnn
+         | DocStr
 
-<ListExprs> ::= <Expr> <MCommaExpr>
-              | ε
+<MTypeAnn> ::= ":" Type
 
-<MCommaExpr> ::= "," <ExprCommaSep>
-               | <AppList>
+<Block> ::= BlockBody
 
-<ExprCommaSep> ::= <ExprCommaSep> "," <Expr>
-                 | <Expr>
+<BlockBody> ::= Expr+
 
-<LamExpr> ::= "lam" "(" <LamArgs> ")" <Block>
+<Expr> ::= "(" SExpr ")"
+         | Atom
 
-<IfExpr> ::= "if" <Expr> <Expr> <Expr>
+<SExpr> ::= LamExpr
+          | LetExpr
+          | IfExpr
+          | TryExpr
+          | ProgNExpr
+          | GenAppExpr
+          | SuspendExpr
+          | CapExpr
 
-<TryExpr> ::= "try" <Expr> <Expr>
+<List> ::= "[" ListExprs "]"
 
-<SuspendExpr> ::= "suspend" <Expr>
+<ListExprs> ::= Expr MCommaExpr* // Check *
 
-<CapExpr> ::= <CapForm>
+<MCommaExpr> ::= "," ExprCommaSep
+               | AppList
 
-<CapForm> ::= "withcap" <Expr> <Block>
-            | "c_usr_grd" "(" <ParsedName> <AppList> ")"
+<ExprCommaSep> ::= Expr ("," Expr)*
 
-<LamArgs> ::= <LamArgs> <IDENT> ":" <Type>
-            | <LamArgs> <IDENT>
-            | ε
+<LamExpr> ::= "lambda" "(" LamArgs ")" Block
 
-<LetExpr> ::= "let" "(" <Binders> ")" <Block>
+<IfExpr> ::= "if" Expr Expr Expr
 
-<Binders> ::= <Binders> "(" <IDENT> <MTypeAnn> <Expr> ")"
-            | "(" <IDENT> <MTypeAnn> <Expr> ")"
+<TryExpr> ::= "try" Expr Expr
 
-<GenAppExpr> ::= <Expr> <AppBindList>
+<SuspendExpr> ::= "suspend" Expr
 
-<ProgNExpr> ::= "progn" <BlockBody>
+<CapExpr> ::= CapForm
 
-<AppList> ::= <AppList> <Expr>
-            | ε
+<CapForm> ::= "with-capability" Expr Block
+            | "create-user-guard" "(" ParsedName AppList ")"
 
-<AppBindList> ::= <AppBindList> <Expr>
-                | <AppBindList> <BindingForm>
-                | ε
+<LamArgs> ::= LamArg ("," LamArg)*
+<LamArg> ::= IDENT (":" Type)?
 
-<BindingForm> ::= "{" <BindPairs> "}"
+<LetExpr> ::= LET_KEYWORD "(" Binders ")" Block // Let
 
-<BindPair> ::= <STR> ":=" <MArg>
-             | <TICK> ":=" <MArg>
+<Binders> ::= Binder (Binder)*
+<Binder> ::= "(" IDENT [MTypeAnn] Expr ")"
 
-<BindPairs> ::= <BindPairs> "," <BindPair>
-              | <BindPair>
+<GenAppExpr> ::= Expr AppBindList // Check *
 
-<Atom> ::= <Var>
-         | <Number>
-         | <String>
-         | <List>
-         | <Bool>
-         | <Operator>
-         | <Object>
+<ProgNExpr> ::= "progn" BlockBody
+
+<AppList> ::= Expr+
+
+<AppBindList> ::= (Expr | BindingForm)+
+
+<BindingForm> ::= "{" BindPairs "}"
+
+<BindPair> ::= STR ":=" MArg
+             | TICK ":=" MArg
+
+<BindPairs> ::= BindPair ("," BindPair)*
+
+<Atom> ::= Var
+         | Number
+         | String
+         | List
+         | Bool
+         | Operator
+         | Object
          | "(" ")"
 
 <Operator> ::= "and"
              | "or"
              | "enforce"
-             | "enforceOne"
+             | "enforce-one"
 
 <Bool> ::= "true"
          | "false"
 
-<Var> ::= <IDENT> "." <ModQual>
-        | <IDENT>
-        | <IDENT> "::" <IDENT>
+<Var> ::= IDENT "." ModQual
+        | IDENT
+        | IDENT "::" IDENT
 
-<ParsedName> ::= <IDENT> "." <ModQual>
-               | <IDENT>
-               | <IDENT> "::" <IDENT>
+<ParsedName> ::= IDENT "." ModQual
+               | IDENT
+               | IDENT "::" IDENT
 
-<ParsedTyName> ::= <IDENT> "." <ModQual>
-                 | <IDENT>
+<ParsedTyName> ::= IDENT "." ModQual
+                 | IDENT
 
-<ModQual> ::= <IDENT> "." <IDENT>
-            | <IDENT>
+<ModQual> ::= IDENT "." IDENT
+            | IDENT
 
-<Number> ::= <NUM> "." <NUM>
-           | <NUM>
+<Number> ::= NUM+ "." NUM+
+           | NUM+
 
-<String> ::= <STR>
-           | <TICK>
+<String> ::= STR
+           | TICK
 
-<Object> ::= "{" <ObjectBody> "}"
+<Object> ::= "{" ObjectBody "}"
 
-<ObjectBody> ::= <FieldPairs>
+<ObjectBody> ::= FieldPairs
 
-<FieldPair> ::= <STR> ":" <Expr>
-              | <TICK> ":" <Expr>
+<FieldPair> ::= STR ":" Expr
+              | TICK ":" Expr
 
-<FieldPairs> ::= <FieldPairs> "," <FieldPair>
-               | <FieldPair>
-               | ε
+<FieldPairs> ::= FieldPair ("," FieldPair)*
 
-<PactFVModels> ::= <PropExprList>
+<PactFVModels> ::= PropExprList
 
-<PropExprList> ::= <PropExprList> <PropExpr>
-                 | ε
+<PropExprList> ::= PropExpr+
 
-<PropExpr> ::= <PropAtom>
-             | "(" <PropExprList> ")"
-             | "[" <PropExprList> "]"
+<PropExpr> ::= PropAtom
+             | "(" PropExprList ")"
+             | "[" PropExprList "]"
 
-<PropAtom> ::= <FVVar>
-             | <FVNumber>
-             | <FVString>
-             | <FVKeyword>
-             | <FVDelim>
-             | <FVBool>
+<PropAtom> ::= FVVar
+             | FVNumber
+             | FVString
+             | FVKeyword
+             | FVDelim
+             | FVBool
 
 <FVKeyword> ::= "let"
-              | "lam"
+              | "lambda"
               | "if"
               | "progn"
               | "suspend"
               | "try"
               | "enforce"
-              | "enforceOne"
+              | "enforce-one"
               | "and"
               | "or"
-              | "c_usr_grd"
-              | "withcap"
+              | "create-user-guard"
+              | "with-capability"
 
 <FVDelim> ::= "{"
             | "}"
@@ -413,12 +389,12 @@
 <FVBool> ::= "true"
            | "false"
 
-<FVNumber> ::= <NUM> "." <NUM>
-             | <NUM>
+<FVNumber> ::= NUM "." NUM
+             | NUM
 
-<FVString> ::= <STR>
-             | <TICK>
+<FVString> ::= STR
+             | TICK
 
-<FVVar> ::= <IDENT> "." <ModQual>
-          | <IDENT>
-          | <IDENT> "::" <IDENT>
+<FVVar> ::= IDENT "." ModQual
+          | IDENT
+          | IDENT "::" IDENT

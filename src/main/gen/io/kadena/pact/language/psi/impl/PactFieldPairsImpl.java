@@ -28,15 +28,9 @@ public class PactFieldPairsImpl extends ASTWrapperPsiElement implements PactFiel
   }
 
   @Override
-  @Nullable
-  public PactFieldPair getFieldPair() {
-    return findChildByClass(PactFieldPair.class);
-  }
-
-  @Override
-  @Nullable
-  public PactFieldPairs getFieldPairs() {
-    return findChildByClass(PactFieldPairs.class);
+  @NotNull
+  public List<PactFieldPair> getFieldPairList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactFieldPair.class);
   }
 
 }

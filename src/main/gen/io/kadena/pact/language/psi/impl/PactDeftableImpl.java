@@ -28,15 +28,21 @@ public class PactDeftableImpl extends ASTWrapperPsiElement implements PactDeftab
   }
 
   @Override
-  @NotNull
+  @Nullable
   public PactMDoc getMDoc() {
-    return findNotNullChildByClass(PactMDoc.class);
+    return findChildByClass(PactMDoc.class);
   }
 
   @Override
   @NotNull
   public PactParsedName getParsedName() {
     return findNotNullChildByClass(PactParsedName.class);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getIdent() {
+    return findNotNullChildByType(IDENT);
   }
 
 }

@@ -10,10 +10,13 @@ public interface PactDefConst extends PsiElement {
   @NotNull
   PactExpr getExpr();
 
-  @NotNull
+  @Nullable
   PactMDoc getMDoc();
 
-  @NotNull
+  @Nullable
   PactMTypeAnn getMTypeAnn();
+
+  @NotNull
+  PsiElement getIdent();
 
 }

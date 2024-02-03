@@ -10,7 +10,10 @@ public interface PactInterface extends PsiElement {
   @NotNull
   PactImportOrIfDef getImportOrIfDef();
 
-  @NotNull
+  @Nullable
   PactMDocOrModel getMDocOrModel();
+
+  @NotNull
+  PsiElement getIdent();
 
 }

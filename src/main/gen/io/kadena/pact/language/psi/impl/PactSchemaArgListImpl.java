@@ -28,15 +28,9 @@ public class PactSchemaArgListImpl extends ASTWrapperPsiElement implements PactS
   }
 
   @Override
-  @Nullable
-  public PactSchemaArgList getSchemaArgList() {
-    return findChildByClass(PactSchemaArgList.class);
-  }
-
-  @Override
-  @Nullable
-  public PactType getType() {
-    return findChildByClass(PactType.class);
+  @NotNull
+  public List<PactSchemaArg> getSchemaArgList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactSchemaArg.class);
   }
 
 }

@@ -29,14 +29,8 @@ public class PactStepsImpl extends ASTWrapperPsiElement implements PactSteps {
 
   @Override
   @NotNull
-  public PactStep getStep() {
-    return findNotNullChildByClass(PactStep.class);
-  }
-
-  @Override
-  @Nullable
-  public PactSteps getSteps() {
-    return findChildByClass(PactSteps.class);
+  public List<PactStep> getStepList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactStep.class);
   }
 
 }

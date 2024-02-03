@@ -28,21 +28,15 @@ public class PactAppBindListImpl extends ASTWrapperPsiElement implements PactApp
   }
 
   @Override
-  @Nullable
-  public PactAppBindList getAppBindList() {
-    return findChildByClass(PactAppBindList.class);
+  @NotNull
+  public List<PactBindingForm> getBindingFormList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactBindingForm.class);
   }
 
   @Override
-  @Nullable
-  public PactBindingForm getBindingForm() {
-    return findChildByClass(PactBindingForm.class);
-  }
-
-  @Override
-  @Nullable
-  public PactExpr getExpr() {
-    return findChildByClass(PactExpr.class);
+  @NotNull
+  public List<PactExpr> getExprList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactExpr.class);
   }
 
 }

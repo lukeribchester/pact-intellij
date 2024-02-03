@@ -27,10 +27,4 @@ public class PactImportNamesImpl extends ASTWrapperPsiElement implements PactImp
     else super.accept(visitor);
   }
 
-  @Override
-  @Nullable
-  public PactImportNames getImportNames() {
-    return findChildByClass(PactImportNames.class);
-  }
-
 }

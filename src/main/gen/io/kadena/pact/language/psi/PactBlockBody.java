@@ -7,10 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface PactBlockBody extends PsiElement {
 
-  @Nullable
-  PactBlockBody getBlockBody();
-
   @NotNull
-  PactExpr getExpr();
+  List<PactExpr> getExprList();
 
 }

@@ -27,4 +27,10 @@ public class PactStringRawImpl extends ASTWrapperPsiElement implements PactStrin
     else super.accept(visitor);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getStr() {
+    return findChildByType(STR);
+  }
+
 }

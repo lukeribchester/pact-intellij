@@ -28,15 +28,9 @@ public class PactPropExprListImpl extends ASTWrapperPsiElement implements PactPr
   }
 
   @Override
-  @Nullable
-  public PactPropExpr getPropExpr() {
-    return findChildByClass(PactPropExpr.class);
-  }
-
-  @Override
-  @Nullable
-  public PactPropExprList getPropExprList() {
-    return findChildByClass(PactPropExprList.class);
+  @NotNull
+  public List<PactPropExpr> getPropExprList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactPropExpr.class);
   }
 
 }

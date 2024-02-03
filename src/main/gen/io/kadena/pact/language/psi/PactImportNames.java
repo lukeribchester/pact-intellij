@@ -7,7 +7,4 @@ import com.intellij.psi.PsiElement;
 
 public interface PactImportNames extends PsiElement {
 
-  @Nullable
-  PactImportNames getImportNames();
-
 }

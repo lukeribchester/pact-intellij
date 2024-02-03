@@ -39,4 +39,10 @@ public class PactUseImpl extends ASTWrapperPsiElement implements PactUse {
     return findNotNullChildByClass(PactModQual.class);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getStr() {
+    return findChildByType(STR);
+  }
+
 }

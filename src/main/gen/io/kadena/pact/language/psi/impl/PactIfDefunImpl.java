@@ -34,15 +34,21 @@ public class PactIfDefunImpl extends ASTWrapperPsiElement implements PactIfDefun
   }
 
   @Override
-  @NotNull
+  @Nullable
   public PactMDocOrModel getMDocOrModel() {
-    return findNotNullChildByClass(PactMDocOrModel.class);
+    return findChildByClass(PactMDocOrModel.class);
+  }
+
+  @Override
+  @Nullable
+  public PactMTypeAnn getMTypeAnn() {
+    return findChildByClass(PactMTypeAnn.class);
   }
 
   @Override
   @NotNull
-  public PactMTypeAnn getMTypeAnn() {
-    return findNotNullChildByClass(PactMTypeAnn.class);
+  public PsiElement getIdent() {
+    return findNotNullChildByType(IDENT);
   }
 
 }

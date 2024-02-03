@@ -8,9 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface PactModuleNames extends PsiElement {
 
   @NotNull
-  PactModQual getModQual();
-
-  @Nullable
-  PactModuleNames getModuleNames();
+  List<PactModQual> getModQualList();
 
 }

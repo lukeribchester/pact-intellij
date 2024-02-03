@@ -10,4 +10,7 @@ public interface PactMArg extends PsiElement {
   @Nullable
   PactType getType();
 
+  @NotNull
+  PsiElement getIdent();
+
 }

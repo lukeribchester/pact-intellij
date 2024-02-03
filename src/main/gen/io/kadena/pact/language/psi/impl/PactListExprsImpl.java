@@ -28,15 +28,15 @@ public class PactListExprsImpl extends ASTWrapperPsiElement implements PactListE
   }
 
   @Override
-  @Nullable
+  @NotNull
   public PactExpr getExpr() {
-    return findChildByClass(PactExpr.class);
+    return findNotNullChildByClass(PactExpr.class);
   }
 
   @Override
-  @Nullable
-  public PactMCommaExpr getMCommaExpr() {
-    return findChildByClass(PactMCommaExpr.class);
+  @NotNull
+  public List<PactMCommaExpr> getMCommaExprList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactMCommaExpr.class);
   }
 
 }

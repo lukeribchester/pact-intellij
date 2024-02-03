@@ -29,14 +29,8 @@ public class PactExprCommaSepImpl extends ASTWrapperPsiElement implements PactEx
 
   @Override
   @NotNull
-  public PactExpr getExpr() {
-    return findNotNullChildByClass(PactExpr.class);
-  }
-
-  @Override
-  @Nullable
-  public PactExprCommaSep getExprCommaSep() {
-    return findChildByClass(PactExprCommaSep.class);
+  public List<PactExpr> getExprList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactExpr.class);
   }
 
 }

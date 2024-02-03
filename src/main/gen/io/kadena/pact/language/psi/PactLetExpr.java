@@ -13,4 +13,7 @@ public interface PactLetExpr extends PsiElement {
   @NotNull
   PactBlock getBlock();
 
+  @NotNull
+  PsiElement getLetKeyword();
+
 }

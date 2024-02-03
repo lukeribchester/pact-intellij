@@ -7,10 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface PactFieldPairs extends PsiElement {
 
-  @Nullable
-  PactFieldPair getFieldPair();
-
-  @Nullable
-  PactFieldPairs getFieldPairs();
+  @NotNull
+  List<PactFieldPair> getFieldPairList();
 
 }

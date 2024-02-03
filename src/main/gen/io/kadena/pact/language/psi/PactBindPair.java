@@ -10,4 +10,7 @@ public interface PactBindPair extends PsiElement {
   @NotNull
   PactMArg getMArg();
 
+  @Nullable
+  PsiElement getStr();
+
 }

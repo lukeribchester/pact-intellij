@@ -7,10 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface PactProgramList extends PsiElement {
 
-  @Nullable
-  PactProgramList getProgramList();
-
-  @Nullable
-  PactTopLevel getTopLevel();
+  @NotNull
+  List<PactTopLevel> getTopLevelList();
 
 }

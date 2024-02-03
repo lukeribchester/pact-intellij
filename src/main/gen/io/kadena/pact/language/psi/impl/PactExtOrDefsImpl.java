@@ -28,21 +28,15 @@ public class PactExtOrDefsImpl extends ASTWrapperPsiElement implements PactExtOr
   }
 
   @Override
-  @Nullable
-  public PactDef getDef() {
-    return findChildByClass(PactDef.class);
+  @NotNull
+  public List<PactDef> getDefList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactDef.class);
   }
 
   @Override
-  @Nullable
-  public PactExt getExt() {
-    return findChildByClass(PactExt.class);
-  }
-
-  @Override
-  @Nullable
-  public PactExtOrDefs getExtOrDefs() {
-    return findChildByClass(PactExtOrDefs.class);
+  @NotNull
+  public List<PactExt> getExtList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactExt.class);
   }
 
 }

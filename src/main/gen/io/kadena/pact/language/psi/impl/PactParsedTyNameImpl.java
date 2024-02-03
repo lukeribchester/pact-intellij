@@ -33,4 +33,10 @@ public class PactParsedTyNameImpl extends ASTWrapperPsiElement implements PactPa
     return findChildByClass(PactModQual.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getIdent() {
+    return findNotNullChildByType(IDENT);
+  }
+
 }

@@ -28,15 +28,9 @@ public class PactProgramListImpl extends ASTWrapperPsiElement implements PactPro
   }
 
   @Override
-  @Nullable
-  public PactProgramList getProgramList() {
-    return findChildByClass(PactProgramList.class);
-  }
-
-  @Override
-  @Nullable
-  public PactTopLevel getTopLevel() {
-    return findChildByClass(PactTopLevel.class);
+  @NotNull
+  public List<PactTopLevel> getTopLevelList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactTopLevel.class);
   }
 
 }

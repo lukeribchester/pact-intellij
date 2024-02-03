@@ -34,15 +34,21 @@ public class PactDefConstImpl extends ASTWrapperPsiElement implements PactDefCon
   }
 
   @Override
-  @NotNull
+  @Nullable
   public PactMDoc getMDoc() {
-    return findNotNullChildByClass(PactMDoc.class);
+    return findChildByClass(PactMDoc.class);
+  }
+
+  @Override
+  @Nullable
+  public PactMTypeAnn getMTypeAnn() {
+    return findChildByClass(PactMTypeAnn.class);
   }
 
   @Override
   @NotNull
-  public PactMTypeAnn getMTypeAnn() {
-    return findNotNullChildByClass(PactMTypeAnn.class);
+  public PsiElement getIdent() {
+    return findNotNullChildByType(IDENT);
   }
 
 }

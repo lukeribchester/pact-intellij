@@ -7,10 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface PactAppList extends PsiElement {
 
-  @Nullable
-  PactAppList getAppList();
-
-  @Nullable
-  PactExpr getExpr();
+  @NotNull
+  List<PactExpr> getExprList();
 
 }

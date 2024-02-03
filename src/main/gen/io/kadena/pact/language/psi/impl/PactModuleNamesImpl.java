@@ -29,14 +29,8 @@ public class PactModuleNamesImpl extends ASTWrapperPsiElement implements PactMod
 
   @Override
   @NotNull
-  public PactModQual getModQual() {
-    return findNotNullChildByClass(PactModQual.class);
-  }
-
-  @Override
-  @Nullable
-  public PactModuleNames getModuleNames() {
-    return findChildByClass(PactModuleNames.class);
+  public List<PactModQual> getModQualList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactModQual.class);
   }
 
 }

@@ -16,4 +16,7 @@ public interface PactType extends PsiElement {
   @Nullable
   PactType getType();
 
+  @Nullable
+  PsiElement getIdent();
+
 }

@@ -34,27 +34,33 @@ public class PactDefcapImpl extends ASTWrapperPsiElement implements PactDefcap {
   }
 
   @Override
-  @NotNull
+  @Nullable
   public PactMArgs getMArgs() {
-    return findNotNullChildByClass(PactMArgs.class);
+    return findChildByClass(PactMArgs.class);
   }
 
   @Override
-  @NotNull
+  @Nullable
   public PactMDCapMeta getMDCapMeta() {
-    return findNotNullChildByClass(PactMDCapMeta.class);
+    return findChildByClass(PactMDCapMeta.class);
   }
 
   @Override
-  @NotNull
+  @Nullable
   public PactMDocOrModel getMDocOrModel() {
-    return findNotNullChildByClass(PactMDocOrModel.class);
+    return findChildByClass(PactMDocOrModel.class);
+  }
+
+  @Override
+  @Nullable
+  public PactMTypeAnn getMTypeAnn() {
+    return findChildByClass(PactMTypeAnn.class);
   }
 
   @Override
   @NotNull
-  public PactMTypeAnn getMTypeAnn() {
-    return findNotNullChildByClass(PactMTypeAnn.class);
+  public PsiElement getIdent() {
+    return findNotNullChildByType(IDENT);
   }
 
 }

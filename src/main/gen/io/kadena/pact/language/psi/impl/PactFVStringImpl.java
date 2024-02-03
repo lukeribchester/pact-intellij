@@ -27,4 +27,10 @@ public class PactFVStringImpl extends ASTWrapperPsiElement implements PactFVStri
     else super.accept(visitor);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getStr() {
+    return findChildByType(STR);
+  }
+
 }

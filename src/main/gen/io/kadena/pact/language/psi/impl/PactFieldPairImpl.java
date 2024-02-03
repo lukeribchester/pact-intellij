@@ -33,4 +33,10 @@ public class PactFieldPairImpl extends ASTWrapperPsiElement implements PactField
     return findNotNullChildByClass(PactExpr.class);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getStr() {
+    return findChildByType(STR);
+  }
+
 }

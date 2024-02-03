@@ -7,10 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface PactMArgs extends PsiElement {
 
-  @Nullable
-  PactMArg getMArg();
-
-  @Nullable
-  PactMArgs getMArgs();
+  @NotNull
+  List<PactMArg> getMArgList();
 
 }

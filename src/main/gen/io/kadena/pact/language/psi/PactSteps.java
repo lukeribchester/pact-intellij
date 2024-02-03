@@ -8,9 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface PactSteps extends PsiElement {
 
   @NotNull
-  PactStep getStep();
-
-  @Nullable
-  PactSteps getSteps();
+  List<PactStep> getStepList();
 
 }

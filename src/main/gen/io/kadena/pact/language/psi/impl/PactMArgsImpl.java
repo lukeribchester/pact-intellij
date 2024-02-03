@@ -28,15 +28,9 @@ public class PactMArgsImpl extends ASTWrapperPsiElement implements PactMArgs {
   }
 
   @Override
-  @Nullable
-  public PactMArg getMArg() {
-    return findChildByClass(PactMArg.class);
-  }
-
-  @Override
-  @Nullable
-  public PactMArgs getMArgs() {
-    return findChildByClass(PactMArgs.class);
+  @NotNull
+  public List<PactMArg> getMArgList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactMArg.class);
   }
 
 }

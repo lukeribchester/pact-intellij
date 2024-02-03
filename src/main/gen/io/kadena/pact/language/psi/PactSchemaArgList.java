@@ -7,10 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface PactSchemaArgList extends PsiElement {
 
-  @Nullable
-  PactSchemaArgList getSchemaArgList();
-
-  @Nullable
-  PactType getType();
+  @NotNull
+  List<PactSchemaArg> getSchemaArgList();
 
 }

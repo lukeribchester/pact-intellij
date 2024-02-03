@@ -13,7 +13,10 @@ public interface PactModule extends PsiElement {
   @NotNull
   PactGovernance getGovernance();
 
-  @NotNull
+  @Nullable
   PactMDocOrModel getMDocOrModel();
+
+  @NotNull
+  PsiElement getIdent();
 
 }
