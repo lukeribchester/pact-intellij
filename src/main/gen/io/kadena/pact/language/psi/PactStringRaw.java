@@ -10,4 +10,7 @@ public interface PactStringRaw extends PsiElement {
   @Nullable
   PsiElement getStr();
 
+  @Nullable
+  PsiElement getTick();
+
 }

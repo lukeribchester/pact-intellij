@@ -39,4 +39,10 @@ public class PactFieldPairImpl extends ASTWrapperPsiElement implements PactField
     return findChildByType(STR);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getTick() {
+    return findChildByType(TICK);
+  }
+
 }

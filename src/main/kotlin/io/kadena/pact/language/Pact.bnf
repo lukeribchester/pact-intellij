@@ -15,10 +15,8 @@
   tokens = [
     // Lexer.x
     STR="regexp:(\"([^\"\\]|\\\"|\\)*\")"
-    //  NUM="regexp:([0-9])"
-    NUM="regexp:[-+]?[0-9]*\.?[0-9]+"
-    // TODO: Verify comments at EOF
-    COMMENT="regexp:(;.*\n)"
+    NUM="regexp:-?[0-9]+"
+    COMMENT="regexp:(;.*\n*)"
 
     // Keywords
     DEFUN_KEYWORD="defun"
@@ -57,7 +55,7 @@
     BLOCK_INTRO_KEYWORD="progn"
     SUSPEND_KEYWORD="suspend"
 
-    TICK="'"
+    TICK="regexp:'[a-zA-Z][a-zA-Z 0-9\-_]*"
     OPEN_PARENS="("
     CLOSE_PARENS=")"
     OPEN_BRACE="{"
@@ -118,30 +116,29 @@
   ]
 }
 
-Program ::= !<<eof>> ProgramList | ReplProgramList
-// TODO: Refactor out PL and RPL:
+Program ::= !<<eof>> ReplProgramList | !<<eof>> ProgramList
+
 ProgramList ::= TopLevel+
 
-ReplProgramList ::= RTL+
+ReplProgramList ::= ReplTopLevel+
 
 private TopLevel ::= Module
                    | Interface
                    | Expr
-                   | Use
+                   | Use { pin=1 }
 
-private RTL ::= ReplTopLevel
-              | "(" ReplSpecial ")"
-
-private ReplTopLevel ::= TopLevel
+private ReplTopLevel ::= "(" ReplSpecial ")"
                        | "(" Defun ")"
                        | "(" DefConst ")"
+                       | TopLevel { pin=1 }
 
 ReplSpecial ::= "load" STR BOOLEAN
               | "load" STR
 
 private Governance ::= StringRaw
                      | IDENT
-// TODO: Handle identifiers (single characters too) and single ticks:
+// TODO: Handle single character identifiers:
+// TODO: Separate operators from IDENT
 // https://raw.githubusercontent.com/kadena-io/pact-5/master/pact-tests/pact-tests/db.repl
 StringRaw ::= STR
             | TICK
@@ -255,8 +252,6 @@ private upper SExpr ::= LamExpr
                       | SuspendExpr
                       | CapExpr
 
-// TODO: Empty Lists (fixed, verify):
-// https://raw.githubusercontent.com/kadena-io/pact-5/master/pact-tests/pact-tests/lists.repl
 List ::= "[" [ListExprs] "]"
 
 ListExprs ::= Expr MCommaExpr? // Check * ?
@@ -330,7 +325,7 @@ Bool ::= "true"
 Var ::= IDENT "." ModQual
       | IDENT
       | IDENT "::" IDENT
-// TODO: Fix unexpected '::':
+// TODO: Fix unexpected '::'
 // https://raw.githubusercontent.com/kadena-io/pact-5/master/pact-tests/pact-tests/nested-defpacts.repl
 ParsedName ::= IDENT "." ModQual
              | IDENT
@@ -342,8 +337,8 @@ ParsedTyName ::= IDENT "." ModQual
 ModQual ::= IDENT "." IDENT
           | IDENT
 
-Number ::= NUM+ "." NUM+
-         | NUM+
+Number ::= NUM "." NUM
+         | NUM
 
 String ::= STR
          | TICK

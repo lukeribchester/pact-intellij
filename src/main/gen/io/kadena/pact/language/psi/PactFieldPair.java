@@ -13,4 +13,7 @@ public interface PactFieldPair extends PsiElement {
   @Nullable
   PsiElement getStr();
 
+  @Nullable
+  PsiElement getTick();
+
 }

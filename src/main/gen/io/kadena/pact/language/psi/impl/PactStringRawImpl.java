@@ -33,4 +33,10 @@ public class PactStringRawImpl extends ASTWrapperPsiElement implements PactStrin
     return findChildByType(STR);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getTick() {
+    return findChildByType(TICK);
+  }
+
 }

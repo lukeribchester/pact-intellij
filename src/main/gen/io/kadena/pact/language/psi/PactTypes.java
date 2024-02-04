@@ -138,7 +138,7 @@ public interface PactTypes {
   IElementType STEP_WITH_ROLLBACK_KEYWORD = new PactTokenType("step-with-rollback");
   IElementType STR = new PactTokenType("STR");
   IElementType SUSPEND_KEYWORD = new PactTokenType("suspend");
-  IElementType TICK = new PactTokenType("'");
+  IElementType TICK = new PactTokenType("TICK");
   IElementType TRUE_KEYWORD = new PactTokenType("true");
   IElementType TRY_KEYWORD = new PactTokenType("try");
   IElementType WITH_CAPABILITY_KEYWORD = new PactTokenType("with-capability");

@@ -33,4 +33,10 @@ public class PactFVStringImpl extends ASTWrapperPsiElement implements PactFVStri
     return findChildByType(STR);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getTick() {
+    return findChildByType(TICK);
+  }
+
 }

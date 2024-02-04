@@ -10,4 +10,7 @@ public interface PactString extends PsiElement {
   @Nullable
   PsiElement getStr();
 
+  @Nullable
+  PsiElement getTick();
+
 }

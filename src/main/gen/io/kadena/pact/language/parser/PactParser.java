@@ -1530,73 +1530,16 @@ public class PactParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // NUM+ "." NUM+
-  //          | NUM+
+  // NUM "." NUM
+  //          | NUM
   public static boolean Number(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Number")) return false;
     if (!nextTokenIs(b, NUM)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = Number_0(b, l + 1);
-    if (!r) r = Number_1(b, l + 1);
+    r = parseTokens(b, 0, NUM, DOT, NUM);
+    if (!r) r = consumeToken(b, NUM);
     exit_section_(b, m, NUMBER, r);
-    return r;
-  }
-
-  // NUM+ "." NUM+
-  private static boolean Number_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "Number_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = Number_0_0(b, l + 1);
-    r = r && consumeToken(b, DOT);
-    r = r && Number_0_2(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // NUM+
-  private static boolean Number_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "Number_0_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, NUM);
-    while (r) {
-      int c = current_position_(b);
-      if (!consumeToken(b, NUM)) break;
-      if (!empty_element_parsed_guard_(b, "Number_0_0", c)) break;
-    }
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // NUM+
-  private static boolean Number_0_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "Number_0_2")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, NUM);
-    while (r) {
-      int c = current_position_(b);
-      if (!consumeToken(b, NUM)) break;
-      if (!empty_element_parsed_guard_(b, "Number_0_2", c)) break;
-    }
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // NUM+
-  private static boolean Number_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "Number_1")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, NUM);
-    while (r) {
-      int c = current_position_(b);
-      if (!consumeToken(b, NUM)) break;
-      if (!empty_element_parsed_guard_(b, "Number_1", c)) break;
-    }
-    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -1720,24 +1663,24 @@ public class PactParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // !<<eof>> ProgramList | ReplProgramList
+  // !<<eof>> ReplProgramList | !<<eof>> ProgramList
   static boolean Program(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Program")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = Program_0(b, l + 1);
-    if (!r) r = ReplProgramList(b, l + 1);
+    if (!r) r = Program_1(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // !<<eof>> ProgramList
+  // !<<eof>> ReplProgramList
   private static boolean Program_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Program_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = Program_0_0(b, l + 1);
-    r = r && ProgramList(b, l + 1);
+    r = r && ReplProgramList(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -1745,6 +1688,27 @@ public class PactParser implements PsiParser, LightPsiParser {
   // !<<eof>>
   private static boolean Program_0_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Program_0_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NOT_);
+    r = !eof(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // !<<eof>> ProgramList
+  private static boolean Program_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Program_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = Program_1_0(b, l + 1);
+    r = r && ProgramList(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // !<<eof>>
+  private static boolean Program_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Program_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NOT_);
     r = !eof(b, l + 1);
@@ -1843,40 +1807,15 @@ public class PactParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ReplTopLevel
-  //               | "(" ReplSpecial ")"
-  static boolean RTL(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "RTL")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = ReplTopLevel(b, l + 1);
-    if (!r) r = RTL_1(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // "(" ReplSpecial ")"
-  private static boolean RTL_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "RTL_1")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, OPEN_PARENS);
-    r = r && ReplSpecial(b, l + 1);
-    r = r && consumeToken(b, CLOSE_PARENS);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // RTL+
+  // ReplTopLevel+
   public static boolean ReplProgramList(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ReplProgramList")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, REPL_PROGRAM_LIST, "<repl program list>");
-    r = RTL(b, l + 1);
+    r = ReplTopLevel(b, l + 1);
     while (r) {
       int c = current_position_(b);
-      if (!RTL(b, l + 1)) break;
+      if (!ReplTopLevel(b, l + 1)) break;
       if (!empty_element_parsed_guard_(b, "ReplProgramList", c)) break;
     }
     exit_section_(b, l, m, r, false, null);
@@ -1898,16 +1837,30 @@ public class PactParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // TopLevel
+  // "(" ReplSpecial ")"
   //                        | "(" Defun ")"
   //                        | "(" DefConst ")"
+  //                        | TopLevel
   static boolean ReplTopLevel(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ReplTopLevel")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = TopLevel(b, l + 1);
+    r = ReplTopLevel_0(b, l + 1);
     if (!r) r = ReplTopLevel_1(b, l + 1);
     if (!r) r = ReplTopLevel_2(b, l + 1);
+    if (!r) r = TopLevel(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // "(" ReplSpecial ")"
+  private static boolean ReplTopLevel_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ReplTopLevel_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, OPEN_PARENS);
+    r = r && ReplSpecial(b, l + 1);
+    r = r && consumeToken(b, CLOSE_PARENS);
     exit_section_(b, m, null, r);
     return r;
   }
