@@ -28,6 +28,18 @@ public class PactInterfaceImpl extends ASTWrapperPsiElement implements PactInter
   }
 
   @Override
+  @Nullable
+  public PactDocAnn getDocAnn() {
+    return findChildByClass(PactDocAnn.class);
+  }
+
+  @Override
+  @Nullable
+  public PactDocStr getDocStr() {
+    return findChildByClass(PactDocStr.class);
+  }
+
+  @Override
   @NotNull
   public PactImportOrIfDef getImportOrIfDef() {
     return findNotNullChildByClass(PactImportOrIfDef.class);
@@ -35,8 +47,8 @@ public class PactInterfaceImpl extends ASTWrapperPsiElement implements PactInter
 
   @Override
   @Nullable
-  public PactMDocOrModel getMDocOrModel() {
-    return findChildByClass(PactMDocOrModel.class);
+  public PactModelAnn getModelAnn() {
+    return findChildByClass(PactModelAnn.class);
   }
 
   @Override

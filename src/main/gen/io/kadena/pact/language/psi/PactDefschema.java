@@ -8,12 +8,18 @@ import com.intellij.psi.PsiElement;
 public interface PactDefschema extends PsiElement {
 
   @Nullable
-  PactMDocOrModel getMDocOrModel();
+  PactDocAnn getDocAnn();
 
-  @NotNull
+  @Nullable
+  PactDocStr getDocStr();
+
+  @Nullable
+  PactModelAnn getModelAnn();
+
+  @Nullable
   PactSchemaArgList getSchemaArgList();
 
-  @NotNull
+  @Nullable
   PsiElement getIdent();
 
 }

@@ -28,15 +28,9 @@ public class PactManagedImpl extends ASTWrapperPsiElement implements PactManaged
   }
 
   @Override
-  @Nullable
-  public PactParsedName getParsedName() {
-    return findChildByClass(PactParsedName.class);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getIdent() {
-    return findChildByType(IDENT);
+  @NotNull
+  public List<PactParsedName> getParsedNameList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactParsedName.class);
   }
 
 }

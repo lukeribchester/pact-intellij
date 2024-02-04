@@ -10,7 +10,4 @@ public interface PactExpr extends PsiElement {
   @Nullable
   PactAtom getAtom();
 
-  @Nullable
-  PactSExpr getSExpr();
-
 }

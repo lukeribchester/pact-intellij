@@ -29,8 +29,44 @@ public class PactReplProgramListImpl extends ASTWrapperPsiElement implements Pac
 
   @Override
   @NotNull
-  public List<PactRtl> getRtlList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactRtl.class);
+  public List<PactDefConst> getDefConstList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactDefConst.class);
+  }
+
+  @Override
+  @NotNull
+  public List<PactDefun> getDefunList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactDefun.class);
+  }
+
+  @Override
+  @NotNull
+  public List<PactExpr> getExprList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactExpr.class);
+  }
+
+  @Override
+  @NotNull
+  public List<PactInterface> getInterfaceList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactInterface.class);
+  }
+
+  @Override
+  @NotNull
+  public List<PactModule> getModuleList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactModule.class);
+  }
+
+  @Override
+  @NotNull
+  public List<PactReplSpecial> getReplSpecialList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactReplSpecial.class);
+  }
+
+  @Override
+  @NotNull
+  public List<PactUse> getUseList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactUse.class);
   }
 
 }

@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface PactDefConst extends PsiElement {
 
-  @NotNull
+  @Nullable
   PactExpr getExpr();
 
   @Nullable
@@ -16,7 +16,7 @@ public interface PactDefConst extends PsiElement {
   @Nullable
   PactMTypeAnn getMTypeAnn();
 
-  @NotNull
+  @Nullable
   PsiElement getIdent();
 
 }

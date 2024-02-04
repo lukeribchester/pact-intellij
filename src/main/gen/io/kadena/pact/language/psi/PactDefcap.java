@@ -11,16 +11,22 @@ public interface PactDefcap extends PsiElement {
   PactBlock getBlock();
 
   @Nullable
+  PactDocAnn getDocAnn();
+
+  @Nullable
+  PactDocStr getDocStr();
+
+  @Nullable
   PactMArgs getMArgs();
 
   @Nullable
   PactMDCapMeta getMDCapMeta();
 
   @Nullable
-  PactMDocOrModel getMDocOrModel();
+  PactMTypeAnn getMTypeAnn();
 
   @Nullable
-  PactMTypeAnn getMTypeAnn();
+  PactModelAnn getModelAnn();
 
   @NotNull
   PsiElement getIdent();

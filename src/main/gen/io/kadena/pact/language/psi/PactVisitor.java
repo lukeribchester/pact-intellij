@@ -27,10 +27,6 @@ public class PactVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitBinder(@NotNull PactBinder o) {
-    visitPsiElement(o);
-  }
-
   public void visitBinders(@NotNull PactBinders o) {
     visitPsiElement(o);
   }
@@ -56,10 +52,6 @@ public class PactVisitor extends PsiElementVisitor {
   }
 
   public void visitCapForm(@NotNull PactCapForm o) {
-    visitPsiElement(o);
-  }
-
-  public void visitDef(@NotNull PactDef o) {
     visitPsiElement(o);
   }
 
@@ -111,10 +103,6 @@ public class PactVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitExtOrDefs(@NotNull PactExtOrDefs o) {
-    visitPsiElement(o);
-  }
-
   public void visitFVBool(@NotNull PactFVBool o) {
     visitPsiElement(o);
   }
@@ -148,14 +136,6 @@ public class PactVisitor extends PsiElementVisitor {
   }
 
   public void visitGenAppExpr(@NotNull PactGenAppExpr o) {
-    visitPsiElement(o);
-  }
-
-  public void visitGovernance(@NotNull PactGovernance o) {
-    visitPsiElement(o);
-  }
-
-  public void visitIfDef(@NotNull PactIfDef o) {
     visitPsiElement(o);
   }
 
@@ -235,10 +215,6 @@ public class PactVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitMDocOrModel(@NotNull PactMDocOrModel o) {
-    visitPsiElement(o);
-  }
-
   public void visitMModel(@NotNull PactMModel o) {
     visitPsiElement(o);
   }
@@ -315,23 +291,11 @@ public class PactVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitRtl(@NotNull PactRtl o) {
-    visitPsiElement(o);
-  }
-
   public void visitReplProgramList(@NotNull PactReplProgramList o) {
     visitPsiElement(o);
   }
 
   public void visitReplSpecial(@NotNull PactReplSpecial o) {
-    visitPsiElement(o);
-  }
-
-  public void visitReplTopLevel(@NotNull PactReplTopLevel o) {
-    visitPsiElement(o);
-  }
-
-  public void visitSExpr(@NotNull PactSExpr o) {
     visitPsiElement(o);
   }
 
@@ -360,10 +324,6 @@ public class PactVisitor extends PsiElementVisitor {
   }
 
   public void visitSuspendExpr(@NotNull PactSuspendExpr o) {
-    visitPsiElement(o);
-  }
-
-  public void visitTopLevel(@NotNull PactTopLevel o) {
     visitPsiElement(o);
   }
 

@@ -7,14 +7,20 @@ import com.intellij.psi.PsiElement;
 
 public interface PactDefPact extends PsiElement {
 
+  @Nullable
+  PactDocAnn getDocAnn();
+
+  @Nullable
+  PactDocStr getDocStr();
+
   @NotNull
   PactMArgs getMArgs();
 
   @Nullable
-  PactMDocOrModel getMDocOrModel();
+  PactMTypeAnn getMTypeAnn();
 
   @Nullable
-  PactMTypeAnn getMTypeAnn();
+  PactModelAnn getModelAnn();
 
   @NotNull
   PactSteps getSteps();

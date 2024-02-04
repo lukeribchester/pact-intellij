@@ -29,20 +29,32 @@ public class PactDefschemaImpl extends ASTWrapperPsiElement implements PactDefsc
 
   @Override
   @Nullable
-  public PactMDocOrModel getMDocOrModel() {
-    return findChildByClass(PactMDocOrModel.class);
+  public PactDocAnn getDocAnn() {
+    return findChildByClass(PactDocAnn.class);
   }
 
   @Override
-  @NotNull
+  @Nullable
+  public PactDocStr getDocStr() {
+    return findChildByClass(PactDocStr.class);
+  }
+
+  @Override
+  @Nullable
+  public PactModelAnn getModelAnn() {
+    return findChildByClass(PactModelAnn.class);
+  }
+
+  @Override
+  @Nullable
   public PactSchemaArgList getSchemaArgList() {
-    return findNotNullChildByClass(PactSchemaArgList.class);
+    return findChildByClass(PactSchemaArgList.class);
   }
 
   @Override
-  @NotNull
+  @Nullable
   public PsiElement getIdent() {
-    return findNotNullChildByType(IDENT);
+    return findChildByType(IDENT);
   }
 
 }

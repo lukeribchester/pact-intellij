@@ -8,6 +8,15 @@ import com.intellij.psi.PsiElement;
 public interface PactProgramList extends PsiElement {
 
   @NotNull
-  List<PactTopLevel> getTopLevelList();
+  List<PactExpr> getExprList();
+
+  @NotNull
+  List<PactInterface> getInterfaceList();
+
+  @NotNull
+  List<PactModule> getModuleList();
+
+  @NotNull
+  List<PactUse> getUseList();
 
 }

@@ -29,8 +29,14 @@ public class PactBindersImpl extends ASTWrapperPsiElement implements PactBinders
 
   @Override
   @NotNull
-  public List<PactBinder> getBinderList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactBinder.class);
+  public List<PactExpr> getExprList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactExpr.class);
+  }
+
+  @Override
+  @NotNull
+  public List<PactMTypeAnn> getMTypeAnnList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactMTypeAnn.class);
   }
 
 }

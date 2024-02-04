@@ -28,9 +28,9 @@ public class PactDefConstImpl extends ASTWrapperPsiElement implements PactDefCon
   }
 
   @Override
-  @NotNull
+  @Nullable
   public PactExpr getExpr() {
-    return findNotNullChildByClass(PactExpr.class);
+    return findChildByClass(PactExpr.class);
   }
 
   @Override
@@ -46,9 +46,9 @@ public class PactDefConstImpl extends ASTWrapperPsiElement implements PactDefCon
   }
 
   @Override
-  @NotNull
+  @Nullable
   public PsiElement getIdent() {
-    return findNotNullChildByType(IDENT);
+    return findChildByType(IDENT);
   }
 
 }

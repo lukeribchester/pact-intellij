@@ -10,7 +10,7 @@ public interface PactListExprs extends PsiElement {
   @NotNull
   PactExpr getExpr();
 
-  @NotNull
-  List<PactMCommaExpr> getMCommaExprList();
+  @Nullable
+  PactMCommaExpr getMCommaExpr();
 
 }

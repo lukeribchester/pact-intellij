@@ -29,8 +29,26 @@ public class PactProgramListImpl extends ASTWrapperPsiElement implements PactPro
 
   @Override
   @NotNull
-  public List<PactTopLevel> getTopLevelList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactTopLevel.class);
+  public List<PactExpr> getExprList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactExpr.class);
+  }
+
+  @Override
+  @NotNull
+  public List<PactInterface> getInterfaceList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactInterface.class);
+  }
+
+  @Override
+  @NotNull
+  public List<PactModule> getModuleList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactModule.class);
+  }
+
+  @Override
+  @NotNull
+  public List<PactUse> getUseList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactUse.class);
   }
 
 }

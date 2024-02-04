@@ -34,9 +34,9 @@ public class PactListExprsImpl extends ASTWrapperPsiElement implements PactListE
   }
 
   @Override
-  @NotNull
-  public List<PactMCommaExpr> getMCommaExprList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactMCommaExpr.class);
+  @Nullable
+  public PactMCommaExpr getMCommaExpr() {
+    return findChildByClass(PactMCommaExpr.class);
   }
 
 }

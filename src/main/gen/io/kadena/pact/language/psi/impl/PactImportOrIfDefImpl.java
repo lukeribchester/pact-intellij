@@ -29,8 +29,32 @@ public class PactImportOrIfDefImpl extends ASTWrapperPsiElement implements PactI
 
   @Override
   @NotNull
-  public List<PactIfDef> getIfDefList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactIfDef.class);
+  public List<PactDefConst> getDefConstList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactDefConst.class);
+  }
+
+  @Override
+  @NotNull
+  public List<PactDefschema> getDefschemaList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactDefschema.class);
+  }
+
+  @Override
+  @NotNull
+  public List<PactIfDefCap> getIfDefCapList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactIfDefCap.class);
+  }
+
+  @Override
+  @NotNull
+  public List<PactIfDefPact> getIfDefPactList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactIfDefPact.class);
+  }
+
+  @Override
+  @NotNull
+  public List<PactIfDefun> getIfDefunList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactIfDefun.class);
   }
 
   @Override

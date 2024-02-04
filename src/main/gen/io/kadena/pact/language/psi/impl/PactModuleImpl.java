@@ -29,26 +29,68 @@ public class PactModuleImpl extends ASTWrapperPsiElement implements PactModule {
 
   @Override
   @NotNull
-  public PactExtOrDefs getExtOrDefs() {
-    return findNotNullChildByClass(PactExtOrDefs.class);
+  public List<PactDefConst> getDefConstList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactDefConst.class);
   }
 
   @Override
   @NotNull
-  public PactGovernance getGovernance() {
-    return findNotNullChildByClass(PactGovernance.class);
+  public List<PactDefPact> getDefPactList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactDefPact.class);
+  }
+
+  @Override
+  @NotNull
+  public List<PactDefcap> getDefcapList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactDefcap.class);
+  }
+
+  @Override
+  @NotNull
+  public List<PactDefschema> getDefschemaList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactDefschema.class);
+  }
+
+  @Override
+  @NotNull
+  public List<PactDeftable> getDeftableList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactDeftable.class);
+  }
+
+  @Override
+  @NotNull
+  public List<PactDefun> getDefunList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactDefun.class);
   }
 
   @Override
   @Nullable
-  public PactMDocOrModel getMDocOrModel() {
-    return findChildByClass(PactMDocOrModel.class);
+  public PactDocAnn getDocAnn() {
+    return findChildByClass(PactDocAnn.class);
+  }
+
+  @Override
+  @Nullable
+  public PactDocStr getDocStr() {
+    return findChildByClass(PactDocStr.class);
   }
 
   @Override
   @NotNull
-  public PsiElement getIdent() {
-    return findNotNullChildByType(IDENT);
+  public List<PactExt> getExtList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactExt.class);
+  }
+
+  @Override
+  @Nullable
+  public PactModelAnn getModelAnn() {
+    return findChildByClass(PactModelAnn.class);
+  }
+
+  @Override
+  @Nullable
+  public PactStringRaw getStringRaw() {
+    return findChildByClass(PactStringRaw.class);
   }
 
 }

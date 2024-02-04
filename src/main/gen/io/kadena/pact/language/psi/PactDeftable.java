@@ -10,10 +10,10 @@ public interface PactDeftable extends PsiElement {
   @Nullable
   PactMDoc getMDoc();
 
-  @NotNull
+  @Nullable
   PactParsedName getParsedName();
 
-  @NotNull
+  @Nullable
   PsiElement getIdent();
 
 }

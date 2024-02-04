@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface PactBinders extends PsiElement {
 
   @NotNull
-  List<PactBinder> getBinderList();
+  List<PactExpr> getExprList();
+
+  @NotNull
+  List<PactMTypeAnn> getMTypeAnnList();
 
 }

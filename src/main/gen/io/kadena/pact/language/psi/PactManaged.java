@@ -7,10 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface PactManaged extends PsiElement {
 
-  @Nullable
-  PactParsedName getParsedName();
-
-  @Nullable
-  PsiElement getIdent();
+  @NotNull
+  List<PactParsedName> getParsedNameList();
 
 }

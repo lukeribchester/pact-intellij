@@ -17,6 +17,7 @@
     STR="regexp:(\"([^\"\\]|\\\"|\\)*\")"
     //  NUM="regexp:([0-9])"
     NUM="regexp:[-+]?[0-9]*\.?[0-9]+"
+    // TODO: Verify comments at EOF
     COMMENT="regexp:(;.*\n)"
 
     // Keywords
@@ -117,284 +118,290 @@
   ]
 }
 
-<Program> ::= ProgramList | ReplProgramList
+Program ::= !<<eof>> ProgramList | ReplProgramList
+// TODO: Refactor out PL and RPL:
+ProgramList ::= TopLevel+
 
-<ProgramList> ::= TopLevel+
+ReplProgramList ::= RTL+
 
-<ReplProgramList> ::= RTL+
+private TopLevel ::= Module
+                   | Interface
+                   | Expr
+                   | Use
 
-<TopLevel> ::= Module
-             | Interface
-             | Expr
-             | Use
+private RTL ::= ReplTopLevel
+              | "(" ReplSpecial ")"
 
-<RTL> ::= ReplTopLevel
-        | "(" ReplSpecial ")"
+private ReplTopLevel ::= TopLevel
+                       | "(" Defun ")"
+                       | "(" DefConst ")"
 
-<ReplTopLevel> ::= TopLevel
-                 | "(" Defun ")"
-                 | "(" DefConst ")"
+ReplSpecial ::= "load" STR BOOLEAN
+              | "load" STR
 
-<ReplSpecial> ::= "load" STR BOOLEAN
-                 | "load" STR
+private Governance ::= StringRaw
+                     | IDENT
+// TODO: Handle identifiers (single characters too) and single ticks:
+// https://raw.githubusercontent.com/kadena-io/pact-5/master/pact-tests/pact-tests/db.repl
+StringRaw ::= STR
+            | TICK
 
-<Governance> ::= StringRaw
-               | IDENT
+Module ::= "(" "module" IDENT Governance [MDocOrModel] ExtOrDefs ")" { pin=7 }
 
-<StringRaw> ::= STR
-              | TICK
+Interface ::= "(" "interface" IDENT [MDocOrModel] ImportOrIfDef ")" { pin=6 }
 
-<Module> ::= "(" "module" IDENT Governance [MDocOrModel] ExtOrDefs ")"
-
-<Interface> ::= "(" "interface" IDENT [MDocOrModel] ImportOrIfDef ")"
-
-<Ext> ::= Use
+Ext ::= Use
         | "(" "implements" ModQual ")"
         | "(" "bless" StringRaw ")"
-
-<Use> ::= "(" "import" ModQual ImportList ")"
+// TODO: Handle (use...):
+// https://raw.githubusercontent.com/kadena-io/pact-5/master/pact-tests/pact-tests/defpact.repl
+Use ::= "(" "import" ModQual ImportList ")"
         | "(" "import" ModQual STR ImportList ")"
 
-<ExtOrDefs> ::= (Def | Ext)+
+private ExtOrDefs ::= (Def | Ext)+
 
-<Def> ::= "(" Defun ")"
-        | "(" DefConst ")"
-        | "(" Defcap ")"
-        | "(" Defschema ")"
-        | "(" Deftable ")"
-        | "(" DefPact ")"
+private Def ::= Defun
+              | DefConst
+              | Defcap
+              | Defschema
+              | Deftable
+              | DefPact
+
+ImportOrIfDef ::= (IfDef | Use)+
+
+private IfDef ::= IfDefun
+                | DefConst
+                | IfDefCap
+                | Defschema
+                | IfDefPact
+
+IfDefun   ::= "(" "defun" IDENT [MTypeAnn] "(" MArgs ")" [MDocOrModel] ")" { pin=9 }
+IfDefCap  ::= "(" "defcap" IDENT [MTypeAnn] "(" MArgs ")" [MDocOrModel] [MDCapMeta] ")" { pin=10 }
+IfDefPact ::= "(" "defpact" IDENT [MTypeAnn] "(" MArgs ")" [MDocOrModel] ")" { pin=9 }
+
+ImportList ::= "[" ImportNames "]"
+
+ImportNames ::= IDENT+
+
+Defun     ::= "(" "defun" IDENT [MTypeAnn] "(" [MArgs] ")" [MDocOrModel] Block ")" { pin=9 }
+Defcap    ::= "(" "defcap" IDENT [MTypeAnn] "(" [MArgs] ")" [MDocOrModel] [MDCapMeta] Block ")" { pin=10 }
+DefPact   ::= "(" "defpact" IDENT [MTypeAnn] "(" MArgs ")" [MDocOrModel] Steps ")" { pin=9 }
+DefConst  ::= "(" "defconst" IDENT [MTypeAnn] Expr [MDoc] ")" { pin=2 }
+Defschema ::= "(" "defschema" IDENT [MDocOrModel] SchemaArgList ")" { pin=2 }
+Deftable  ::= "(" "deftable" IDENT ":" "{" ParsedName "}" [MDoc] ")" { pin=2 }
+
+Steps ::= Step+
+
+Step ::= "(" "step" Expr [MModel] ")"
+       | "(" "step" Expr Expr [MModel] ")"
+       | "(" "step-with-rollback" Expr Expr [MModel] ")"
+       | "(" "step-with-rollback" Expr Expr Expr [MModel] ")"
+
+MDCapMeta ::= Managed
+            | Event
+
+Managed ::= "@managed" (IDENT ParsedName)*
+
+Event ::= "@event"
+
+MArgs ::= MArg*
+
+MArg ::= IDENT ":" Type
+       | IDENT
+
+SchemaArgList ::= SchemaArg (SchemaArg) * // Verified
+
+SchemaArg ::= IDENT (":" Type)?
+
+Type ::= "[" Type "]"
+       | "module" "{" ModuleNames "}"
+       | IDENT "{" ParsedTyName "}"
+       | IDENT
+
+ModuleNames ::= ModQual ("," ModQual) *  // Verified
+
+DocAnn ::= "@doc" STR
+
+DocStr ::= STR
+
+MModel ::= ModelAnn
+
+ModelAnn ::= "@model" "[" PactFVModels "]"
+
+private MDocOrModel ::= DocAnn ModelAnn
+                      | ModelAnn DocAnn
+                      | DocAnn
+                      | ModelAnn
+                      | DocStr
+
+MDoc ::= DocAnn
+       | DocStr
+
+MTypeAnn ::= ":" Type
+
+Block ::= BlockBody
+
+BlockBody ::= Expr+
+
+Expr ::= "(" SExpr ")"
+       | Atom
+
+private upper SExpr ::= LamExpr
+                      | LetExpr
+                      | IfExpr
+                      | TryExpr
+                      | ProgNExpr
+                      | GenAppExpr
+                      | SuspendExpr
+                      | CapExpr
+
+// TODO: Empty Lists (fixed, verify):
+// https://raw.githubusercontent.com/kadena-io/pact-5/master/pact-tests/pact-tests/lists.repl
+List ::= "[" [ListExprs] "]"
+
+ListExprs ::= Expr MCommaExpr? // Check * ?
+
+MCommaExpr ::= "," ExprCommaSep
+             | AppList
+
+ExprCommaSep ::= Expr ("," Expr) * // Verified
+
+upper LamExpr ::= "lambda" "(" LamArgs ")" Block
+
+// TODO: Fix if-statement syntax:
+// https://raw.githubusercontent.com/kadena-io/pact-5/master/pact-tests/pact-tests/signatures.repl
+upper IfExpr ::= "if" Expr Expr Expr
+
+upper TryExpr ::= "try" Expr Expr
+
+upper SuspendExpr ::= "suspend" Expr
+
+upper CapExpr ::= CapForm
+
+CapForm ::= "with-capability" Expr Block
+          | "create-user-guard" "(" ParsedName AppList ")"
+
+// TODO: Fix lambda syntax:
+// https://raw.githubusercontent.com/kadena-io/pact-5/master/pact-tests/pact-tests/lambda.repl
+LamArgs ::= LamArg (LamArg)* // Verified
+LamArg ::= IDENT (":" Type)?
 
 
-<ImportOrIfDef> ::= (IfDef | Use)+
+upper LetExpr ::= LET_KEYWORD "(" Binders ")" Block // Let
 
+//Binders ::= Binder (Binder)* // Verified
+//Binder ::= "(" IDENT [MTypeAnn] Expr ")" // Type annotation fault
 
-<IfDef> ::= "(" IfDefun ")"
-          | "(" DefConst ")"
-          | "(" IfDefCap ")"
-          | "(" Defschema ")"
-          | "(" IfDefPact ")"
+//Binders ::= Binder+ // Verified
+Binders ::= ("(" IDENT MTypeAnn Expr ")")+ // Type annotation fault
 
-<IfDefun> ::= "defun" IDENT [MTypeAnn] "(" MArgs ")" [MDocOrModel]
+upper GenAppExpr ::= Expr AppBindList // Check * ?
 
-<IfDefCap> ::= "defcap" IDENT [MTypeAnn] "(" MArgs ")" [MDocOrModel] MDCapMeta
+upper ProgNExpr ::= "progn" BlockBody
 
-<IfDefPact> ::= "defpact" IDENT [MTypeAnn] "(" MArgs ")" [MDocOrModel]
+AppList ::= Expr* // Was +
 
-<ImportList> ::= "[" ImportNames "]"
+AppBindList ::= (Expr | BindingForm)*
 
-<ImportNames> ::= IDENT+
+BindingForm ::= "{" BindPairs "}"
 
-<DefConst> ::= "defconst" IDENT [MTypeAnn] Expr [MDoc]
+BindPair ::= STR ":=" MArg
+           | TICK ":=" MArg
 
-<Defun> ::= "defun" IDENT [MTypeAnn] "(" [MArgs] ")" [MDocOrModel] Block
+BindPairs ::= BindPair ("," BindPair)* // Verified
 
-<Defschema> ::= "defschema" IDENT [MDocOrModel] SchemaArgList
+Atom ::= Var
+       | Number
+       | String
+       | List
+       | Bool
+       | Operator
+       | Object
+       | "(" ")"
 
-<Deftable> ::= "deftable" IDENT ":" "{" ParsedName "}" [MDoc]
+Operator ::= "and"
+           | "or"
+           | "enforce"
+           | "enforce-one"
 
-<Defcap> ::= "defcap" IDENT [MTypeAnn] "(" [MArgs] ")" [MDocOrModel] [MDCapMeta] Block
+Bool ::= "true"
+       | "false"
 
-<DefPact> ::= "defpact" IDENT [MTypeAnn] "(" MArgs ")" [MDocOrModel] Steps
+Var ::= IDENT "." ModQual
+      | IDENT
+      | IDENT "::" IDENT
+// TODO: Fix unexpected '::':
+// https://raw.githubusercontent.com/kadena-io/pact-5/master/pact-tests/pact-tests/nested-defpacts.repl
+ParsedName ::= IDENT "." ModQual
+             | IDENT
+             | IDENT "::" IDENT
 
-<Steps> ::= Step+
+ParsedTyName ::= IDENT "." ModQual
+               | IDENT
 
-<Step> ::= "(" "step" Expr [MModel] ")"
-         | "(" "step" Expr Expr [MModel] ")"
-         | "(" "step-with-rollback" Expr Expr [MModel] ")"
-         | "(" "step-with-rollback" Expr Expr Expr [MModel] ")"
+ModQual ::= IDENT "." IDENT
+          | IDENT
 
-<MDCapMeta> ::= Managed
-              | Event
+Number ::= NUM+ "." NUM+
+         | NUM+
 
-<Managed> ::= "@managed"
-            | "@managed" IDENT ParsedName
+String ::= STR
+         | TICK
 
-<Event> ::= "@event"
+Object ::= "{" ObjectBody "}"
 
-<MArgs> ::= MArg+
+ObjectBody ::= FieldPairs
 
-<MArg> ::= IDENT ":" Type
-         | IDENT
+FieldPair ::= STR ":" Expr
+            | TICK ":" Expr
 
-<SchemaArgList> ::= SchemaArg (SchemaArg)*
+FieldPairs ::= FieldPair ("," FieldPair)* // Verified
 
-<SchemaArg> ::= IDENT (":" Type)?
+PactFVModels ::= PropExprList
 
-<Type> ::= "[" Type "]"
-         | "module" "{" ModuleNames "}"
-         | IDENT "{" ParsedTyName "}"
-         | IDENT
+PropExprList ::= PropExpr* // Was +
+// https://github.com/kadena-io/pact-5/blob/master/pact-tests/pact-tests/fv-syntax-regression.repl
 
-<ModuleNames> ::= ModQual ("," ModQual)*
+PropExpr ::= PropAtom
+           | "(" PropExprList ")"
+           | "[" PropExprList "]"
 
-<DocAnn> ::= "@doc" STR
+PropAtom ::= FVVar
+           | FVNumber
+           | FVString
+           | FVKeyword
+           | FVDelim
+           | FVBool
 
-<DocStr> ::= STR
+FVKeyword ::= "let"
+            | "lambda"
+            | "if"
+            | "progn"
+            | "suspend"
+            | "try"
+            | "enforce"
+            | "enforce-one"
+            | "and"
+            | "or"
+            | "create-user-guard"
+            | "with-capability"
 
-<MModel> ::= ModelAnn
+FVDelim ::= "{"
+          | "}"
+          | ":"
+          | ","
 
-<ModelAnn> ::= "@model" "[" PactFVModels "]"
-
-<MDocOrModel> ::= DocAnn ModelAnn
-                | ModelAnn DocAnn
-                | DocAnn
-                | ModelAnn
-                | DocStr
-
-<MDoc> ::= DocAnn
-         | DocStr
-
-<MTypeAnn> ::= ":" Type
-
-<Block> ::= BlockBody
-
-<BlockBody> ::= Expr+
-
-<Expr> ::= "(" SExpr ")"
-         | Atom
-
-<SExpr> ::= LamExpr
-          | LetExpr
-          | IfExpr
-          | TryExpr
-          | ProgNExpr
-          | GenAppExpr
-          | SuspendExpr
-          | CapExpr
-
-<List> ::= "[" ListExprs "]"
-
-<ListExprs> ::= Expr MCommaExpr* // Check *
-
-<MCommaExpr> ::= "," ExprCommaSep
-               | AppList
-
-<ExprCommaSep> ::= Expr ("," Expr)*
-
-<LamExpr> ::= "lambda" "(" LamArgs ")" Block
-
-<IfExpr> ::= "if" Expr Expr Expr
-
-<TryExpr> ::= "try" Expr Expr
-
-<SuspendExpr> ::= "suspend" Expr
-
-<CapExpr> ::= CapForm
-
-<CapForm> ::= "with-capability" Expr Block
-            | "create-user-guard" "(" ParsedName AppList ")"
-
-<LamArgs> ::= LamArg ("," LamArg)*
-<LamArg> ::= IDENT (":" Type)?
-
-<LetExpr> ::= LET_KEYWORD "(" Binders ")" Block // Let
-
-<Binders> ::= Binder (Binder)*
-<Binder> ::= "(" IDENT [MTypeAnn] Expr ")"
-
-<GenAppExpr> ::= Expr AppBindList // Check *
-
-<ProgNExpr> ::= "progn" BlockBody
-
-<AppList> ::= Expr+
-
-<AppBindList> ::= (Expr | BindingForm)+
-
-<BindingForm> ::= "{" BindPairs "}"
-
-<BindPair> ::= STR ":=" MArg
-             | TICK ":=" MArg
-
-<BindPairs> ::= BindPair ("," BindPair)*
-
-<Atom> ::= Var
-         | Number
-         | String
-         | List
-         | Bool
-         | Operator
-         | Object
-         | "(" ")"
-
-<Operator> ::= "and"
-             | "or"
-             | "enforce"
-             | "enforce-one"
-
-<Bool> ::= "true"
+FVBool ::= "true"
          | "false"
 
-<Var> ::= IDENT "." ModQual
+FVNumber ::= NUM "." NUM
+           | NUM
+
+FVString ::= STR
+           | TICK
+
+FVVar ::= IDENT "." ModQual
         | IDENT
         | IDENT "::" IDENT
 
-<ParsedName> ::= IDENT "." ModQual
-               | IDENT
-               | IDENT "::" IDENT
-
-<ParsedTyName> ::= IDENT "." ModQual
-                 | IDENT
-
-<ModQual> ::= IDENT "." IDENT
-            | IDENT
-
-<Number> ::= NUM+ "." NUM+
-           | NUM+
-
-<String> ::= STR
-           | TICK
-
-<Object> ::= "{" ObjectBody "}"
-
-<ObjectBody> ::= FieldPairs
-
-<FieldPair> ::= STR ":" Expr
-              | TICK ":" Expr
-
-<FieldPairs> ::= FieldPair ("," FieldPair)*
-
-<PactFVModels> ::= PropExprList
-
-<PropExprList> ::= PropExpr+
-
-<PropExpr> ::= PropAtom
-             | "(" PropExprList ")"
-             | "[" PropExprList "]"
-
-<PropAtom> ::= FVVar
-             | FVNumber
-             | FVString
-             | FVKeyword
-             | FVDelim
-             | FVBool
-
-<FVKeyword> ::= "let"
-              | "lambda"
-              | "if"
-              | "progn"
-              | "suspend"
-              | "try"
-              | "enforce"
-              | "enforce-one"
-              | "and"
-              | "or"
-              | "create-user-guard"
-              | "with-capability"
-
-<FVDelim> ::= "{"
-            | "}"
-            | ":"
-            | ","
-
-<FVBool> ::= "true"
-           | "false"
-
-<FVNumber> ::= NUM "." NUM
-             | NUM
-
-<FVString> ::= STR
-             | TICK
-
-<FVVar> ::= IDENT "." ModQual
-          | IDENT
-          | IDENT "::" IDENT
+// TODO: https://raw.githubusercontent.com/kadena-io/pact-5/master/pact-tests/pact-tests/yield.repl

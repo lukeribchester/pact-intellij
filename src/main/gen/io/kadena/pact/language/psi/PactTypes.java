@@ -11,7 +11,6 @@ public interface PactTypes {
   IElementType APP_BIND_LIST = new PactElementType("APP_BIND_LIST");
   IElementType APP_LIST = new PactElementType("APP_LIST");
   IElementType ATOM = new PactElementType("ATOM");
-  IElementType BINDER = new PactElementType("BINDER");
   IElementType BINDERS = new PactElementType("BINDERS");
   IElementType BINDING_FORM = new PactElementType("BINDING_FORM");
   IElementType BIND_PAIR = new PactElementType("BIND_PAIR");
@@ -21,7 +20,6 @@ public interface PactTypes {
   IElementType BOOL = new PactElementType("BOOL");
   IElementType CAP_EXPR = new PactElementType("CAP_EXPR");
   IElementType CAP_FORM = new PactElementType("CAP_FORM");
-  IElementType DEF = new PactElementType("DEF");
   IElementType DEFCAP = new PactElementType("DEFCAP");
   IElementType DEFSCHEMA = new PactElementType("DEFSCHEMA");
   IElementType DEFTABLE = new PactElementType("DEFTABLE");
@@ -34,7 +32,6 @@ public interface PactTypes {
   IElementType EXPR = new PactElementType("EXPR");
   IElementType EXPR_COMMA_SEP = new PactElementType("EXPR_COMMA_SEP");
   IElementType EXT = new PactElementType("EXT");
-  IElementType EXT_OR_DEFS = new PactElementType("EXT_OR_DEFS");
   IElementType FIELD_PAIR = new PactElementType("FIELD_PAIR");
   IElementType FIELD_PAIRS = new PactElementType("FIELD_PAIRS");
   IElementType FV_BOOL = new PactElementType("FV_BOOL");
@@ -44,8 +41,6 @@ public interface PactTypes {
   IElementType FV_STRING = new PactElementType("FV_STRING");
   IElementType FV_VAR = new PactElementType("FV_VAR");
   IElementType GEN_APP_EXPR = new PactElementType("GEN_APP_EXPR");
-  IElementType GOVERNANCE = new PactElementType("GOVERNANCE");
-  IElementType IF_DEF = new PactElementType("IF_DEF");
   IElementType IF_DEFUN = new PactElementType("IF_DEFUN");
   IElementType IF_DEF_CAP = new PactElementType("IF_DEF_CAP");
   IElementType IF_DEF_PACT = new PactElementType("IF_DEF_PACT");
@@ -70,7 +65,6 @@ public interface PactTypes {
   IElementType M_ARGS = new PactElementType("M_ARGS");
   IElementType M_COMMA_EXPR = new PactElementType("M_COMMA_EXPR");
   IElementType M_DOC = new PactElementType("M_DOC");
-  IElementType M_DOC_OR_MODEL = new PactElementType("M_DOC_OR_MODEL");
   IElementType M_MODEL = new PactElementType("M_MODEL");
   IElementType M_TYPE_ANN = new PactElementType("M_TYPE_ANN");
   IElementType NUMBER = new PactElementType("NUMBER");
@@ -87,8 +81,6 @@ public interface PactTypes {
   IElementType PROP_EXPR_LIST = new PactElementType("PROP_EXPR_LIST");
   IElementType REPL_PROGRAM_LIST = new PactElementType("REPL_PROGRAM_LIST");
   IElementType REPL_SPECIAL = new PactElementType("REPL_SPECIAL");
-  IElementType REPL_TOP_LEVEL = new PactElementType("REPL_TOP_LEVEL");
-  IElementType RTL = new PactElementType("RTL");
   IElementType SCHEMA_ARG = new PactElementType("SCHEMA_ARG");
   IElementType SCHEMA_ARG_LIST = new PactElementType("SCHEMA_ARG_LIST");
   IElementType STEP = new PactElementType("STEP");
@@ -96,8 +88,6 @@ public interface PactTypes {
   IElementType STRING = new PactElementType("STRING");
   IElementType STRING_RAW = new PactElementType("STRING_RAW");
   IElementType SUSPEND_EXPR = new PactElementType("SUSPEND_EXPR");
-  IElementType S_EXPR = new PactElementType("S_EXPR");
-  IElementType TOP_LEVEL = new PactElementType("TOP_LEVEL");
   IElementType TRY_EXPR = new PactElementType("TRY_EXPR");
   IElementType TYPE = new PactElementType("TYPE");
   IElementType USE = new PactElementType("USE");
@@ -165,9 +155,6 @@ public interface PactTypes {
       else if (type == ATOM) {
         return new PactAtomImpl(node);
       }
-      else if (type == BINDER) {
-        return new PactBinderImpl(node);
-      }
       else if (type == BINDERS) {
         return new PactBindersImpl(node);
       }
@@ -194,9 +181,6 @@ public interface PactTypes {
       }
       else if (type == CAP_FORM) {
         return new PactCapFormImpl(node);
-      }
-      else if (type == DEF) {
-        return new PactDefImpl(node);
       }
       else if (type == DEFCAP) {
         return new PactDefcapImpl(node);
@@ -234,9 +218,6 @@ public interface PactTypes {
       else if (type == EXT) {
         return new PactExtImpl(node);
       }
-      else if (type == EXT_OR_DEFS) {
-        return new PactExtOrDefsImpl(node);
-      }
       else if (type == FIELD_PAIR) {
         return new PactFieldPairImpl(node);
       }
@@ -263,12 +244,6 @@ public interface PactTypes {
       }
       else if (type == GEN_APP_EXPR) {
         return new PactGenAppExprImpl(node);
-      }
-      else if (type == GOVERNANCE) {
-        return new PactGovernanceImpl(node);
-      }
-      else if (type == IF_DEF) {
-        return new PactIfDefImpl(node);
       }
       else if (type == IF_DEFUN) {
         return new PactIfDefunImpl(node);
@@ -342,9 +317,6 @@ public interface PactTypes {
       else if (type == M_DOC) {
         return new PactMDocImpl(node);
       }
-      else if (type == M_DOC_OR_MODEL) {
-        return new PactMDocOrModelImpl(node);
-      }
       else if (type == M_MODEL) {
         return new PactMModelImpl(node);
       }
@@ -393,12 +365,6 @@ public interface PactTypes {
       else if (type == REPL_SPECIAL) {
         return new PactReplSpecialImpl(node);
       }
-      else if (type == REPL_TOP_LEVEL) {
-        return new PactReplTopLevelImpl(node);
-      }
-      else if (type == RTL) {
-        return new PactRtlImpl(node);
-      }
       else if (type == SCHEMA_ARG) {
         return new PactSchemaArgImpl(node);
       }
@@ -419,12 +385,6 @@ public interface PactTypes {
       }
       else if (type == SUSPEND_EXPR) {
         return new PactSuspendExprImpl(node);
-      }
-      else if (type == S_EXPR) {
-        return new PactSExprImpl(node);
-      }
-      else if (type == TOP_LEVEL) {
-        return new PactTopLevelImpl(node);
       }
       else if (type == TRY_EXPR) {
         return new PactTryExprImpl(node);

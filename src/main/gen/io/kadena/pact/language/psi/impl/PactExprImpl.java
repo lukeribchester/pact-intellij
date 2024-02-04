@@ -33,10 +33,4 @@ public class PactExprImpl extends ASTWrapperPsiElement implements PactExpr {
     return findChildByClass(PactAtom.class);
   }
 
-  @Override
-  @Nullable
-  public PactSExpr getSExpr() {
-    return findChildByClass(PactSExpr.class);
-  }
-
 }

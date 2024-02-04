@@ -11,13 +11,19 @@ public interface PactDefun extends PsiElement {
   PactBlock getBlock();
 
   @Nullable
+  PactDocAnn getDocAnn();
+
+  @Nullable
+  PactDocStr getDocStr();
+
+  @Nullable
   PactMArgs getMArgs();
 
   @Nullable
-  PactMDocOrModel getMDocOrModel();
+  PactMTypeAnn getMTypeAnn();
 
   @Nullable
-  PactMTypeAnn getMTypeAnn();
+  PactModelAnn getModelAnn();
 
   @NotNull
   PsiElement getIdent();
