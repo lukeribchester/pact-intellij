@@ -24,7 +24,7 @@ internal class PactColorSettingsPage : ColorSettingsPage {
 
     @NotNull
     override fun getDemoText(): String {
-        return ""
+        return PACT_EXAMPLE
     }
 
     @Nullable
