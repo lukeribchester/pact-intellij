@@ -36,6 +36,10 @@
                 language="Pact"
                 implementationClass="io.kadena.pact.ide.highlighting.PactSyntaxHighlighterFactory"/>
 
+        <!-- Color Settings -->
+        <colorSettingsPage
+                implementation="io.kadena.pact.ide.highlighting.PactColorSettingsPage"/>
+
         <!-- Language Server (LSP) -->
         <platform.lsp.serverSupportProvider
                 implementation="io.kadena.pact.lsp.PactLspServerSupportProvider"/>
