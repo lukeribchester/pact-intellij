@@ -31,6 +31,11 @@
                 language="Pact"
                 implementationClass="io.kadena.pact.language.PactParserDefinition"/>
 
+        <!-- Syntax Highlighter -->
+        <lang.syntaxHighlighterFactory
+                language="Pact"
+                implementationClass="io.kadena.pact.ide.highlighting.PactSyntaxHighlighterFactory"/>
+
         <!-- Language Server (LSP) -->
         <platform.lsp.serverSupportProvider
                 implementation="io.kadena.pact.lsp.PactLspServerSupportProvider"/>
