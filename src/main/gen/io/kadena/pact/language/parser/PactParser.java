@@ -752,16 +752,79 @@ public class PactParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // NUM "." NUM
-  //            | NUM
+  // ["+" | "-"] NUM+ ["." NUM+]
   public static boolean FVNumber(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "FVNumber")) return false;
-    if (!nextTokenIs(b, NUM)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, FV_NUMBER, "<fv number>");
+    r = FVNumber_0(b, l + 1);
+    r = r && FVNumber_1(b, l + 1);
+    r = r && FVNumber_2(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // ["+" | "-"]
+  private static boolean FVNumber_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "FVNumber_0")) return false;
+    FVNumber_0_0(b, l + 1);
+    return true;
+  }
+
+  // "+" | "-"
+  private static boolean FVNumber_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "FVNumber_0_0")) return false;
+    boolean r;
+    r = consumeToken(b, "+");
+    if (!r) r = consumeToken(b, "-");
+    return r;
+  }
+
+  // NUM+
+  private static boolean FVNumber_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "FVNumber_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = parseTokens(b, 0, NUM, DOT, NUM);
-    if (!r) r = consumeToken(b, NUM);
-    exit_section_(b, m, FV_NUMBER, r);
+    r = consumeToken(b, NUM);
+    while (r) {
+      int c = current_position_(b);
+      if (!consumeToken(b, NUM)) break;
+      if (!empty_element_parsed_guard_(b, "FVNumber_1", c)) break;
+    }
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // ["." NUM+]
+  private static boolean FVNumber_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "FVNumber_2")) return false;
+    FVNumber_2_0(b, l + 1);
+    return true;
+  }
+
+  // "." NUM+
+  private static boolean FVNumber_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "FVNumber_2_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, DOT);
+    r = r && FVNumber_2_0_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // NUM+
+  private static boolean FVNumber_2_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "FVNumber_2_0_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, NUM);
+    while (r) {
+      int c = current_position_(b);
+      if (!consumeToken(b, NUM)) break;
+      if (!empty_element_parsed_guard_(b, "FVNumber_2_0_1", c)) break;
+    }
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -1530,16 +1593,79 @@ public class PactParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // NUM "." NUM
-  //          | NUM
+  // ["+" | "-"] NUM+ ["." NUM+]
   public static boolean Number(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Number")) return false;
-    if (!nextTokenIs(b, NUM)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, NUMBER, "<number>");
+    r = Number_0(b, l + 1);
+    r = r && Number_1(b, l + 1);
+    r = r && Number_2(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // ["+" | "-"]
+  private static boolean Number_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Number_0")) return false;
+    Number_0_0(b, l + 1);
+    return true;
+  }
+
+  // "+" | "-"
+  private static boolean Number_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Number_0_0")) return false;
+    boolean r;
+    r = consumeToken(b, "+");
+    if (!r) r = consumeToken(b, "-");
+    return r;
+  }
+
+  // NUM+
+  private static boolean Number_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Number_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = parseTokens(b, 0, NUM, DOT, NUM);
-    if (!r) r = consumeToken(b, NUM);
-    exit_section_(b, m, NUMBER, r);
+    r = consumeToken(b, NUM);
+    while (r) {
+      int c = current_position_(b);
+      if (!consumeToken(b, NUM)) break;
+      if (!empty_element_parsed_guard_(b, "Number_1", c)) break;
+    }
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // ["." NUM+]
+  private static boolean Number_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Number_2")) return false;
+    Number_2_0(b, l + 1);
+    return true;
+  }
+
+  // "." NUM+
+  private static boolean Number_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Number_2_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, DOT);
+    r = r && Number_2_0_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // NUM+
+  private static boolean Number_2_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Number_2_0_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, NUM);
+    while (r) {
+      int c = current_position_(b);
+      if (!consumeToken(b, NUM)) break;
+      if (!empty_element_parsed_guard_(b, "Number_2_0_1", c)) break;
+    }
+    exit_section_(b, m, null, r);
     return r;
   }
 

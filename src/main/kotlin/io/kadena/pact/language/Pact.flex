@@ -21,7 +21,7 @@ WHITE_SPACE=[\ \n\t\f]
 // Lexer.x
 STR=(\"([^\"\\]|\\\"|\\)*\")
 NUM=([0-9])
-COMMENT=(;.*\n)
+COMMENT=(;.*\n*)
 
 LET_KEYWORD=([let*]|[let])
 IF_KEYWORD="if"
@@ -57,7 +57,7 @@ TRY_KEYWORD="try"
 BLOCK_INTRO_KEYWORD="progn"
 SUSPEND_KEYWORD="suspend"
 
-TICK="'"
+TICK='[a-zA-Z][a-zA-Z 0-9\-_]*
 OPEN_PARENS="("
 CLOSE_PARENS=")"
 OPEN_BRACE="{"

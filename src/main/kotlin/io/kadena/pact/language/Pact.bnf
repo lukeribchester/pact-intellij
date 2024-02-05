@@ -15,7 +15,7 @@
   tokens = [
     // Lexer.x
     STR="regexp:(\"([^\"\\]|\\\"|\\)*\")"
-    NUM="regexp:-?[0-9]+"
+    NUM="regexp:[0-9]"
     COMMENT="regexp:(;.*\n*)"
 
     // Keywords
@@ -337,8 +337,7 @@ ParsedTyName ::= IDENT "." ModQual
 ModQual ::= IDENT "." IDENT
           | IDENT
 
-Number ::= NUM "." NUM
-         | NUM
+Number ::= ["+" | "-"] NUM+ ["." NUM+]
 
 String ::= STR
          | TICK
@@ -389,8 +388,7 @@ FVDelim ::= "{"
 FVBool ::= "true"
          | "false"
 
-FVNumber ::= NUM "." NUM
-           | NUM
+FVNumber ::= ["+" | "-"] NUM+ ["." NUM+]
 
 FVString ::= STR
            | TICK
