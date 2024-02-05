@@ -23,6 +23,15 @@ class PactSyntaxHighlighter : SyntaxHighlighterBase() {
         if (tokenType == PactTypes.COMMENT) {
             return COMMENT_KEYS
         }
+        if (tokenType == PactTypes.STR) {
+            return STRING_KEYS
+        }
+        if (tokenType == PactTypes.NUM) {
+            return NUM_KEYS
+        }
+        if (tokenType == PactTypes.IDENT) {
+            return IDEN_KEYS
+        }
         if (tokenType == TokenType.BAD_CHARACTER) {
             return BAD_CHAR_KEYS
         }
@@ -33,12 +42,24 @@ class PactSyntaxHighlighter : SyntaxHighlighterBase() {
         val COMMENT: TextAttributesKey = createTextAttributesKey(
             "PACT_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT
         )
+        val STRING: TextAttributesKey = createTextAttributesKey(
+            "PACT_STRING", DefaultLanguageHighlighterColors.STRING
+        )
+        val NUM: TextAttributesKey = createTextAttributesKey(
+            "PACT_NUM", DefaultLanguageHighlighterColors.NUMBER
+        )
+        val IDEN: TextAttributesKey = createTextAttributesKey(
+            "PACT_IDEN", DefaultLanguageHighlighterColors.IDENTIFIER
+        )
         val BAD_CHARACTER: TextAttributesKey = createTextAttributesKey(
             "PACT_BAD_CHARACTER", HighlighterColors.BAD_CHARACTER
         )
 
         private val BAD_CHAR_KEYS = arrayOf<TextAttributesKey?>(BAD_CHARACTER)
         private val COMMENT_KEYS = arrayOf<TextAttributesKey?>(COMMENT)
+        private val STRING_KEYS = arrayOf<TextAttributesKey?>(STRING)
+        private val NUM_KEYS = arrayOf<TextAttributesKey?>(NUM)
+        private val IDEN_KEYS = arrayOf<TextAttributesKey?>(IDEN)
         private val EMPTY_KEYS = arrayOfNulls<TextAttributesKey>(0)
     }
 }

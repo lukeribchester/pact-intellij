@@ -47,7 +47,11 @@ internal class PactColorSettingsPage : ColorSettingsPage {
 
     companion object {
         private val DESCRIPTORS = arrayOf<AttributesDescriptor>(
-            AttributesDescriptor("Bad value", PactSyntaxHighlighter.BAD_CHARACTER)
+            AttributesDescriptor("Comment", PactSyntaxHighlighter.COMMENT),
+            AttributesDescriptor("String", PactSyntaxHighlighter.STRING),
+            AttributesDescriptor("Number", PactSyntaxHighlighter.NUM),
+            AttributesDescriptor("Identifier", PactSyntaxHighlighter.IDEN),
+            AttributesDescriptor("Bad value", PactSyntaxHighlighter.BAD_CHARACTER),
         )
     }
 }
