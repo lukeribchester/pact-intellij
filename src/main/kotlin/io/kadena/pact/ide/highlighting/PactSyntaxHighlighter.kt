@@ -30,10 +30,10 @@ class PactSyntaxHighlighter : SyntaxHighlighterBase() {
     }
 
     companion object {
-        private val COMMENT: TextAttributesKey = createTextAttributesKey(
+        val COMMENT: TextAttributesKey = createTextAttributesKey(
             "PACT_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT
         )
-        private val BAD_CHARACTER: TextAttributesKey = createTextAttributesKey(
+        val BAD_CHARACTER: TextAttributesKey = createTextAttributesKey(
             "PACT_BAD_CHARACTER", HighlighterColors.BAD_CHARACTER
         )
 
