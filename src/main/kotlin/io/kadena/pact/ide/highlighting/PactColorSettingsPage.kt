@@ -2,10 +2,12 @@ package io.kadena.pact.ide.highlighting
 
 import com.intellij.openapi.editor.colors.TextAttributesKey
 import com.intellij.openapi.fileTypes.SyntaxHighlighter
+import com.intellij.openapi.fileTypes.SyntaxHighlighterFactory
 import com.intellij.openapi.options.colors.AttributesDescriptor
 import com.intellij.openapi.options.colors.ColorDescriptor
 import com.intellij.openapi.options.colors.ColorSettingsPage
 import io.kadena.pact.PactIcons
+import io.kadena.pact.language.PactLanguage
 import org.jetbrains.annotations.NotNull
 import org.jetbrains.annotations.Nullable
 import javax.swing.Icon
@@ -13,45 +15,31 @@ import javax.swing.Icon
 
 internal class PactColorSettingsPage : ColorSettingsPage {
     @Nullable
-    override fun getIcon(): Icon {
-        return PactIcons.FILE
-    }
+    override fun getIcon(): Icon = PactIcons.FILE
 
     @NotNull
-    override fun getHighlighter(): SyntaxHighlighter {
-        return PactSyntaxHighlighter()
-    }
+    override fun getHighlighter(): SyntaxHighlighter =
+        SyntaxHighlighterFactory.getSyntaxHighlighter(PactLanguage, null, null)
 
     @NotNull
-    override fun getDemoText(): String {
-        return PACT_EXAMPLE
-    }
+    override fun getDemoText(): String = PACT_EXAMPLE
 
     @Nullable
-    override fun getAdditionalHighlightingTagToDescriptorMap(): Map<String, TextAttributesKey>? {
-        return null
-    }
+    override fun getAdditionalHighlightingTagToDescriptorMap(): Map<String, TextAttributesKey>? = null
 
-    override fun getAttributeDescriptors(): Array<out AttributesDescriptor> {
-        return DESCRIPTORS
-    }
+    override fun getAttributeDescriptors(): Array<out AttributesDescriptor> = DESCRIPTORS
 
-    override fun getColorDescriptors(): Array<out ColorDescriptor> {
-        return ColorDescriptor.EMPTY_ARRAY
-    }
+    override fun getColorDescriptors(): Array<out ColorDescriptor> = ColorDescriptor.EMPTY_ARRAY
 
     @NotNull
-    override fun getDisplayName(): String {
-        return "Pact"
-    }
+    override fun getDisplayName(): String = PactLanguage.displayName
 
-    companion object {
-        private val DESCRIPTORS = arrayOf<AttributesDescriptor>(
-            AttributesDescriptor("Comment", PactSyntaxHighlighter.COMMENT),
-            AttributesDescriptor("String", PactSyntaxHighlighter.STRING),
-            AttributesDescriptor("Number", PactSyntaxHighlighter.NUM),
-            AttributesDescriptor("Identifier", PactSyntaxHighlighter.IDEN),
-            AttributesDescriptor("Bad value", PactSyntaxHighlighter.BAD_CHARACTER),
-        )
-    }
 }
+
+private val DESCRIPTORS = arrayOf(
+    AttributesDescriptor("Comment", PactColors.COMMENT),
+    AttributesDescriptor("String", PactColors.STRING),
+    AttributesDescriptor("Number", PactColors.NUM),
+    AttributesDescriptor("Identifier", PactColors.IDEN),
+    AttributesDescriptor("Bad value", PactColors.BAD_CHARACTER),
+)
