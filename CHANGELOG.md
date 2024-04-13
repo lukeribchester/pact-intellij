@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+### Changed
+
+- Updated the IntelliJ Platform version compatibility range
+
 ## [0.1.0] - 2024-01-22
 
 ### Added
