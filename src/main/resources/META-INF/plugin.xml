@@ -1,6 +1,6 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>io.kadena.pact.intellij</id>
+    <id>io.kadena.pact</id>
     <name>Pact</name>
     <vendor>Kadena</vendor>
 
@@ -8,25 +8,29 @@
     <depends>com.intellij.modules.ultimate</depends>
 
     <extensions defaultExtensionNs="com.intellij">
+        <!-- File Type -->
         <fileType
                 name="Pact File"
-                implementationClass="io.kadena.pact.intellij.PactFileType"
+                implementationClass="io.kadena.pact.PactFileType"
                 fieldName="INSTANCE"
                 language="Pact"
                 extensions="pact"
         />
 
-        <!-- LSP -->
-        <platform.lsp.serverSupportProvider
-                implementation="io.kadena.pact.intellij.ide.lsp.PactLspServerSupportProvider"
+        <!-- Application Settings -->
+        <applicationService
+                serviceImplementation="io.kadena.pact.ide.settings.AppSettingsState"
         />
 
-<!--        <lang.syntaxHighlighterFactory-->
-<!--                language="Pact"-->
-<!--                implementationClass="io.kadena.pact.intellij.language.PactSyntaxHighlighterFactory"-->
-<!--        />-->
+        <applicationConfigurable
+                parentId="language"
+                instance="io.kadena.pact.ide.settings.AppSettingsConfigurable"
+                id="io.kadena.pact.ide.settings.AppSettingsConfigurable"
+                displayName="Pact"/>
 
-<!--        <colorSettingsPage-->
-<!--                implementation="io.kadena.pact.intellij.language.PactColorSettingsPage"/>-->
+        <!-- Language Server (LSP) -->
+        <platform.lsp.serverSupportProvider
+                implementation="io.kadena.pact.lsp.PactLspServerSupportProvider"
+        />
     </extensions>
 </idea-plugin>

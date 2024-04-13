@@ -1,5 +1,6 @@
 import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.markdownToHTML
+import org.jetbrains.intellij.IntelliJPluginExtension
 
 // Include generated sources
 sourceSets["main"].java.srcDirs("src/main/gen")
@@ -59,7 +60,27 @@ koverReport {
     }
 }
 
+// Bundle the Pact Language Server (LSP) executables
+val bundleExecutables by tasks.registering(Copy::class) {
+    val source = "${layout.projectDirectory}/bundled"
+
+    val sandboxDir = project.extensions.getByType((IntelliJPluginExtension::class.java)).sandboxDir.get()
+    val pluginName = properties("pluginName").get()
+    val destination = "${sandboxDir}/plugins/${pluginName}"
+
+    from(source)
+    into(destination)
+}
+
 tasks {
+    prepareSandbox {
+        finalizedBy(bundleExecutables)
+    }
+
+    buildSearchableOptions {
+        mustRunAfter("bundleExecutables")
+    }
+
     wrapper {
         gradleVersion = properties("gradleVersion").get()
     }
@@ -74,7 +95,7 @@ tasks {
             val start = "<!-- Plugin description -->"
             val end = "<!-- Plugin description end -->"
 
-            with (it.lines()) {
+            with(it.lines()) {
                 if (!containsAll(listOf(start, end))) {
                     throw GradleException("Plugin description section not found in README.md:\n$start ... $end")
                 }
@@ -96,6 +117,10 @@ tasks {
         }
     }
 
+    runIde {
+        mustRunAfter("bundleExecutables")
+    }
+
     // Configure UI tests plugin
     // Read more: https://github.com/JetBrains/intellij-ui-test-robot
     runIdeForUiTests {
@@ -103,6 +128,10 @@ tasks {
         systemProperty("ide.mac.message.dialogs.as.sheets", "false")
         systemProperty("jb.privacy.policy.text", "<!--999.999-->")
         systemProperty("jb.consents.confirmation.enabled", "false")
+    }
+
+    verifyPlugin {
+        mustRunAfter("bundleExecutables")
     }
 
     signPlugin {
