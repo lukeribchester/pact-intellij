@@ -169,7 +169,7 @@ public class PactParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ("(" IDENT MTypeAnn Expr ")")+
+  // ("(" IDENT [MTypeAnn] Expr ")")+
   public static boolean Binders(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Binders")) return false;
     if (!nextTokenIs(b, OPEN_PARENS)) return false;
@@ -185,17 +185,24 @@ public class PactParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // "(" IDENT MTypeAnn Expr ")"
+  // "(" IDENT [MTypeAnn] Expr ")"
   private static boolean Binders_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Binders_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeTokens(b, 0, OPEN_PARENS, IDENT);
-    r = r && MTypeAnn(b, l + 1);
+    r = r && Binders_0_2(b, l + 1);
     r = r && Expr(b, l + 1);
     r = r && consumeToken(b, CLOSE_PARENS);
     exit_section_(b, m, null, r);
     return r;
+  }
+
+  // [MTypeAnn]
+  private static boolean Binders_0_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Binders_0_2")) return false;
+    MTypeAnn(b, l + 1);
+    return true;
   }
 
   /* ********************************************************** */
