@@ -262,8 +262,6 @@ ExprCommaSep ::= Expr ("," Expr) * // Verified
 
 upper LamExpr ::= "lambda" "(" LamArgs ")" Block
 
-// TODO: Fix if-statement syntax:
-// https://raw.githubusercontent.com/kadena-io/pact-5/master/pact-tests/pact-tests/signatures.repl
 upper IfExpr ::= "if" Expr Expr Expr
 
 upper TryExpr ::= "try" Expr Expr
@@ -275,8 +273,6 @@ upper CapExpr ::= CapForm
 CapForm ::= "with-capability" Expr Block
           | "create-user-guard" "(" ParsedName AppList ")"
 
-// TODO: Fix lambda syntax:
-// https://raw.githubusercontent.com/kadena-io/pact-5/master/pact-tests/pact-tests/lambda.repl
 LamArgs ::= LamArg (LamArg)* // Verified
 LamArg ::= IDENT (":" Type)?
 
@@ -324,8 +320,7 @@ Bool ::= "true"
 Var ::= IDENT "." ModQual
       | IDENT "::" IDENT
       | IDENT
-// TODO: Fix unexpected '::'
-// https://raw.githubusercontent.com/kadena-io/pact-5/master/pact-tests/pact-tests/nested-defpacts.repl
+
 ParsedName ::= IDENT "." ModQual
              | IDENT "::" IDENT
              | IDENT
