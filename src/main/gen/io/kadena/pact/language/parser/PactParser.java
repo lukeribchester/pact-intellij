@@ -851,16 +851,16 @@ public class PactParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // IDENT "." ModQual
-  //         | IDENT
   //         | IDENT "::" IDENT
+  //         | IDENT
   public static boolean FVVar(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "FVVar")) return false;
     if (!nextTokenIs(b, IDENT)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = FVVar_0(b, l + 1);
-    if (!r) r = consumeToken(b, IDENT);
     if (!r) r = parseTokens(b, 0, IDENT, DYN_ACC, IDENT);
+    if (!r) r = consumeToken(b, IDENT);
     exit_section_(b, m, FV_VAR, r);
     return r;
   }
@@ -1739,16 +1739,16 @@ public class PactParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // IDENT "." ModQual
-  //              | IDENT
   //              | IDENT "::" IDENT
+  //              | IDENT
   public static boolean ParsedName(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ParsedName")) return false;
     if (!nextTokenIs(b, IDENT)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = ParsedName_0(b, l + 1);
-    if (!r) r = consumeToken(b, IDENT);
     if (!r) r = parseTokens(b, 0, IDENT, DYN_ACC, IDENT);
+    if (!r) r = consumeToken(b, IDENT);
     exit_section_(b, m, PARSED_NAME, r);
     return r;
   }
@@ -2432,16 +2432,16 @@ public class PactParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // IDENT "." ModQual
-  //       | IDENT
   //       | IDENT "::" IDENT
+  //       | IDENT
   public static boolean Var(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Var")) return false;
     if (!nextTokenIs(b, IDENT)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = Var_0(b, l + 1);
-    if (!r) r = consumeToken(b, IDENT);
     if (!r) r = parseTokens(b, 0, IDENT, DYN_ACC, IDENT);
+    if (!r) r = consumeToken(b, IDENT);
     exit_section_(b, m, VAR, r);
     return r;
   }

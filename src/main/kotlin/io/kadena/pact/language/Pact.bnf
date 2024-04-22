@@ -322,13 +322,13 @@ Bool ::= "true"
        | "false"
 
 Var ::= IDENT "." ModQual
-      | IDENT
       | IDENT "::" IDENT
+      | IDENT
 // TODO: Fix unexpected '::'
 // https://raw.githubusercontent.com/kadena-io/pact-5/master/pact-tests/pact-tests/nested-defpacts.repl
 ParsedName ::= IDENT "." ModQual
-             | IDENT
              | IDENT "::" IDENT
+             | IDENT
 
 ParsedTyName ::= IDENT "." ModQual
                | IDENT
@@ -393,7 +393,7 @@ FVString ::= STR
            | TICK
 
 FVVar ::= IDENT "." ModQual
-        | IDENT
         | IDENT "::" IDENT
+        | IDENT
 
 // TODO: https://raw.githubusercontent.com/kadena-io/pact-5/master/pact-tests/pact-tests/yield.repl
