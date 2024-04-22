@@ -28,9 +28,9 @@ public class PactUseImpl extends ASTWrapperPsiElement implements PactUse {
   }
 
   @Override
-  @NotNull
+  @Nullable
   public PactImportList getImportList() {
-    return findNotNullChildByClass(PactImportList.class);
+    return findChildByClass(PactImportList.class);
   }
 
   @Override

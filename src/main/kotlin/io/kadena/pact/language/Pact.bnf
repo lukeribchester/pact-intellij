@@ -150,10 +150,9 @@ Interface ::= "(" "interface" IDENT [MDocOrModel] ImportOrIfDef ")" { pin=6 }
 Ext ::= Use
         | "(" "implements" ModQual ")"
         | "(" "bless" StringRaw ")"
-// TODO: Handle (use...):
-// https://raw.githubusercontent.com/kadena-io/pact-5/master/pact-tests/pact-tests/defpact.repl
-Use ::= "(" "import" ModQual ImportList ")"
-        | "(" "import" ModQual STR ImportList ")"
+
+Use ::= "(" "use" ModQual STR? ImportList? ")"
+        | "(" "import" ModQual STR? ImportList? ")"
 
 private ExtOrDefs ::= (Def | Ext)+
 
@@ -176,7 +175,7 @@ IfDefun   ::= "(" "defun" IDENT [MTypeAnn] "(" MArgs ")" [MDocOrModel] ")" { pin
 IfDefCap  ::= "(" "defcap" IDENT [MTypeAnn] "(" MArgs ")" [MDocOrModel] [MDCapMeta] ")" { pin=10 }
 IfDefPact ::= "(" "defpact" IDENT [MTypeAnn] "(" MArgs ")" [MDocOrModel] ")" { pin=9 }
 
-ImportList ::= "[" ImportNames "]"
+ImportList ::= "[" ImportNames? "]"
 
 ImportNames ::= IDENT+
 

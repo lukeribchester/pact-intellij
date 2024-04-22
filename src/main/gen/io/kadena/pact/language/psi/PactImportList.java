@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface PactImportList extends PsiElement {
 
-  @NotNull
+  @Nullable
   PactImportNames getImportNames();
 
 }

@@ -1101,17 +1101,24 @@ public class PactParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // "[" ImportNames "]"
+  // "[" ImportNames? "]"
   public static boolean ImportList(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ImportList")) return false;
     if (!nextTokenIs(b, OPEN_BRACKET)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, OPEN_BRACKET);
-    r = r && ImportNames(b, l + 1);
+    r = r && ImportList_1(b, l + 1);
     r = r && consumeToken(b, CLOSE_BRACKET);
     exit_section_(b, m, IMPORT_LIST, r);
     return r;
+  }
+
+  // ImportNames?
+  private static boolean ImportList_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ImportList_1")) return false;
+    ImportNames(b, l + 1);
+    return true;
   }
 
   /* ********************************************************** */
@@ -2346,8 +2353,8 @@ public class PactParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // "(" "import" ModQual ImportList ")"
-  //         | "(" "import" ModQual STR ImportList ")"
+  // "(" "use" ModQual STR? ImportList? ")"
+  //         | "(" "import" ModQual STR? ImportList? ")"
   public static boolean Use(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Use")) return false;
     if (!nextTokenIs(b, OPEN_PARENS)) return false;
@@ -2359,21 +2366,35 @@ public class PactParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // "(" "import" ModQual ImportList ")"
+  // "(" "use" ModQual STR? ImportList? ")"
   private static boolean Use_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Use_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, OPEN_PARENS);
-    r = r && consumeToken(b, "import");
+    r = consumeTokens(b, 0, OPEN_PARENS, IMPORT_KEYWORD);
     r = r && ModQual(b, l + 1);
-    r = r && ImportList(b, l + 1);
+    r = r && Use_0_3(b, l + 1);
+    r = r && Use_0_4(b, l + 1);
     r = r && consumeToken(b, CLOSE_PARENS);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // "(" "import" ModQual STR ImportList ")"
+  // STR?
+  private static boolean Use_0_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Use_0_3")) return false;
+    consumeToken(b, STR);
+    return true;
+  }
+
+  // ImportList?
+  private static boolean Use_0_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Use_0_4")) return false;
+    ImportList(b, l + 1);
+    return true;
+  }
+
+  // "(" "import" ModQual STR? ImportList? ")"
   private static boolean Use_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Use_1")) return false;
     boolean r;
@@ -2381,11 +2402,25 @@ public class PactParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, OPEN_PARENS);
     r = r && consumeToken(b, "import");
     r = r && ModQual(b, l + 1);
-    r = r && consumeToken(b, STR);
-    r = r && ImportList(b, l + 1);
+    r = r && Use_1_3(b, l + 1);
+    r = r && Use_1_4(b, l + 1);
     r = r && consumeToken(b, CLOSE_PARENS);
     exit_section_(b, m, null, r);
     return r;
+  }
+
+  // STR?
+  private static boolean Use_1_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Use_1_3")) return false;
+    consumeToken(b, STR);
+    return true;
+  }
+
+  // ImportList?
+  private static boolean Use_1_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Use_1_4")) return false;
+    ImportList(b, l + 1);
+    return true;
   }
 
   /* ********************************************************** */
