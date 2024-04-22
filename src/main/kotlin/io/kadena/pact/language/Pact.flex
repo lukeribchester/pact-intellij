@@ -23,7 +23,7 @@ STR=(\"([^\"\\]|\\\"|\\)*\")
 NUM=([0-9])
 COMMENT=(;.*\n*)
 
-LET_KEYWORD=([let*]|[let])
+LET_KEYWORD=(let\*|let)
 IF_KEYWORD="if"
 DEFUN_KEYWORD="defun"
 DEF_CAP_KEYWORD="defcap"

@@ -30,7 +30,7 @@
     IMPLEMENTS_KEYWORD="implements"
     INTERFACE_KEYWORD="interface"
     BLESS_KEYWORD="bless"
-    LET_KEYWORD="regexp:([let*]|[let])"
+    LET_KEYWORD="regexp:(let\*|let)"
     LAMBDA_KEYWORD="lambda"
 
 
