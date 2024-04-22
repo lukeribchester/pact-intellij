@@ -55,7 +55,7 @@
     BLOCK_INTRO_KEYWORD="progn"
     SUSPEND_KEYWORD="suspend"
 
-    TICK="regexp:'[a-zA-Z][a-zA-Z 0-9\-_]*"
+    TICK="regexp:'[a-zA-Z][a-zA-Z0-9\-_]*"
     OPEN_PARENS="("
     CLOSE_PARENS=")"
     OPEN_BRACE="{"

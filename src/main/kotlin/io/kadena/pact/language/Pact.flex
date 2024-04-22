@@ -57,7 +57,7 @@ TRY_KEYWORD="try"
 BLOCK_INTRO_KEYWORD="progn"
 SUSPEND_KEYWORD="suspend"
 
-TICK='[a-zA-Z][a-zA-Z 0-9\-_]*
+TICK='[a-zA-Z][a-zA-Z0-9\-_]*
 OPEN_PARENS="("
 CLOSE_PARENS=")"
 OPEN_BRACE="{"
