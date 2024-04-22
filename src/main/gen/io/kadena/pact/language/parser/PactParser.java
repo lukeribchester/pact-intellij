@@ -1684,17 +1684,24 @@ public class PactParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // "{" ObjectBody "}"
+  // "{" ObjectBody? "}"
   public static boolean Object(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Object")) return false;
     if (!nextTokenIs(b, OPEN_BRACE)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, OPEN_BRACE);
-    r = r && ObjectBody(b, l + 1);
+    r = r && Object_1(b, l + 1);
     r = r && consumeToken(b, CLOSE_BRACE);
     exit_section_(b, m, OBJECT, r);
     return r;
+  }
+
+  // ObjectBody?
+  private static boolean Object_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Object_1")) return false;
+    ObjectBody(b, l + 1);
+    return true;
   }
 
   /* ********************************************************** */

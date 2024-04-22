@@ -28,9 +28,9 @@ public class PactObjectImpl extends ASTWrapperPsiElement implements PactObject {
   }
 
   @Override
-  @NotNull
+  @Nullable
   public PactObjectBody getObjectBody() {
-    return findNotNullChildByClass(PactObjectBody.class);
+    return findChildByClass(PactObjectBody.class);
   }
 
 }

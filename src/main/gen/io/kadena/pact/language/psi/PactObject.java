@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface PactObject extends PsiElement {
 
-  @NotNull
+  @Nullable
   PactObjectBody getObjectBody();
 
 }

@@ -341,7 +341,7 @@ Number ::= ["+" | "-"] NUM+ ["." NUM+]
 String ::= STR
          | TICK
 
-Object ::= "{" ObjectBody "}"
+Object ::= "{" ObjectBody? "}"
 
 ObjectBody ::= FieldPairs
 
