@@ -135,49 +135,34 @@
 
 
 
-Steps ::= Step+
 
-Step ::= "(" "step" Expression [MModel] ")"
-       | "(" "step" Expression Expression [MModel] ")"
-       | "(" "step-with-rollback" Expression Expression [MModel] ")"
-       | "(" "step-with-rollback" Expression Expression Expression [MModel] ")"
 
 MDCapMeta ::= Managed
             | Event
 
-Managed ::= "@managed" (IDENTIFIER ParsedName)*
 
-Event ::= "@event"
+
+
 
 MArgs ::= MArg*
 
-MArg ::= IDENTIFIER ":" Type
+MArg ::= IDENTIFIER ":" TypeDeclaration
        | IDENTIFIER
 
 SchemaArgList ::= SchemaArg (SchemaArg) * // Verified
 
-SchemaArg ::= IDENTIFIER (":" Type)?
+SchemaArg ::= IDENTIFIER (":" TypeDeclaration)?
 
-Type ::= "[" Type "]"
-       | "module" "{" ModuleNames "}"
-       | IDENTIFIER "{" ParsedTypeName "}"
-       | IDENTIFIER
 
 ModuleNames ::= ModQual ("," ModQual) *  // Verified
 
-DocAnn ::= "@doc" STR
 
-DocStr ::= STR
 
 MModel ::= ModelAnn
 
-ModelAnn ::= "@model" "[" PactFVModels "]"
 
-private MDocOrModel ::= DocAnn ModelAnn
-                      | ModelAnn DocAnn
-                      | DocAnn
-                      | ModelAnn
-                      | DocStr
+
+
 
 MDoc ::= DocAnn
        | DocStr
@@ -282,6 +267,24 @@ private ReplTopLevel ::= "(" ReplSpecial ")"
 ReplSpecial ::= KEYWORD_LOAD STR Boolean
               | KEYWORD_LOAD STR
 
+/* Annotations & Documentation */
+
+private MDocOrModel ::= DocumentationAnnotation ModelAnnotation
+                      | ModelAnnotation DocumentationAnnotation
+                      | DocumentationAnnotation
+                      | ModelAnnotation
+                      | DocumentationString
+
+DocumentationAnnotation ::= KEYWORD_DOC_ANNOTATION STR
+
+DocumentationString ::= STR
+
+EventAnnotation ::= KEYWORD_EVENT_ANNOTATION
+
+ManagedAnnotation ::= KEYWORD_MANAGED_ANNOTATION (IDENTIFIER ParsedName)*
+
+ModelAnnotation ::= KEYWORD_MODEL_ANNOTATION "[" PactFVModels "]"
+
 /* Module */
 
 Module ::= "(" KEYWORD_MODULE IDENTIFIER Governance [MDocOrModel] (Definition | Extension)+ ")" { pin=7 }
@@ -378,6 +381,15 @@ BindPairs ::= BindPair ("," BindPair)*
 BindPair ::= STR ":=" MArg
            | TICK ":=" MArg
 
+/* Steps */
+
+Steps ::= Step+
+
+Step ::= "(" KEYWORD_STEP Expression [MModel] ")"
+       | "(" KEYWORD_STEP Expression Expression [MModel] ")"
+       | "(" KEYWORD_STEP_WITH_ROLLBACK Expression Expression [MModel] ")"
+       | "(" KEYWORD_STEP_WITH_ROLLBACK Expression Expression Expression [MModel] ")"
+
 /* Variables & Names */
 
 Variable ::= IDENTIFIER "." ModuleQualifier
@@ -395,6 +407,11 @@ ModuleQualifier ::= IDENTIFIER "." IDENTIFIER
                   | IDENTIFIER
 
 /* Data Types */
+
+TypeDeclaration ::= "[" TypeDeclaration "]"
+                  | "module" "{" ModuleNames "}"
+                  | IDENTIFIER "{" ParsedTypeName "}"
+                  | IDENTIFIER
 
 DataType ::= CompositeDataType
            | AtomicDataType
