@@ -8,8 +8,4 @@ import org.jetbrains.annotations.NotNull
 
 class PactTokenType(@NotNull @NonNls debugName: String?) :
     IElementType(debugName.toString(), PactLanguage.INSTANCE) {
-
-    override fun toString(): String {
-        return "PactTokenType." + super.toString()
-    }
 }
