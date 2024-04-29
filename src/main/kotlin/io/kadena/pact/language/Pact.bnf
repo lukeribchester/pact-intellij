@@ -13,106 +13,115 @@
   tokenTypeClass="io.kadena.pact.language.psi.PactTokenType"
 
   tokens = [
-    // Lexer.x
-    STR="regexp:(\"([^\"\\]|\\\"|\\)*\")"
-    NUM="regexp:[0-9]"
+    /* Whitespace */
+    CRLF="regexp:\R"
+    WHITE_SPACE="regexp:[\ \n\t\f]"
+
+    /* Comments */
     COMMENT="regexp:(;.*\n*)"
 
-    // Keywords
-    DEFUN_KEYWORD="defun"
-    DEF_CAP_KEYWORD="defcap"
-    DEF_CONST_KEYWORD="defconst"
-    DEF_SCHEMA_KEYWORD="defschema"
-    DEF_TABLE_KEYWORD="deftable"
-    DEF_PACT_KEYWORD="defpact"
-    IMPORT_KEYWORD="use"
-    MODULE_KEYWORD="module"
-    IMPLEMENTS_KEYWORD="implements"
-    INTERFACE_KEYWORD="interface"
-    BLESS_KEYWORD="bless"
-    LET_KEYWORD="regexp:(let\*|let)"
-    LAMBDA_KEYWORD="lambda"
+    /* Keywords */
+    KEYWORD_BLESS="bless"
+    KEYWORD_ENFORCE="enforce"
+    KEYWORD_ENFORCE_ONE="enforce-one"
+    KEYWORD_IF="if"
+    KEYWORD_IMPLEMENTS="implements"
+    KEYWORD_INTERFACE="interface"
+    KEYWORD_LAMBDA="lambda"
+    KEYWORD_LET="regexp:(let|let\*)"
+    KEYWORD_MODULE="module"
+    KEYWORD_BLOCK_INTRO="progn"
+    KEYWORD_STEP="step"
+    KEYWORD_STEP_WITH_ROLLBACK="step-with-rollback"
+    KEYWORD_SUSPEND="suspend"
+    KEYWORD_TRY="try"
+    KEYWORD_IMPORT="use"
 
+    /* Keywords (Capabilities) */
+    KEYWORD_CREATE_USER_GUARD="create-user-guard"
+    KEYWORD_WITH_CAPABILITY="with-capability"
 
-    TRUE_KEYWORD="true"
-    FALSE_KEYWORD="false"
-    AND_KEYWORD="and"
-    OR_KEYWORD="or"
+    /* Keywords (Definitions) */
+    KEYWORD_DEF_CAP="defcap"
+    KEYWORD_DEF_CONST="defconst"
+    KEYWORD_DEF_PACT="defpact"
+    KEYWORD_DEF_SCHEMA="defschema"
+    KEYWORD_DEF_TABLE="deftable"
+    KEYWORD_DEFUN="defun"
 
-    IF_KEYWORD="if"
-    LOAD_KEYWORD="load"
-    DOC_ANN_KEYWORD="@doc"
-    MODEL_ANN_KEYWORD="@model"
-    EVENT_ANN_KEYWORD="@event"
-    MANAGED_ANN_KEYWORD="@managed"
-    STEP_KEYWORD="step"
-    STEP_WITH_ROLLBACK_KEYWORD="step-with-rollback"
-    ENFORCE_KEYWORD="enforce"
-    ENFORCE_ONE_KEYWORD="enforce-one"
-    WITH_CAPABILITY_KEYWORD="with-capability"
-    CREATE_USER_GUARD_KEYWORD="create-user-guard"
-    TRY_KEYWORD="try"
-    BLOCK_INTRO_KEYWORD="progn"
-    SUSPEND_KEYWORD="suspend"
+    /* Keywords (REPL) */
+    KEYWORD_LOAD="load"
 
+    /* Annotations */
+    KEYWORD_DOC_ANNOTATION="@doc"
+    KEYWORD_EVENT_ANNOTATION="@event"
+    KEYWORD_MANAGED_ANNOTATION="@managed"
+    KEYWORD_MODEL_ANNOTATION="@model"
+
+    /* Literals */
+    STRING="regexp:(\"([^\"\\]|\\\"|\\)*\")"
+    NUMBER="regexp:([0-9])"
+    TRUE="true"
+    FALSE="false"
+
+    /* Identifiers */
     TICK="regexp:'[a-zA-Z][a-zA-Z0-9\-_]*"
-    OPEN_PARENS="("
-    CLOSE_PARENS=")"
-    OPEN_BRACE="{"
-    CLOSE_BRACE="}"
-    OPEN_BRACKET="["
-    CLOSE_BRACKET="]"
+    IDENTIFIER="regexp:[a-zA-Z%#+\-_&$@<>=\^?*!|/~][a-zA-Z0-9%#+\-_&$@<>=\^?*!|/~]*"
+
+    /* Operators (Arithmetic) */
+    PLUS="+"
+    MINUS="-"
+    MULTIPLY="*"
+    DIVIDE="/"
+    POW="^"
+    ABS="abs"
+    CEILING="ceiling"
+    FLOOR="floor"
+    LOG="log"
+    LN="ln"
+    DECIMAL="dec"
+    EXP="exp"
+    MOD="mod"
+    ROUND="round"
+    SQRT="sqrt"
+
+    /* Operators (Assignment) */
+    BIND_ASSIGN=":="
+
+    /* Operators (Bitwise) */
+    BITWISE_AND="&"
+    BITWISE_OR="|"
+    BITWISE_REVERSE="~"
+    BITWISE_SHIFT="shift"
+    BITWISE_XOR="xor"
+
+    /* Operators (Logical) */
+    AND="and"
+    AND_SHORT_CIRCUIT="and?"
+    NOT="not"
+    NOT_SHORT_CIRCUIT="not?"
+    OR="or"
+    OR_SHORT_CIRCUIT="or?"
+
+    /* Operators (Relational) */
+    EQUAL="="
+    NOT_EQUAL="!="
+    LESS_THAN="<"
+    LESS_THAN_OR_EQUAL="<="
+    GREATER_THAN=">"
+    GREATER_THAN_OR_EQUAL=">="
+
+    /* Delimiters */
+    PAREN_OPEN="("
+    PAREN_CLOSE=")"
+    BRACE_OPEN="{"
+    BRACE_CLOSE="}"
+    BRACKET_OPEN="["
+    BRACKET_CLOSE="]"
+    COLON=":"
     COMMA=","
     DOT="."
-    BIND_ASSIGN=":="
     DYN_ACC="::"
-    COLON=":"
-
-    // Parser.y
-
-    // Numerical operators
-    //   ADD="+"
-    //   SUB="-"
-    //   MULT="*"
-    //   DIV="/"
-    //   CARET="^"
-    //   LOG="log"
-    //   SQRT="sqrt"
-    //   LN="ln"
-    //   EXP="exp"
-    //   ABS="abs"
-    //   ROUND="round"
-    //   CEILING="ceiling"
-    //   FLOOR="floor"
-    //   MOD="mod"
-
-    // Bitwise operators
-    //   AMP="&"
-    //   PIPE="|"
-    //   XOR="xor"
-    //   SHIFT="shift"
-    //   TILDE="~"
-
-    // Logical operators
-    //   GT=">"
-    //   LT="<"
-    //   GE=">="
-    //   LE="<="
-    //   EQ="="
-    //   EXCL_EQ="!="
-    //   AND="and"
-    //   AND_APP="and?"
-    //   OR="or"
-    //   OR_APP="or?"
-    //   NOT="not"
-    //   NOT_APP="not?"
-    //   WHEN="when"
-
-    IDENT="regexp:[a-zA-Z%#+\-_&$@<>=^?*!|/~][a-zA-Z0-9%#+\-_&$@<>=^?*!|/~]*"
-
-    // Reference
-    CRLF="regexp:\R"
-    WhiteSpace="regexp:[ \n\t\f]"
   ]
 }
 
@@ -132,27 +141,27 @@ private ReplTopLevel ::= "(" ReplSpecial ")"
                        | "(" DefConst ")"
                        | TopLevel { pin=1 }
 
-ReplSpecial ::= "load" STR BOOLEAN
-              | "load" STR
+ReplSpecial ::= "load" STRING Bool
+              | "load" STRING
 
 private Governance ::= StringRaw
-                     | IDENT
+                     | IDENTIFIER
 // TODO: Handle single character identifiers:
-// TODO: Separate operators from IDENT
+// TODO: Separate operators from IDENTIFIER
 // https://raw.githubusercontent.com/kadena-io/pact-5/master/pact-tests/pact-tests/db.repl
-StringRaw ::= STR
+StringRaw ::= STRING
             | TICK
 
-Module ::= "(" "module" IDENT Governance [MDocOrModel] ExtOrDefs ")" { pin=7 }
+Module ::= "(" "module" IDENTIFIER Governance [MDocOrModel] ExtOrDefs ")" { pin=7 }
 
-Interface ::= "(" "interface" IDENT [MDocOrModel] ImportOrIfDef ")" { pin=6 }
+Interface ::= "(" "interface" IDENTIFIER [MDocOrModel] ImportOrIfDef ")" { pin=6 }
 
 Ext ::= Use
         | "(" "implements" ModQual ")"
         | "(" "bless" StringRaw ")"
 
-Use ::= "(" "use" ModQual STR? ImportList? ")"
-        | "(" "import" ModQual STR? ImportList? ")"
+Use ::= "(" "use" ModQual STRING? ImportList? ")"
+        | "(" "import" ModQual STRING? ImportList? ")"
 
 private ExtOrDefs ::= (Def | Ext)+
 
@@ -171,20 +180,20 @@ private IfDef ::= IfDefun
                 | Defschema
                 | IfDefPact
 
-IfDefun   ::= "(" "defun" IDENT [MTypeAnn] "(" MArgs ")" [MDocOrModel] ")" { pin=9 }
-IfDefCap  ::= "(" "defcap" IDENT [MTypeAnn] "(" MArgs ")" [MDocOrModel] [MDCapMeta] ")" { pin=10 }
-IfDefPact ::= "(" "defpact" IDENT [MTypeAnn] "(" MArgs ")" [MDocOrModel] ")" { pin=9 }
+IfDefun   ::= "(" "defun" IDENTIFIER [MTypeAnn] "(" MArgs ")" [MDocOrModel] ")" { pin=9 }
+IfDefCap  ::= "(" "defcap" IDENTIFIER [MTypeAnn] "(" MArgs ")" [MDocOrModel] [MDCapMeta] ")" { pin=10 }
+IfDefPact ::= "(" "defpact" IDENTIFIER [MTypeAnn] "(" MArgs ")" [MDocOrModel] ")" { pin=9 }
 
 ImportList ::= "[" ImportNames? "]"
 
-ImportNames ::= IDENT+
+ImportNames ::= IDENTIFIER+
 
-Defun     ::= "(" "defun" IDENT [MTypeAnn] "(" [MArgs] ")" [MDocOrModel] Block ")" { pin=9 }
-Defcap    ::= "(" "defcap" IDENT [MTypeAnn] "(" [MArgs] ")" [MDocOrModel] [MDCapMeta] Block ")" { pin=10 }
-DefPact   ::= "(" "defpact" IDENT [MTypeAnn] "(" MArgs ")" [MDocOrModel] Steps ")" { pin=9 }
-DefConst  ::= "(" "defconst" IDENT [MTypeAnn] Expr [MDoc] ")" { pin=2 }
-Defschema ::= "(" "defschema" IDENT [MDocOrModel] SchemaArgList ")" { pin=2 }
-Deftable  ::= "(" "deftable" IDENT ":" "{" ParsedName "}" [MDoc] ")" { pin=2 }
+Defun     ::= "(" "defun" IDENTIFIER [MTypeAnn] "(" [MArgs] ")" [MDocOrModel] Block ")" { pin=9 }
+Defcap    ::= "(" "defcap" IDENTIFIER [MTypeAnn] "(" [MArgs] ")" [MDocOrModel] [MDCapMeta] Block ")" { pin=10 }
+DefPact   ::= "(" "defpact" IDENTIFIER [MTypeAnn] "(" MArgs ")" [MDocOrModel] Steps ")" { pin=9 }
+DefConst  ::= "(" "defconst" IDENTIFIER [MTypeAnn] Expr [MDoc] ")" { pin=2 }
+Defschema ::= "(" "defschema" IDENTIFIER [MDocOrModel] SchemaArgList ")" { pin=2 }
+Deftable  ::= "(" "deftable" IDENTIFIER ":" "{" ParsedName "}" [MDoc] ")" { pin=2 }
 
 Steps ::= Step+
 
@@ -196,29 +205,29 @@ Step ::= "(" "step" Expr [MModel] ")"
 MDCapMeta ::= Managed
             | Event
 
-Managed ::= "@managed" (IDENT ParsedName)*
+Managed ::= "@managed" (IDENTIFIER ParsedName)*
 
 Event ::= "@event"
 
 MArgs ::= MArg*
 
-MArg ::= IDENT ":" Type
-       | IDENT
+MArg ::= IDENTIFIER ":" Type
+       | IDENTIFIER
 
 SchemaArgList ::= SchemaArg (SchemaArg) * // Verified
 
-SchemaArg ::= IDENT (":" Type)?
+SchemaArg ::= IDENTIFIER (":" Type)?
 
 Type ::= "[" Type "]"
        | "module" "{" ModuleNames "}"
-       | IDENT "{" ParsedTyName "}"
-       | IDENT
+       | IDENTIFIER "{" ParsedTyName "}"
+       | IDENTIFIER
 
 ModuleNames ::= ModQual ("," ModQual) *  // Verified
 
-DocAnn ::= "@doc" STR
+DocAnn ::= "@doc" STRING
 
-DocStr ::= STR
+DocStr ::= STRING
 
 MModel ::= ModelAnn
 
@@ -274,16 +283,16 @@ CapForm ::= "with-capability" Expr Block
           | "create-user-guard" "(" ParsedName AppList ")"
 
 LamArgs ::= LamArg (LamArg)* // Verified
-LamArg ::= IDENT (":" Type)?
+LamArg ::= IDENTIFIER (":" Type)?
 
 
-upper LetExpr ::= LET_KEYWORD "(" Binders ")" Block // Let
+upper LetExpr ::= KEYWORD_LET "(" Binders ")" Block // Let
 
 //Binders ::= Binder (Binder)* // Verified
-//Binder ::= "(" IDENT [MTypeAnn] Expr ")" // Type annotation fault
+//Binder ::= "(" IDENTIFIER [MTypeAnn] Expr ")" // Type annotation fault
 
 //Binders ::= Binder+ // Verified
-Binders ::= ("(" IDENT [MTypeAnn] Expr ")")+
+Binders ::= ("(" IDENTIFIER [MTypeAnn] Expr ")")+
 
 upper GenAppExpr ::= Expr AppBindList // Check * ?
 
@@ -295,7 +304,7 @@ AppBindList ::= (Expr | BindingForm)*
 
 BindingForm ::= "{" BindPairs "}"
 
-BindPair ::= STR ":=" MArg
+BindPair ::= STRING ":=" MArg
            | TICK ":=" MArg
 
 BindPairs ::= BindPair ("," BindPair)* // Verified
@@ -314,33 +323,33 @@ Operator ::= "and"
            | "enforce"
            | "enforce-one"
 
-Bool ::= "true"
-       | "false"
+Bool ::= TRUE
+       | FALSE
 
-Var ::= IDENT "." ModQual
-      | IDENT "::" IDENT
-      | IDENT
+Var ::= IDENTIFIER "." ModQual
+      | IDENTIFIER "::" IDENTIFIER
+      | IDENTIFIER
 
-ParsedName ::= IDENT "." ModQual
-             | IDENT "::" IDENT
-             | IDENT
+ParsedName ::= IDENTIFIER "." ModQual
+             | IDENTIFIER "::" IDENTIFIER
+             | IDENTIFIER
 
-ParsedTyName ::= IDENT "." ModQual
-               | IDENT
+ParsedTyName ::= IDENTIFIER "." ModQual
+               | IDENTIFIER
 
-ModQual ::= IDENT "." IDENT
-          | IDENT
+ModQual ::= IDENTIFIER "." IDENTIFIER
+          | IDENTIFIER
 
-Number ::= ["+" | "-"] NUM+ ["." NUM+]
+Number ::= ["+" | "-"] NUMBER+ ["." NUMBER+]
 
-String ::= STR
+String ::= STRING
          | TICK
 
 Object ::= "{" ObjectBody? "}"
 
 ObjectBody ::= FieldPairs
 
-FieldPair ::= STR ":" Expr
+FieldPair ::= STRING ":" Expr
             | TICK ":" Expr
 
 FieldPairs ::= FieldPair ("," FieldPair)* // Verified
@@ -379,16 +388,16 @@ FVDelim ::= "{"
           | ":"
           | ","
 
-FVBool ::= "true"
-         | "false"
+FVBool ::= TRUE
+         | FALSE
 
-FVNumber ::= ["+" | "-"] NUM+ ["." NUM+]
+FVNumber ::= ["+" | "-"] NUMBER+ ["." NUMBER+]
 
-FVString ::= STR
+FVString ::= STRING
            | TICK
 
-FVVar ::= IDENT "." ModQual
-        | IDENT "::" IDENT
-        | IDENT
+FVVar ::= IDENTIFIER "." ModQual
+        | IDENTIFIER "::" IDENTIFIER
+        | IDENTIFIER
 
 // TODO: https://raw.githubusercontent.com/kadena-io/pact-5/master/pact-tests/pact-tests/yield.repl

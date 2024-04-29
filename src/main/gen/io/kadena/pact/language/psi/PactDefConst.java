@@ -17,6 +17,6 @@ public interface PactDefConst extends PsiElement {
   PactMTypeAnn getMTypeAnn();
 
   @Nullable
-  PsiElement getIdent();
+  PsiElement getIdentifier();
 
 }

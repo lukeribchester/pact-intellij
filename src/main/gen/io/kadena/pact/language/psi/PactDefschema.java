@@ -20,6 +20,6 @@ public interface PactDefschema extends PsiElement {
   PactSchemaArgList getSchemaArgList();
 
   @Nullable
-  PsiElement getIdent();
+  PsiElement getIdentifier();
 
 }

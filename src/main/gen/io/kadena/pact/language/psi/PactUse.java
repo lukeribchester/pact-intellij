@@ -14,6 +14,6 @@ public interface PactUse extends PsiElement {
   PactModQual getModQual();
 
   @Nullable
-  PsiElement getStr();
+  PsiElement getString();
 
 }

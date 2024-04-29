@@ -26,6 +26,6 @@ public interface PactIfDefCap extends PsiElement {
   PactModelAnn getModelAnn();
 
   @NotNull
-  PsiElement getIdent();
+  PsiElement getIdentifier();
 
 }

@@ -35,8 +35,8 @@ public class PactSchemaArgImpl extends ASTWrapperPsiElement implements PactSchem
 
   @Override
   @NotNull
-  public PsiElement getIdent() {
-    return findNotNullChildByType(IDENT);
+  public PsiElement getIdentifier() {
+    return findNotNullChildByType(IDENTIFIER);
   }
 
 }

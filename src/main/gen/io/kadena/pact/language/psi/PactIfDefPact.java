@@ -23,6 +23,6 @@ public interface PactIfDefPact extends PsiElement {
   PactModelAnn getModelAnn();
 
   @NotNull
-  PsiElement getIdent();
+  PsiElement getIdentifier();
 
 }

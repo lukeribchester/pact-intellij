@@ -53,8 +53,8 @@ public class PactDefschemaImpl extends ASTWrapperPsiElement implements PactDefsc
 
   @Override
   @Nullable
-  public PsiElement getIdent() {
-    return findChildByType(IDENT);
+  public PsiElement getIdentifier() {
+    return findChildByType(IDENTIFIER);
   }
 
 }

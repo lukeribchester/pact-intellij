@@ -65,8 +65,8 @@ public class PactDefunImpl extends ASTWrapperPsiElement implements PactDefun {
 
   @Override
   @NotNull
-  public PsiElement getIdent() {
-    return findNotNullChildByType(IDENT);
+  public PsiElement getIdentifier() {
+    return findNotNullChildByType(IDENTIFIER);
   }
 
 }

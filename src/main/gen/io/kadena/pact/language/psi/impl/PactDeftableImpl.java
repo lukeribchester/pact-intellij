@@ -41,8 +41,8 @@ public class PactDeftableImpl extends ASTWrapperPsiElement implements PactDeftab
 
   @Override
   @Nullable
-  public PsiElement getIdent() {
-    return findChildByType(IDENT);
+  public PsiElement getIdentifier() {
+    return findChildByType(IDENTIFIER);
   }
 
 }

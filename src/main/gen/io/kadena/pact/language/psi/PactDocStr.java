@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface PactDocStr extends PsiElement {
 
   @NotNull
-  PsiElement getStr();
+  PsiElement getString();
 
 }

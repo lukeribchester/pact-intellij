@@ -26,6 +26,6 @@ public interface PactDefPact extends PsiElement {
   PactSteps getSteps();
 
   @NotNull
-  PsiElement getIdent();
+  PsiElement getIdentifier();
 
 }

@@ -41,8 +41,8 @@ public class PactLetExprImpl extends ASTWrapperPsiElement implements PactLetExpr
 
   @Override
   @NotNull
-  public PsiElement getLetKeyword() {
-    return findNotNullChildByType(LET_KEYWORD);
+  public PsiElement getKeywordLet() {
+    return findNotNullChildByType(KEYWORD_LET);
   }
 
 }

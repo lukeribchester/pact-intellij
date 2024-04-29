@@ -7,7 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface PactReplSpecial extends PsiElement {
 
+  @Nullable
+  PactBool getBool();
+
   @NotNull
-  PsiElement getStr();
+  PsiElement getString();
 
 }

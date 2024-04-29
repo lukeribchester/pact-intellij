@@ -35,8 +35,8 @@ public class PactFieldPairImpl extends ASTWrapperPsiElement implements PactField
 
   @Override
   @Nullable
-  public PsiElement getStr() {
-    return findChildByType(STR);
+  public PsiElement getString() {
+    return findChildByType(STRING);
   }
 
   @Override

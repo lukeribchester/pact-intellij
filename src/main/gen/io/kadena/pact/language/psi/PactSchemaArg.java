@@ -11,6 +11,6 @@ public interface PactSchemaArg extends PsiElement {
   PactType getType();
 
   @NotNull
-  PsiElement getIdent();
+  PsiElement getIdentifier();
 
 }

@@ -11,6 +11,6 @@ public interface PactMArg extends PsiElement {
   PactType getType();
 
   @NotNull
-  PsiElement getIdent();
+  PsiElement getIdentifier();
 
 }

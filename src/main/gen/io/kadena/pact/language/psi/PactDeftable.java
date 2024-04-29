@@ -14,6 +14,6 @@ public interface PactDeftable extends PsiElement {
   PactParsedName getParsedName();
 
   @Nullable
-  PsiElement getIdent();
+  PsiElement getIdentifier();
 
 }

@@ -29,8 +29,8 @@ public class PactDocAnnImpl extends ASTWrapperPsiElement implements PactDocAnn {
 
   @Override
   @NotNull
-  public PsiElement getStr() {
-    return findNotNullChildByType(STR);
+  public PsiElement getString() {
+    return findNotNullChildByType(STRING);
   }
 
 }

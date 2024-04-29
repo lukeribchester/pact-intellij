@@ -59,8 +59,8 @@ public class PactIfDefPactImpl extends ASTWrapperPsiElement implements PactIfDef
 
   @Override
   @NotNull
-  public PsiElement getIdent() {
-    return findNotNullChildByType(IDENT);
+  public PsiElement getIdentifier() {
+    return findNotNullChildByType(IDENTIFIER);
   }
 
 }
