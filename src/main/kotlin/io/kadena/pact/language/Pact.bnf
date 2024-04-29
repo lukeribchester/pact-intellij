@@ -130,37 +130,10 @@
 
 
 
-private ExtOrDefs ::= (Def | Ext)+
 
-private Def ::= Defun
-              | DefConst
-              | Defcap
-              | Defschema
-              | Deftable
-              | DefPact
 
-ImportOrIfDef ::= (IfDef | Use)+
 
-private IfDef ::= IfDefun
-                | DefConst
-                | IfDefCap
-                | Defschema
-                | IfDefPact
 
-IfDefun   ::= "(" "defun" IDENTIFIER [MTypeAnn] "(" MArgs ")" [MDocOrModel] ")" { pin=9 }
-IfDefCap  ::= "(" "defcap" IDENTIFIER [MTypeAnn] "(" MArgs ")" [MDocOrModel] [MDCapMeta] ")" { pin=10 }
-IfDefPact ::= "(" "defpact" IDENTIFIER [MTypeAnn] "(" MArgs ")" [MDocOrModel] ")" { pin=9 }
-
-ImportList ::= "[" ImportNames? "]"
-
-ImportNames ::= IDENTIFIER+
-
-Defun     ::= "(" "defun" IDENTIFIER [MTypeAnn] "(" [MArgs] ")" [MDocOrModel] Block ")" { pin=9 }
-Defcap    ::= "(" "defcap" IDENTIFIER [MTypeAnn] "(" [MArgs] ")" [MDocOrModel] [MDCapMeta] Block ")" { pin=10 }
-DefPact   ::= "(" "defpact" IDENTIFIER [MTypeAnn] "(" MArgs ")" [MDocOrModel] Steps ")" { pin=9 }
-DefConst  ::= "(" "defconst" IDENTIFIER [MTypeAnn] Expression [MDoc] ")" { pin=2 }
-Defschema ::= "(" "defschema" IDENTIFIER [MDocOrModel] SchemaArgList ")" { pin=2 }
-Deftable  ::= "(" "deftable" IDENTIFIER ":" "{" ParsedName "}" [MDoc] ")" { pin=2 }
 
 Steps ::= Step+
 
@@ -311,12 +284,12 @@ ReplSpecial ::= KEYWORD_LOAD STR Boolean
 
 /* Module */
 
-Module ::= "(" KEYWORD_MODULE IDENTIFIER Governance [MDocOrModel] ExtOrDefs ")" { pin=7 }
+Module ::= "(" KEYWORD_MODULE IDENTIFIER Governance [MDocOrModel] (Definition | Extension)+ ")" { pin=7 }
 
 private Governance ::= String
                      | IDENTIFIER
 
-Interface ::= "(" KEYWORD_INTERFACE IDENTIFIER [MDocOrModel] ImportOrIfDef ")" { pin=6 }
+Interface ::= "(" KEYWORD_INTERFACE IDENTIFIER [MDocOrModel] (InterfaceDefinition | Use)+ ")" { pin=6 }
 
 /* Extensions */
 
@@ -325,6 +298,36 @@ Extension ::= Use
             | "(" KEYWORD_BLESS String ")"
 
 Use ::= "(" KEYWORD_IMPORT ModuleQualifier STR? ImportList? ")"
+
+ImportList ::= "[" [IDENTIFIER+] "]"
+
+/* Definitions */
+
+private Definition ::= DefCap
+                     | DefConst
+                     | DefPact
+                     | DefSchema
+                     | DefTable
+                     | Defun
+
+DefCap    ::= "(" KEYWORD_DEF_CAP IDENTIFIER [MTypeAnn] "(" [MArgs] ")" [MDocOrModel] [MDCapMeta] Block ")" { pin=10 }
+DefConst  ::= "(" KEYWORD_DEF_CONST IDENTIFIER [MTypeAnn] Expression [MDoc] ")" { pin=2 }
+DefPact   ::= "(" KEYWORD_DEF_PACT IDENTIFIER [MTypeAnn] "(" MArgs ")" [MDocOrModel] Steps ")" { pin=9 }
+DefSchema ::= "(" KEYWORD_DEF_SCHEMA IDENTIFIER [MDocOrModel] SchemaArgList ")" { pin=2 }
+DefTable  ::= "(" KEYWORD_DEF_TABLE IDENTIFIER ":" "{" ParsedName "}" [MDoc] ")" { pin=2 }
+Defun     ::= "(" KEYWORD_DEFUN IDENTIFIER [MTypeAnn] "(" [MArgs] ")" [MDocOrModel] Block ")" { pin=9 }
+
+/* Definitions (Interface) */
+
+private InterfaceDefinition ::= IfDefCap
+                              | DefConst
+                              | IfDefPact
+                              | DefSchema
+                              | IfDefun
+
+IfDefCap  ::= "(" KEYWORD_DEF_CAP IDENTIFIER [MTypeAnn] "(" MArgs ")" [MDocOrModel] [MDCapMeta] ")" { pin=10 }
+IfDefPact ::= "(" KEYWORD_DEF_PACT IDENTIFIER [MTypeAnn] "(" MArgs ")" [MDocOrModel] ")" { pin=9 }
+IfDefun   ::= "(" KEYWORD_DEFUN IDENTIFIER [MTypeAnn] "(" MArgs ")" [MDocOrModel] ")" { pin=9 }
 
 /* Expressions */
 
