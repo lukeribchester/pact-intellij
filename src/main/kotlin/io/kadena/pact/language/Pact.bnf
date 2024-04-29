@@ -125,23 +125,6 @@
   ]
 }
 
-MArgs ::= MArg*
-
-MArg ::= IDENTIFIER ":" TypeDeclaration
-       | IDENTIFIER
-
-MTypeAnn ::= ":" TypeDeclaration
-
-
-
-
-
-
-
-
-
-
-
 PactFVModels ::= PropExpressionList
 
 PropExpressionList ::= PropExpression* // Was +
@@ -268,6 +251,13 @@ DefPact   ::= "(" KEYWORD_DEF_PACT IDENTIFIER [MTypeAnn] "(" MArgs ")" [MDocOrMo
 DefSchema ::= "(" KEYWORD_DEF_SCHEMA IDENTIFIER [MDocOrModel] SchemaArgumentList ")" { pin=2 }
 DefTable  ::= "(" KEYWORD_DEF_TABLE IDENTIFIER ":" "{" ParsedName "}" [MDoc] ")" { pin=2 }
 Defun     ::= "(" KEYWORD_DEFUN IDENTIFIER [MTypeAnn] "(" [MArgs] ")" [MDocOrModel] Block ")" { pin=9 }
+
+MArgs ::= MArg*
+
+MArg ::= IDENTIFIER ":" TypeDeclaration
+       | IDENTIFIER
+
+MTypeAnn ::= ":" TypeDeclaration
 
 SchemaArgumentList ::= SchemaArgument (SchemaArgument) * // Verified
 
