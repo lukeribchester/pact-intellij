@@ -8,9 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface PactNumber extends PsiElement {
 
   @Nullable
-  PactFloatingPoint getFloatingPoint();
+  PsiElement getFloatingPoint();
 
   @Nullable
-  PactInteger getInteger();
+  PsiElement getInteger();
 
 }

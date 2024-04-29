@@ -135,10 +135,6 @@ public class PactVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitFloatingPoint(@NotNull PactFloatingPoint o) {
-    visitPsiElement(o);
-  }
-
   public void visitGenericExpression(@NotNull PactGenericExpression o) {
     visitPsiElement(o);
   }
@@ -160,10 +156,6 @@ public class PactVisitor extends PsiElementVisitor {
   }
 
   public void visitImportList(@NotNull PactImportList o) {
-    visitPsiElement(o);
-  }
-
-  public void visitInteger(@NotNull PactInteger o) {
     visitPsiElement(o);
   }
 

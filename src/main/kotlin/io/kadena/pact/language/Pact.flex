@@ -62,7 +62,8 @@ KEYWORD_MODEL_ANNOTATION="@model"
 
 /* Literals */
 STR=(\"([^\"\\]|\\\"|\\)*\")
-NUM=([0-9])
+INTEGER=([+-]?[0-9]+)
+FLOATING_POINT=([+-]?([0-9]+\.[0-9]*|\.[0-9]+)([eE][+-]?[0-9]+)?)
 TRUE="true"
 FALSE="false"
 
@@ -172,7 +173,8 @@ DYN_ACC="::"
 
 /* Literals */
 <YYINITIAL> {STR} { yybegin(YYINITIAL); return PactTypes.STR; }
-<YYINITIAL> {NUM} { yybegin(YYINITIAL); return PactTypes.NUM; }
+<YYINITIAL> {INTEGER} { yybegin(YYINITIAL); return PactTypes.INTEGER; }
+<YYINITIAL> {FLOATING_POINT} { yybegin(YYINITIAL); return PactTypes.FLOATING_POINT; }
 <YYINITIAL> {TRUE}   { yybegin(YYINITIAL); return PactTypes.TRUE; }
 <YYINITIAL> {FALSE}  { yybegin(YYINITIAL); return PactTypes.FALSE; }
 

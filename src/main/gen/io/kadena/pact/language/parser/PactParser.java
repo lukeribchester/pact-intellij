@@ -848,66 +848,6 @@ public class PactParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ["+" | "-"] NUM+ "." NUM+
-  public static boolean FloatingPoint(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "FloatingPoint")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, FLOATING_POINT, "<floating point>");
-    r = FloatingPoint_0(b, l + 1);
-    r = r && FloatingPoint_1(b, l + 1);
-    r = r && consumeToken(b, DOT);
-    r = r && FloatingPoint_3(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // ["+" | "-"]
-  private static boolean FloatingPoint_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "FloatingPoint_0")) return false;
-    FloatingPoint_0_0(b, l + 1);
-    return true;
-  }
-
-  // "+" | "-"
-  private static boolean FloatingPoint_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "FloatingPoint_0_0")) return false;
-    boolean r;
-    r = consumeToken(b, PLUS);
-    if (!r) r = consumeToken(b, MINUS);
-    return r;
-  }
-
-  // NUM+
-  private static boolean FloatingPoint_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "FloatingPoint_1")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, NUM);
-    while (r) {
-      int c = current_position_(b);
-      if (!consumeToken(b, NUM)) break;
-      if (!empty_element_parsed_guard_(b, "FloatingPoint_1", c)) break;
-    }
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // NUM+
-  private static boolean FloatingPoint_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "FloatingPoint_3")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, NUM);
-    while (r) {
-      int c = current_position_(b);
-      if (!consumeToken(b, NUM)) break;
-      if (!empty_element_parsed_guard_(b, "FloatingPoint_3", c)) break;
-    }
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  /* ********************************************************** */
   // Expression AppBindList
   public static boolean GenericExpression(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "GenericExpression")) return false;
@@ -1080,49 +1020,6 @@ public class PactParser implements PsiParser, LightPsiParser {
       int c = current_position_(b);
       if (!consumeToken(b, IDENTIFIER)) break;
       if (!empty_element_parsed_guard_(b, "ImportList_1_0", c)) break;
-    }
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // ["+" | "-"] NUM+
-  public static boolean Integer(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "Integer")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, INTEGER, "<integer>");
-    r = Integer_0(b, l + 1);
-    r = r && Integer_1(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // ["+" | "-"]
-  private static boolean Integer_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "Integer_0")) return false;
-    Integer_0_0(b, l + 1);
-    return true;
-  }
-
-  // "+" | "-"
-  private static boolean Integer_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "Integer_0_0")) return false;
-    boolean r;
-    r = consumeToken(b, PLUS);
-    if (!r) r = consumeToken(b, MINUS);
-    return r;
-  }
-
-  // NUM+
-  private static boolean Integer_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "Integer_1")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, NUM);
-    while (r) {
-      int c = current_position_(b);
-      if (!consumeToken(b, NUM)) break;
-      if (!empty_element_parsed_guard_(b, "Integer_1", c)) break;
     }
     exit_section_(b, m, null, r);
     return r;
@@ -1651,14 +1548,15 @@ public class PactParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // FloatingPoint
-  //          | Integer
+  // FLOATING_POINT
+  //          | INTEGER
   public static boolean Number(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Number")) return false;
+    if (!nextTokenIs(b, "<number>", FLOATING_POINT, INTEGER)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, NUMBER, "<number>");
-    r = FloatingPoint(b, l + 1);
-    if (!r) r = Integer(b, l + 1);
+    r = consumeToken(b, FLOATING_POINT);
+    if (!r) r = consumeToken(b, INTEGER);
     exit_section_(b, l, m, r, false, null);
     return r;
   }

@@ -38,7 +38,6 @@ public interface PactTypes {
   IElementType EXPRESSION_COMMA_SEP = new PactElementType("EXPRESSION_COMMA_SEP");
   IElementType EXTENSION = new PactElementType("EXTENSION");
   IElementType FIELD_PAIR = new PactElementType("FIELD_PAIR");
-  IElementType FLOATING_POINT = new PactElementType("FLOATING_POINT");
   IElementType FV_DELIM = new PactElementType("FV_DELIM");
   IElementType FV_KEYWORD = new PactElementType("FV_KEYWORD");
   IElementType GENERIC_EXPRESSION = new PactElementType("GENERIC_EXPRESSION");
@@ -47,7 +46,6 @@ public interface PactTypes {
   IElementType IF_DEF_PACT = new PactElementType("IF_DEF_PACT");
   IElementType IF_EXPRESSION = new PactElementType("IF_EXPRESSION");
   IElementType IMPORT_LIST = new PactElementType("IMPORT_LIST");
-  IElementType INTEGER = new PactElementType("INTEGER");
   IElementType INTERFACE = new PactElementType("INTERFACE");
   IElementType LAMBDA_ARGUMENT = new PactElementType("LAMBDA_ARGUMENT");
   IElementType LAMBDA_ARGUMENTS = new PactElementType("LAMBDA_ARGUMENTS");
@@ -118,10 +116,12 @@ public interface PactTypes {
   IElementType EQUAL = new PactTokenType("=");
   IElementType EXP = new PactTokenType("exp");
   IElementType FALSE = new PactTokenType("false");
+  IElementType FLOATING_POINT = new PactTokenType("FLOATING_POINT");
   IElementType FLOOR = new PactTokenType("floor");
   IElementType GREATER_THAN = new PactTokenType(">");
   IElementType GREATER_THAN_OR_EQUAL = new PactTokenType(">=");
   IElementType IDENTIFIER = new PactTokenType("IDENTIFIER");
+  IElementType INTEGER = new PactTokenType("INTEGER");
   IElementType KEYWORD_BLESS = new PactTokenType("bless");
   IElementType KEYWORD_BLOCK_INTRO = new PactTokenType("progn");
   IElementType KEYWORD_CREATE_USER_GUARD = new PactTokenType("create-user-guard");
@@ -160,7 +160,6 @@ public interface PactTypes {
   IElementType NOT = new PactTokenType("not");
   IElementType NOT_EQUAL = new PactTokenType("!=");
   IElementType NOT_SHORT_CIRCUIT = new PactTokenType("not?");
-  IElementType NUM = new PactTokenType("NUM");
   IElementType OR = new PactTokenType("or");
   IElementType OR_SHORT_CIRCUIT = new PactTokenType("or?");
   IElementType PAREN_CLOSE = new PactTokenType(")");
@@ -266,9 +265,6 @@ public interface PactTypes {
       else if (type == FIELD_PAIR) {
         return new PactFieldPairImpl(node);
       }
-      else if (type == FLOATING_POINT) {
-        return new PactFloatingPointImpl(node);
-      }
       else if (type == FV_DELIM) {
         return new PactFVDelimImpl(node);
       }
@@ -292,9 +288,6 @@ public interface PactTypes {
       }
       else if (type == IMPORT_LIST) {
         return new PactImportListImpl(node);
-      }
-      else if (type == INTEGER) {
-        return new PactIntegerImpl(node);
       }
       else if (type == INTERFACE) {
         return new PactInterfaceImpl(node);

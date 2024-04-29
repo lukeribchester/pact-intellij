@@ -60,7 +60,8 @@
 
     /* Literals */
     STR="regexp:(\"([^\"\\]|\\\"|\\)*\")"
-    NUM="regexp:([0-9])"
+    INTEGER="regexp:([+-]?[0-9]+)"
+    FLOATING_POINT="regexp:([+-]?([0-9]+\.[0-9]*|\.[0-9]+)([eE][+-]?[0-9]+)?)"
     TRUE="true"
     FALSE="false"
 
@@ -358,12 +359,8 @@ FieldPair ::= STR ":" Expression
 
 /* Data Types (Atomic) */
 
-Number ::= FloatingPoint
-         | Integer { pin=2 }
-
-Integer ::= ["+" | "-"] NUM+ { pin=2 }
-
-FloatingPoint ::= ["+" | "-"] NUM+ "." NUM+ { pin=4 }
+Number ::= FLOATING_POINT
+         | INTEGER { pin=2 }
 
 String ::= STR
          | TICK

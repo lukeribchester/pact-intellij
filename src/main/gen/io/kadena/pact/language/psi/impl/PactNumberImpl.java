@@ -29,14 +29,14 @@ public class PactNumberImpl extends ASTWrapperPsiElement implements PactNumber {
 
   @Override
   @Nullable
-  public PactFloatingPoint getFloatingPoint() {
-    return findChildByClass(PactFloatingPoint.class);
+  public PsiElement getFloatingPoint() {
+    return findChildByType(FLOATING_POINT);
   }
 
   @Override
   @Nullable
-  public PactInteger getInteger() {
-    return findChildByClass(PactInteger.class);
+  public PsiElement getInteger() {
+    return findChildByType(INTEGER);
   }
 
 }
