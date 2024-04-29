@@ -125,43 +125,10 @@
   ]
 }
 
-Program ::= !<<eof>> ReplProgramList | !<<eof>> ProgramList
 
-ProgramList ::= TopLevel+
 
-ReplProgramList ::= ReplTopLevel+
 
-private TopLevel ::= Module
-                   | Interface
-                   | Expr
-                   | Use { pin=1 }
 
-private ReplTopLevel ::= "(" ReplSpecial ")"
-                       | "(" Defun ")"
-                       | "(" DefConst ")"
-                       | TopLevel { pin=1 }
-
-ReplSpecial ::= "load" STR Boolean
-              | "load" STR
-
-private Governance ::= StringRaw
-                     | IDENTIFIER
-// TODO: Handle single character identifiers:
-// TODO: Separate operators from IDENTIFIER
-// https://raw.githubusercontent.com/kadena-io/pact-5/master/pact-tests/pact-tests/db.repl
-StringRaw ::= STR
-            | TICK
-
-Module ::= "(" "module" IDENTIFIER Governance [MDocOrModel] ExtOrDefs ")" { pin=7 }
-
-Interface ::= "(" "interface" IDENTIFIER [MDocOrModel] ImportOrIfDef ")" { pin=6 }
-
-Ext ::= Use
-        | "(" "implements" ModQual ")"
-        | "(" "bless" StringRaw ")"
-
-Use ::= "(" "use" ModQual STR? ImportList? ")"
-        | "(" "import" ModQual STR? ImportList? ")"
 
 private ExtOrDefs ::= (Def | Ext)+
 
@@ -191,16 +158,16 @@ ImportNames ::= IDENTIFIER+
 Defun     ::= "(" "defun" IDENTIFIER [MTypeAnn] "(" [MArgs] ")" [MDocOrModel] Block ")" { pin=9 }
 Defcap    ::= "(" "defcap" IDENTIFIER [MTypeAnn] "(" [MArgs] ")" [MDocOrModel] [MDCapMeta] Block ")" { pin=10 }
 DefPact   ::= "(" "defpact" IDENTIFIER [MTypeAnn] "(" MArgs ")" [MDocOrModel] Steps ")" { pin=9 }
-DefConst  ::= "(" "defconst" IDENTIFIER [MTypeAnn] Expr [MDoc] ")" { pin=2 }
+DefConst  ::= "(" "defconst" IDENTIFIER [MTypeAnn] Expression [MDoc] ")" { pin=2 }
 Defschema ::= "(" "defschema" IDENTIFIER [MDocOrModel] SchemaArgList ")" { pin=2 }
 Deftable  ::= "(" "deftable" IDENTIFIER ":" "{" ParsedName "}" [MDoc] ")" { pin=2 }
 
 Steps ::= Step+
 
-Step ::= "(" "step" Expr [MModel] ")"
-       | "(" "step" Expr Expr [MModel] ")"
-       | "(" "step-with-rollback" Expr Expr [MModel] ")"
-       | "(" "step-with-rollback" Expr Expr Expr [MModel] ")"
+Step ::= "(" "step" Expression [MModel] ")"
+       | "(" "step" Expression Expression [MModel] ")"
+       | "(" "step-with-rollback" Expression Expression [MModel] ")"
+       | "(" "step-with-rollback" Expression Expression Expression [MModel] ")"
 
 MDCapMeta ::= Managed
             | Event
@@ -246,65 +213,27 @@ MTypeAnn ::= ":" Type
 
 Block ::= BlockBody
 
-BlockBody ::= Expr+
+BlockBody ::= Expression+
 
-Expr ::= "(" SExpr ")"
-       | DataType
-       | Variable
 
-private upper SExpr ::= LamExpr
-                      | LetExpr
-                      | IfExpr
-                      | TryExpr
-                      | ProgNExpr
-                      | GenAppExpr
-                      | SuspendExpr
-                      | CapExpr
 
-MCommaExpr ::= "," ExprCommaSep
+MCommaExpression ::= "," ExpressionCommaSep
              | AppList
 
-ExprCommaSep ::= Expr ("," Expr) * // Verified
-
-upper LamExpr ::= "lambda" "(" LamArgs ")" Block
-
-upper IfExpr ::= "if" Expr Expr Expr
-
-upper TryExpr ::= "try" Expr Expr
-
-upper SuspendExpr ::= "suspend" Expr
-
-upper CapExpr ::= CapForm
-
-CapForm ::= "with-capability" Expr Block
-          | "create-user-guard" "(" ParsedName AppList ")"
-
-LamArgs ::= LamArg (LamArg)* // Verified
-LamArg ::= IDENTIFIER (":" Type)?
+ExpressionCommaSep ::= Expression ("," Expression) * // Verified
 
 
-upper LetExpr ::= KEYWORD_LET "(" Binders ")" Block // Let
+
+
+
+
+
 
 //Binders ::= Binder (Binder)* // Verified
-//Binder ::= "(" IDENTIFIER [MTypeAnn] Expr ")" // Type annotation fault
+//Binder ::= "(" IDENTIFIER [MTypeAnn] Expression ")" // Type annotation fault
 
 //Binders ::= Binder+ // Verified
-Binders ::= ("(" IDENTIFIER [MTypeAnn] Expr ")")+
-
-upper GenAppExpr ::= Expr AppBindList // Check * ?
-
-upper ProgNExpr ::= "progn" BlockBody
-
-AppList ::= Expr* // Was +
-
-AppBindList ::= (Expr | BindingForm)*
-
-BindingForm ::= "{" BindPairs "}"
-
-BindPair ::= STR ":=" MArg
-           | TICK ":=" MArg
-
-BindPairs ::= BindPair ("," BindPair)* // Verified
+Binders ::= ("(" IDENTIFIER [MTypeAnn] Expression ")")+
 
 
 
@@ -313,14 +242,17 @@ BindPairs ::= BindPair ("," BindPair)* // Verified
 
 
 
-PactFVModels ::= PropExprList
 
-PropExprList ::= PropExpr* // Was +
+
+
+PactFVModels ::= PropExpressionList
+
+PropExpressionList ::= PropExpression* // Was +
 // https://github.com/kadena-io/pact-5/blob/master/pact-tests/pact-tests/fv-syntax-regression.repl
 
-PropExpr ::= PropAtom
-           | "(" PropExprList ")"
-           | "[" PropExprList "]"
+PropExpression ::= PropAtom
+           | "(" PropExpressionList ")"
+           | "[" PropExpressionList "]"
 
 PropAtom ::= Variable
            | Number
@@ -353,6 +285,95 @@ FVDelim ::= "{"
 
 /* TODO: Final */
 
+Program ::= !<<eof>> ProgramList
+          | !<<eof>> ReplProgramList
+
+/* Top Level */
+
+ProgramList ::= TopLevel+
+
+private TopLevel ::= Module
+                   | Interface
+                   | Use
+                   | Expression { pin=1 }
+
+/* Top Level (REPL) */
+
+ReplProgramList ::= ReplTopLevel+
+
+private ReplTopLevel ::= "(" ReplSpecial ")"
+                       | "(" Defun ")"
+                       | "(" DefConst ")"
+                       | TopLevel { pin=1 }
+
+ReplSpecial ::= KEYWORD_LOAD STR Boolean
+              | KEYWORD_LOAD STR
+
+/* Module */
+
+Module ::= "(" KEYWORD_MODULE IDENTIFIER Governance [MDocOrModel] ExtOrDefs ")" { pin=7 }
+
+private Governance ::= String
+                     | IDENTIFIER
+
+Interface ::= "(" KEYWORD_INTERFACE IDENTIFIER [MDocOrModel] ImportOrIfDef ")" { pin=6 }
+
+/* Extensions */
+
+Extension ::= Use
+            | "(" KEYWORD_IMPLEMENTS ModuleQualifier ")"
+            | "(" KEYWORD_BLESS String ")"
+
+Use ::= "(" KEYWORD_IMPORT ModuleQualifier STR? ImportList? ")"
+
+/* Expressions */
+
+Expression ::= "(" SymbolicExpression ")"
+             | Variable
+             | DataType
+
+private upper SymbolicExpression ::= LambdaExpression
+                                   | LetExpression
+                                   | IfExpression
+                                   | TryExpression
+                                   | SuspendExpression
+                                   | ProgNExpression
+                                   | CapabilityExpression
+                                   | GenericExpression
+
+upper LambdaExpression ::= KEYWORD_LAMBDA "(" LambdaArguments ")" Block
+
+LambdaArguments ::= LambdaArgument (LambdaArgument)*
+
+LambdaArgument ::= IDENTIFIER (":" Type)?
+
+upper LetExpression ::= KEYWORD_LET "(" Binders ")" Block
+
+upper IfExpression ::= KEYWORD_IF Expression Expression Expression
+
+upper TryExpression ::= KEYWORD_TRY Expression Expression
+
+upper SuspendExpression ::= KEYWORD_SUSPEND Expression
+
+upper ProgNExpression ::= KEYWORD_BLOCK_INTRO BlockBody
+
+upper CapabilityExpression ::= CapabilityForm
+
+CapabilityForm ::= KEYWORD_WITH_CAPABILITY Expression Block
+                 | KEYWORD_CREATE_USER_GUARD "(" ParsedName AppList ")"
+
+AppList ::= Expression* // Was +
+
+upper GenericExpression ::= Expression AppBindList // Check * ?
+
+AppBindList ::= (Expression | BindingForm)*
+
+BindingForm ::= "{" BindPairs "}"
+
+BindPairs ::= BindPair ("," BindPair)*
+
+BindPair ::= STR ":=" MArg
+           | TICK ":=" MArg
 
 /* Variables & Names */
 
@@ -385,16 +406,16 @@ AtomicDataType ::= Number
 
 /* Data Types (Composite) */
 
-List ::= "[" [ListExprs] "]"
+List ::= "[" [ListExpression] "]"
 
-ListExprs ::= Expr MCommaExpr? // Check * ?
+ListExpression ::= Expression MCommaExpression? // Check * ?
 
 Object ::= "{" ObjectBody? "}"
 
 ObjectBody ::= FieldPair ("," FieldPair)*
 
-FieldPair ::= STR ":" Expr
-            | TICK ":" Expr
+FieldPair ::= STR ":" Expression
+            | TICK ":" Expression
 
 /* Data Types (Atomic) */
 
@@ -415,9 +436,9 @@ Boolean ::= TRUE
 
 Operator ::= ArithmeticOperator
            | AssignmentOperator
-           | BitwiseOperator
            | LogicalOperator
            | RelationalOperator
+           | BitwiseOperator
 
 ArithmeticOperator ::= PLUS
                      | MINUS
