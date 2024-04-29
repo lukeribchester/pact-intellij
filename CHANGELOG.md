@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- Native IntelliJ Platform language support
+
 ## [0.1.2] - 2024-04-13
 
 ### Added
