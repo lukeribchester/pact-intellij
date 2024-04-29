@@ -68,7 +68,7 @@ FALSE="false"
 
 /* Identifiers */
 TICK='[a-zA-Z][a-zA-Z0-9\-_]*
-IDENTIFIER=[a-zA-Z%#_&$@<>=\^?*!|/~][a-zA-Z0-9%#+\-_&$@<>=\^?*!|/~]*
+IDENTIFIER=[a-zA-Z][a-zA-Z0-9\-_]*
 
 /* Operators (Arithmetic) */
 PLUS="+"
