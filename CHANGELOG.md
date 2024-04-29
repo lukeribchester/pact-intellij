@@ -6,9 +6,9 @@
 
 ## [0.1.2] - 2024-04-13
 
-### Changed
+### Added
 
-- Updated the IntelliJ Platform version compatibility range
+- Support for IntelliJ Platform 2024.1
 
 ## [0.1.0] - 2024-01-22
 
