@@ -15,7 +15,7 @@
   tokens = [
     /* Whitespace */
     CRLF="regexp:\R"
-    WHITE_SPACE="regexp:[\ \n\t\f]"
+    WHITE_SPACE="regexp:[ \n\t\f]"
 
     /* Comments */
     COMMENT="regexp:(;.*\n*)"

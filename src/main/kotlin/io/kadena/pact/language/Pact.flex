@@ -17,7 +17,7 @@ import com.intellij.psi.TokenType;
 
 /* Whitespace */
 CRLF=\R
-WHITE_SPACE=[\ \n\t\f]
+WHITE_SPACE=[ \n\t\f]
 
 /* Comments */
 COMMENT=(;.*\n*)
