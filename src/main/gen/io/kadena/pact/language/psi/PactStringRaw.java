@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement;
 public interface PactStringRaw extends PsiElement {
 
   @Nullable
-  PsiElement getString();
+  PsiElement getStr();
 
   @Nullable
   PsiElement getTick();

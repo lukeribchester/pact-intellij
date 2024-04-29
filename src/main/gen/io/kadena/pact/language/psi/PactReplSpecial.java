@@ -11,6 +11,6 @@ public interface PactReplSpecial extends PsiElement {
   PactBool getBool();
 
   @NotNull
-  PsiElement getString();
+  PsiElement getStr();
 
 }

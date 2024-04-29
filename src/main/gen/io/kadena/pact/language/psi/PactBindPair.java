@@ -11,7 +11,7 @@ public interface PactBindPair extends PsiElement {
   PactMArg getMArg();
 
   @Nullable
-  PsiElement getString();
+  PsiElement getStr();
 
   @Nullable
   PsiElement getTick();

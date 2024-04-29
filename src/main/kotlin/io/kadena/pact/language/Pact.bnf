@@ -59,8 +59,8 @@
     KEYWORD_MODEL_ANNOTATION="@model"
 
     /* Literals */
-    STRING="regexp:(\"([^\"\\]|\\\"|\\)*\")"
-    NUMBER="regexp:([0-9])"
+    STR="regexp:(\"([^\"\\]|\\\"|\\)*\")"
+    NUM="regexp:([0-9])"
     TRUE="true"
     FALSE="false"
 
@@ -141,15 +141,15 @@ private ReplTopLevel ::= "(" ReplSpecial ")"
                        | "(" DefConst ")"
                        | TopLevel { pin=1 }
 
-ReplSpecial ::= "load" STRING Bool
-              | "load" STRING
+ReplSpecial ::= "load" STR Bool
+              | "load" STR
 
 private Governance ::= StringRaw
                      | IDENTIFIER
 // TODO: Handle single character identifiers:
 // TODO: Separate operators from IDENTIFIER
 // https://raw.githubusercontent.com/kadena-io/pact-5/master/pact-tests/pact-tests/db.repl
-StringRaw ::= STRING
+StringRaw ::= STR
             | TICK
 
 Module ::= "(" "module" IDENTIFIER Governance [MDocOrModel] ExtOrDefs ")" { pin=7 }
@@ -160,8 +160,8 @@ Ext ::= Use
         | "(" "implements" ModQual ")"
         | "(" "bless" StringRaw ")"
 
-Use ::= "(" "use" ModQual STRING? ImportList? ")"
-        | "(" "import" ModQual STRING? ImportList? ")"
+Use ::= "(" "use" ModQual STR? ImportList? ")"
+        | "(" "import" ModQual STR? ImportList? ")"
 
 private ExtOrDefs ::= (Def | Ext)+
 
@@ -225,9 +225,9 @@ Type ::= "[" Type "]"
 
 ModuleNames ::= ModQual ("," ModQual) *  // Verified
 
-DocAnn ::= "@doc" STRING
+DocAnn ::= "@doc" STR
 
-DocStr ::= STRING
+DocStr ::= STR
 
 MModel ::= ModelAnn
 
@@ -304,7 +304,7 @@ AppBindList ::= (Expr | BindingForm)*
 
 BindingForm ::= "{" BindPairs "}"
 
-BindPair ::= STRING ":=" MArg
+BindPair ::= STR ":=" MArg
            | TICK ":=" MArg
 
 BindPairs ::= BindPair ("," BindPair)* // Verified
@@ -340,16 +340,16 @@ ParsedTyName ::= IDENTIFIER "." ModQual
 ModQual ::= IDENTIFIER "." IDENTIFIER
           | IDENTIFIER
 
-Number ::= ["+" | "-"] NUMBER+ ["." NUMBER+]
+Number ::= ["+" | "-"] NUM+ ["." NUM+]
 
-String ::= STRING
+String ::= STR
          | TICK
 
 Object ::= "{" ObjectBody? "}"
 
 ObjectBody ::= FieldPairs
 
-FieldPair ::= STRING ":" Expr
+FieldPair ::= STR ":" Expr
             | TICK ":" Expr
 
 FieldPairs ::= FieldPair ("," FieldPair)* // Verified
@@ -391,9 +391,9 @@ FVDelim ::= "{"
 FVBool ::= TRUE
          | FALSE
 
-FVNumber ::= ["+" | "-"] NUMBER+ ["." NUMBER+]
+FVNumber ::= ["+" | "-"] NUM+ ["." NUM+]
 
-FVString ::= STRING
+FVString ::= STR
            | TICK
 
 FVVar ::= IDENTIFIER "." ModQual

@@ -61,8 +61,8 @@ KEYWORD_MANAGED_ANNOTATION="@managed"
 KEYWORD_MODEL_ANNOTATION="@model"
 
 /* Literals */
-STRING=(\"([^\"\\]|\\\"|\\)*\")
-NUMBER=([0-9])
+STR=(\"([^\"\\]|\\\"|\\)*\")
+NUM=([0-9])
 TRUE="true"
 FALSE="false"
 
@@ -171,8 +171,8 @@ DYN_ACC="::"
 <YYINITIAL> {KEYWORD_MODEL_ANNOTATION}   { yybegin(YYINITIAL); return PactTypes.KEYWORD_MODEL_ANNOTATION; }
 
 /* Literals */
-<YYINITIAL> {STRING} { yybegin(YYINITIAL); return PactTypes.STRING; }
-<YYINITIAL> {NUMBER} { yybegin(YYINITIAL); return PactTypes.NUMBER; }
+<YYINITIAL> {STR} { yybegin(YYINITIAL); return PactTypes.STR; }
+<YYINITIAL> {NUM} { yybegin(YYINITIAL); return PactTypes.NUM; }
 <YYINITIAL> {TRUE}   { yybegin(YYINITIAL); return PactTypes.TRUE; }
 <YYINITIAL> {FALSE}  { yybegin(YYINITIAL); return PactTypes.FALSE; }
 

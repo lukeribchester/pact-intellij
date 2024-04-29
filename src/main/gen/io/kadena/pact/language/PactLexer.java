@@ -731,7 +731,7 @@ class PactLexer implements FlexLexer {
             // fall through
           case 53: break;
           case 5: 
-            { yybegin(YYINITIAL); return PactTypes.NUMBER;
+            { yybegin(YYINITIAL); return PactTypes.NUM;
             } 
             // fall through
           case 54: break;
@@ -791,7 +791,7 @@ class PactLexer implements FlexLexer {
             // fall through
           case 65: break;
           case 17: 
-            { yybegin(YYINITIAL); return PactTypes.STRING;
+            { yybegin(YYINITIAL); return PactTypes.STR;
             } 
             // fall through
           case 66: break;

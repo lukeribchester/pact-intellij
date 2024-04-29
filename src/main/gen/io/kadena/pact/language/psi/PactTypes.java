@@ -159,7 +159,7 @@ public interface PactTypes {
   IElementType NOT = new PactTokenType("not");
   IElementType NOT_EQUAL = new PactTokenType("!=");
   IElementType NOT_SHORT_CIRCUIT = new PactTokenType("not?");
-  IElementType NUMBER = new PactTokenType("NUMBER");
+  IElementType NUM = new PactTokenType("NUM");
   IElementType OR = new PactTokenType("or");
   IElementType OR_SHORT_CIRCUIT = new PactTokenType("or?");
   IElementType PAREN_CLOSE = new PactTokenType(")");
@@ -168,7 +168,7 @@ public interface PactTypes {
   IElementType POW = new PactTokenType("^");
   IElementType ROUND = new PactTokenType("round");
   IElementType SQRT = new PactTokenType("sqrt");
-  IElementType STRING = new PactTokenType("STRING");
+  IElementType STR = new PactTokenType("STR");
   IElementType TICK = new PactTokenType("TICK");
   IElementType TRUE = new PactTokenType("true");
 

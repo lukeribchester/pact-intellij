@@ -29,8 +29,8 @@ public class PactStringRawImpl extends ASTWrapperPsiElement implements PactStrin
 
   @Override
   @Nullable
-  public PsiElement getString() {
-    return findChildByType(STRING);
+  public PsiElement getStr() {
+    return findChildByType(STR);
   }
 
   @Override

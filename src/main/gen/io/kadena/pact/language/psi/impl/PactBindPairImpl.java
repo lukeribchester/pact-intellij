@@ -35,8 +35,8 @@ public class PactBindPairImpl extends ASTWrapperPsiElement implements PactBindPa
 
   @Override
   @Nullable
-  public PsiElement getString() {
-    return findChildByType(STRING);
+  public PsiElement getStr() {
+    return findChildByType(STR);
   }
 
   @Override

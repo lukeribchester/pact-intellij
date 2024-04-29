@@ -29,8 +29,8 @@ public class PactFVStringImpl extends ASTWrapperPsiElement implements PactFVStri
 
   @Override
   @Nullable
-  public PsiElement getString() {
-    return findChildByType(STRING);
+  public PsiElement getStr() {
+    return findChildByType(STR);
   }
 
   @Override

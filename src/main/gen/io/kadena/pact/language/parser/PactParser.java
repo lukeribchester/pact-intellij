@@ -98,11 +98,11 @@ public class PactParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // STRING ":=" MArg
+  // STR ":=" MArg
   //            | TICK ":=" MArg
   public static boolean BindPair(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "BindPair")) return false;
-    if (!nextTokenIs(b, "<bind pair>", STRING, TICK)) return false;
+    if (!nextTokenIs(b, "<bind pair>", STR, TICK)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, BIND_PAIR, "<bind pair>");
     r = BindPair_0(b, l + 1);
@@ -111,12 +111,12 @@ public class PactParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // STRING ":=" MArg
+  // STR ":=" MArg
   private static boolean BindPair_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "BindPair_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, STRING, BIND_ASSIGN);
+    r = consumeTokens(b, 0, STR, BIND_ASSIGN);
     r = r && MArg(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
@@ -137,7 +137,7 @@ public class PactParser implements PsiParser, LightPsiParser {
   // BindPair ("," BindPair)*
   public static boolean BindPairs(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "BindPairs")) return false;
-    if (!nextTokenIs(b, "<bind pairs>", STRING, TICK)) return false;
+    if (!nextTokenIs(b, "<bind pairs>", STR, TICK)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, BIND_PAIRS, "<bind pairs>");
     r = BindPair(b, l + 1);
@@ -534,25 +534,25 @@ public class PactParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // "@doc" STRING
+  // "@doc" STR
   public static boolean DocAnn(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "DocAnn")) return false;
     if (!nextTokenIs(b, KEYWORD_DOC_ANNOTATION)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, KEYWORD_DOC_ANNOTATION, STRING);
+    r = consumeTokens(b, 0, KEYWORD_DOC_ANNOTATION, STR);
     exit_section_(b, m, DOC_ANN, r);
     return r;
   }
 
   /* ********************************************************** */
-  // STRING
+  // STR
   public static boolean DocStr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "DocStr")) return false;
-    if (!nextTokenIs(b, STRING)) return false;
+    if (!nextTokenIs(b, STR)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, STRING);
+    r = consumeToken(b, STR);
     exit_section_(b, m, DOC_STR, r);
     return r;
   }
@@ -759,7 +759,7 @@ public class PactParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ["+" | "-"] NUMBER+ ["." NUMBER+]
+  // ["+" | "-"] NUM+ ["." NUM+]
   public static boolean FVNumber(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "FVNumber")) return false;
     boolean r;
@@ -787,29 +787,29 @@ public class PactParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // NUMBER+
+  // NUM+
   private static boolean FVNumber_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "FVNumber_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, NUMBER);
+    r = consumeToken(b, NUM);
     while (r) {
       int c = current_position_(b);
-      if (!consumeToken(b, NUMBER)) break;
+      if (!consumeToken(b, NUM)) break;
       if (!empty_element_parsed_guard_(b, "FVNumber_1", c)) break;
     }
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // ["." NUMBER+]
+  // ["." NUM+]
   private static boolean FVNumber_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "FVNumber_2")) return false;
     FVNumber_2_0(b, l + 1);
     return true;
   }
 
-  // "." NUMBER+
+  // "." NUM+
   private static boolean FVNumber_2_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "FVNumber_2_0")) return false;
     boolean r;
@@ -820,15 +820,15 @@ public class PactParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // NUMBER+
+  // NUM+
   private static boolean FVNumber_2_0_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "FVNumber_2_0_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, NUMBER);
+    r = consumeToken(b, NUM);
     while (r) {
       int c = current_position_(b);
-      if (!consumeToken(b, NUMBER)) break;
+      if (!consumeToken(b, NUM)) break;
       if (!empty_element_parsed_guard_(b, "FVNumber_2_0_1", c)) break;
     }
     exit_section_(b, m, null, r);
@@ -836,14 +836,14 @@ public class PactParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // STRING
+  // STR
   //            | TICK
   public static boolean FVString(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "FVString")) return false;
-    if (!nextTokenIs(b, "<fv string>", STRING, TICK)) return false;
+    if (!nextTokenIs(b, "<fv string>", STR, TICK)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, FV_STRING, "<fv string>");
-    r = consumeToken(b, STRING);
+    r = consumeToken(b, STR);
     if (!r) r = consumeToken(b, TICK);
     exit_section_(b, l, m, r, false, null);
     return r;
@@ -877,11 +877,11 @@ public class PactParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // STRING ":" Expr
+  // STR ":" Expr
   //             | TICK ":" Expr
   public static boolean FieldPair(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "FieldPair")) return false;
-    if (!nextTokenIs(b, "<field pair>", STRING, TICK)) return false;
+    if (!nextTokenIs(b, "<field pair>", STR, TICK)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, FIELD_PAIR, "<field pair>");
     r = FieldPair_0(b, l + 1);
@@ -890,12 +890,12 @@ public class PactParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // STRING ":" Expr
+  // STR ":" Expr
   private static boolean FieldPair_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "FieldPair_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, STRING, COLON);
+    r = consumeTokens(b, 0, STR, COLON);
     r = r && Expr(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
@@ -916,7 +916,7 @@ public class PactParser implements PsiParser, LightPsiParser {
   // FieldPair ("," FieldPair)*
   public static boolean FieldPairs(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "FieldPairs")) return false;
-    if (!nextTokenIs(b, "<field pairs>", STRING, TICK)) return false;
+    if (!nextTokenIs(b, "<field pairs>", STR, TICK)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, FIELD_PAIRS, "<field pairs>");
     r = FieldPair(b, l + 1);
@@ -1410,7 +1410,7 @@ public class PactParser implements PsiParser, LightPsiParser {
   //        | DocStr
   public static boolean MDoc(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "MDoc")) return false;
-    if (!nextTokenIs(b, "<m doc>", KEYWORD_DOC_ANNOTATION, STRING)) return false;
+    if (!nextTokenIs(b, "<m doc>", KEYWORD_DOC_ANNOTATION, STR)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, M_DOC, "<m doc>");
     r = DocAnn(b, l + 1);
@@ -1607,7 +1607,7 @@ public class PactParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ["+" | "-"] NUMBER+ ["." NUMBER+]
+  // ["+" | "-"] NUM+ ["." NUM+]
   public static boolean Number(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Number")) return false;
     boolean r;
@@ -1635,29 +1635,29 @@ public class PactParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // NUMBER+
+  // NUM+
   private static boolean Number_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Number_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, NUMBER);
+    r = consumeToken(b, NUM);
     while (r) {
       int c = current_position_(b);
-      if (!consumeToken(b, NUMBER)) break;
+      if (!consumeToken(b, NUM)) break;
       if (!empty_element_parsed_guard_(b, "Number_1", c)) break;
     }
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // ["." NUMBER+]
+  // ["." NUM+]
   private static boolean Number_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Number_2")) return false;
     Number_2_0(b, l + 1);
     return true;
   }
 
-  // "." NUMBER+
+  // "." NUM+
   private static boolean Number_2_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Number_2_0")) return false;
     boolean r;
@@ -1668,15 +1668,15 @@ public class PactParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // NUMBER+
+  // NUM+
   private static boolean Number_2_0_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Number_2_0_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, NUMBER);
+    r = consumeToken(b, NUM);
     while (r) {
       int c = current_position_(b);
-      if (!consumeToken(b, NUMBER)) break;
+      if (!consumeToken(b, NUM)) break;
       if (!empty_element_parsed_guard_(b, "Number_2_0_1", c)) break;
     }
     exit_section_(b, m, null, r);
@@ -1708,7 +1708,7 @@ public class PactParser implements PsiParser, LightPsiParser {
   // FieldPairs
   public static boolean ObjectBody(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ObjectBody")) return false;
-    if (!nextTokenIs(b, "<object body>", STRING, TICK)) return false;
+    if (!nextTokenIs(b, "<object body>", STR, TICK)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, OBJECT_BODY, "<object body>");
     r = FieldPairs(b, l + 1);
@@ -1970,25 +1970,25 @@ public class PactParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // "load" STRING Bool
-  //               | "load" STRING
+  // "load" STR Bool
+  //               | "load" STR
   public static boolean ReplSpecial(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ReplSpecial")) return false;
     if (!nextTokenIs(b, KEYWORD_LOAD)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = ReplSpecial_0(b, l + 1);
-    if (!r) r = parseTokens(b, 0, KEYWORD_LOAD, STRING);
+    if (!r) r = parseTokens(b, 0, KEYWORD_LOAD, STR);
     exit_section_(b, m, REPL_SPECIAL, r);
     return r;
   }
 
-  // "load" STRING Bool
+  // "load" STR Bool
   private static boolean ReplSpecial_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ReplSpecial_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, KEYWORD_LOAD, STRING);
+    r = consumeTokens(b, 0, KEYWORD_LOAD, STR);
     r = r && Bool(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
@@ -2255,28 +2255,28 @@ public class PactParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // STRING
+  // STR
   //          | TICK
   public static boolean String(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "String")) return false;
-    if (!nextTokenIs(b, "<string>", STRING, TICK)) return false;
+    if (!nextTokenIs(b, "<string>", STR, TICK)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, STRING, "<string>");
-    r = consumeToken(b, STRING);
+    r = consumeToken(b, STR);
     if (!r) r = consumeToken(b, TICK);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
   /* ********************************************************** */
-  // STRING
+  // STR
   //             | TICK
   public static boolean StringRaw(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "StringRaw")) return false;
-    if (!nextTokenIs(b, "<string raw>", STRING, TICK)) return false;
+    if (!nextTokenIs(b, "<string raw>", STR, TICK)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, STRING_RAW, "<string raw>");
-    r = consumeToken(b, STRING);
+    r = consumeToken(b, STR);
     if (!r) r = consumeToken(b, TICK);
     exit_section_(b, l, m, r, false, null);
     return r;
@@ -2378,8 +2378,8 @@ public class PactParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // "(" "use" ModQual STRING? ImportList? ")"
-  //         | "(" "import" ModQual STRING? ImportList? ")"
+  // "(" "use" ModQual STR? ImportList? ")"
+  //         | "(" "import" ModQual STR? ImportList? ")"
   public static boolean Use(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Use")) return false;
     if (!nextTokenIs(b, PAREN_OPEN)) return false;
@@ -2391,7 +2391,7 @@ public class PactParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // "(" "use" ModQual STRING? ImportList? ")"
+  // "(" "use" ModQual STR? ImportList? ")"
   private static boolean Use_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Use_0")) return false;
     boolean r;
@@ -2405,10 +2405,10 @@ public class PactParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // STRING?
+  // STR?
   private static boolean Use_0_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Use_0_3")) return false;
-    consumeToken(b, STRING);
+    consumeToken(b, STR);
     return true;
   }
 
@@ -2419,7 +2419,7 @@ public class PactParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // "(" "import" ModQual STRING? ImportList? ")"
+  // "(" "import" ModQual STR? ImportList? ")"
   private static boolean Use_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Use_1")) return false;
     boolean r;
@@ -2434,10 +2434,10 @@ public class PactParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // STRING?
+  // STR?
   private static boolean Use_1_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Use_1_3")) return false;
-    consumeToken(b, STRING);
+    consumeToken(b, STR);
     return true;
   }
 

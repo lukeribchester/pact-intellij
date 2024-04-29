@@ -35,8 +35,8 @@ public class PactReplSpecialImpl extends ASTWrapperPsiElement implements PactRep
 
   @Override
   @NotNull
-  public PsiElement getString() {
-    return findNotNullChildByType(STRING);
+  public PsiElement getStr() {
+    return findNotNullChildByType(STR);
   }
 
 }
