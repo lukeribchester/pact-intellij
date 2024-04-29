@@ -125,46 +125,6 @@
   ]
 }
 
-PactFVModels ::= PropExpressionList
-
-PropExpressionList ::= PropExpression* // Was +
-// https://github.com/kadena-io/pact-5/blob/master/pact-tests/pact-tests/fv-syntax-regression.repl
-
-PropExpression ::= PropAtom
-           | "(" PropExpressionList ")"
-           | "[" PropExpressionList "]"
-
-PropAtom ::= Variable
-           | Number
-           | String
-           | FVKeyword
-           | FVDelim
-           | Boolean
-           | Operator
-
-FVKeyword ::= "let"
-            | "lambda"
-            | "if"
-            | "progn"
-            | "suspend"
-            | "try"
-            | "enforce"
-            | "enforce-one"
-            | "and"
-            | "or"
-            | "create-user-guard"
-            | "with-capability"
-
-FVDelim ::= "{"
-          | "}"
-          | ":"
-          | ","
-
-
-
-
-/* TODO: Final */
-
 Program ::= !<<eof>> ProgramList
           | !<<eof>> ReplProgramList
 
@@ -456,3 +416,40 @@ RelationalOperator ::= EQUAL
                      | LESS_THAN_OR_EQUAL
                      | GREATER_THAN
                      | GREATER_THAN_OR_EQUAL
+
+/* TODO: WIP */
+
+PactFVModels ::= PropExpressionList
+
+PropExpressionList ::= PropExpression* // Was +
+// https://github.com/kadena-io/pact-5/blob/master/pact-tests/pact-tests/fv-syntax-regression.repl
+
+PropExpression ::= PropAtom
+                 | "(" PropExpressionList ")"
+                 | "[" PropExpressionList "]"
+
+PropAtom ::= Variable
+           | Number
+           | String
+           | FVKeyword
+           | FVDelim
+           | Boolean
+           | Operator
+
+FVKeyword ::= "let"
+            | "lambda"
+            | "if"
+            | "progn"
+            | "suspend"
+            | "try"
+            | "enforce"
+            | "enforce-one"
+            | "and"
+            | "or"
+            | "create-user-guard"
+            | "with-capability"
+
+FVDelim ::= "{"
+          | "}"
+          | ":"
+          | ","
