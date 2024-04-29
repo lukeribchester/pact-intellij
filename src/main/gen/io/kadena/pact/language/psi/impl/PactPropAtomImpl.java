@@ -29,8 +29,8 @@ public class PactPropAtomImpl extends ASTWrapperPsiElement implements PactPropAt
 
   @Override
   @Nullable
-  public PactFVBool getFVBool() {
-    return findChildByClass(PactFVBool.class);
+  public PactBoolean getBoolean() {
+    return findChildByClass(PactBoolean.class);
   }
 
   @Override
@@ -47,20 +47,26 @@ public class PactPropAtomImpl extends ASTWrapperPsiElement implements PactPropAt
 
   @Override
   @Nullable
-  public PactFVNumber getFVNumber() {
-    return findChildByClass(PactFVNumber.class);
+  public PactNumber getNumber() {
+    return findChildByClass(PactNumber.class);
   }
 
   @Override
   @Nullable
-  public PactFVString getFVString() {
-    return findChildByClass(PactFVString.class);
+  public PactOperator getOperator() {
+    return findChildByClass(PactOperator.class);
   }
 
   @Override
   @Nullable
-  public PactFVVar getFVVar() {
-    return findChildByClass(PactFVVar.class);
+  public PactString getString() {
+    return findChildByClass(PactString.class);
+  }
+
+  @Override
+  @Nullable
+  public PactVariable getVariable() {
+    return findChildByClass(PactVariable.class);
   }
 
 }

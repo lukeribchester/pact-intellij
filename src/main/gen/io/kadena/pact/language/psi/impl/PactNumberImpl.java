@@ -27,4 +27,16 @@ public class PactNumberImpl extends ASTWrapperPsiElement implements PactNumber {
     else super.accept(visitor);
   }
 
+  @Override
+  @Nullable
+  public PactFloatingPoint getFloatingPoint() {
+    return findChildByClass(PactFloatingPoint.class);
+  }
+
+  @Override
+  @Nullable
+  public PactInteger getInteger() {
+    return findChildByClass(PactInteger.class);
+  }
+
 }

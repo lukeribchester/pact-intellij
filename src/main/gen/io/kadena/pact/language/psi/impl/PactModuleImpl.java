@@ -29,6 +29,12 @@ public class PactModuleImpl extends ASTWrapperPsiElement implements PactModule {
 
   @Override
   @NotNull
+  public List<PactDefCap> getDefCapList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactDefCap.class);
+  }
+
+  @Override
+  @NotNull
   public List<PactDefConst> getDefConstList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, PactDefConst.class);
   }
@@ -41,20 +47,14 @@ public class PactModuleImpl extends ASTWrapperPsiElement implements PactModule {
 
   @Override
   @NotNull
-  public List<PactDefcap> getDefcapList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactDefcap.class);
+  public List<PactDefSchema> getDefSchemaList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactDefSchema.class);
   }
 
   @Override
   @NotNull
-  public List<PactDefschema> getDefschemaList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactDefschema.class);
-  }
-
-  @Override
-  @NotNull
-  public List<PactDeftable> getDeftableList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactDeftable.class);
+  public List<PactDefTable> getDefTableList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactDefTable.class);
   }
 
   @Override
@@ -65,32 +65,32 @@ public class PactModuleImpl extends ASTWrapperPsiElement implements PactModule {
 
   @Override
   @Nullable
-  public PactDocAnn getDocAnn() {
-    return findChildByClass(PactDocAnn.class);
+  public PactDocumentationAnnotation getDocumentationAnnotation() {
+    return findChildByClass(PactDocumentationAnnotation.class);
   }
 
   @Override
   @Nullable
-  public PactDocStr getDocStr() {
-    return findChildByClass(PactDocStr.class);
+  public PactDocumentationString getDocumentationString() {
+    return findChildByClass(PactDocumentationString.class);
   }
 
   @Override
   @NotNull
-  public List<PactExt> getExtList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactExt.class);
+  public List<PactExtension> getExtensionList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactExtension.class);
   }
 
   @Override
   @Nullable
-  public PactModelAnn getModelAnn() {
-    return findChildByClass(PactModelAnn.class);
+  public PactModelAnnotation getModelAnnotation() {
+    return findChildByClass(PactModelAnnotation.class);
   }
 
   @Override
   @Nullable
-  public PactStringRaw getStringRaw() {
-    return findChildByClass(PactStringRaw.class);
+  public PactString getString() {
+    return findChildByClass(PactString.class);
   }
 
 }

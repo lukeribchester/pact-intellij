@@ -11,6 +11,6 @@ public interface PactAppBindList extends PsiElement {
   List<PactBindingForm> getBindingFormList();
 
   @NotNull
-  List<PactExpr> getExprList();
+  List<PactExpression> getExpressionList();
 
 }

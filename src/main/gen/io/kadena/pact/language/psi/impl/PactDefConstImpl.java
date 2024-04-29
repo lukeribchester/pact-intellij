@@ -29,8 +29,8 @@ public class PactDefConstImpl extends ASTWrapperPsiElement implements PactDefCon
 
   @Override
   @Nullable
-  public PactExpr getExpr() {
-    return findChildByClass(PactExpr.class);
+  public PactExpression getExpression() {
+    return findChildByClass(PactExpression.class);
   }
 
   @Override

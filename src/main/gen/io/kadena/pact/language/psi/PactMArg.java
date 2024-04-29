@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement;
 public interface PactMArg extends PsiElement {
 
   @Nullable
-  PactType getType();
+  PactTypeDeclaration getTypeDeclaration();
 
   @NotNull
   PsiElement getIdentifier();

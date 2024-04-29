@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface PactAppList extends PsiElement {
 
   @NotNull
-  List<PactExpr> getExprList();
+  List<PactExpression> getExpressionList();
 
 }

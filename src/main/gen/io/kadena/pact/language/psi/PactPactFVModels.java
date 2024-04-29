@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface PactPactFVModels extends PsiElement {
 
   @NotNull
-  PactPropExprList getPropExprList();
+  PactPropExpressionList getPropExpressionList();
 
 }

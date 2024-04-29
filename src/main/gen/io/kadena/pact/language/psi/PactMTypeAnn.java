@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface PactMTypeAnn extends PsiElement {
 
   @NotNull
-  PactType getType();
+  PactTypeDeclaration getTypeDeclaration();
 
 }

@@ -7,4 +7,19 @@ import com.intellij.psi.PsiElement;
 
 public interface PactOperator extends PsiElement {
 
+  @Nullable
+  PactArithmeticOperator getArithmeticOperator();
+
+  @Nullable
+  PactAssignmentOperator getAssignmentOperator();
+
+  @Nullable
+  PactBitwiseOperator getBitwiseOperator();
+
+  @Nullable
+  PactLogicalOperator getLogicalOperator();
+
+  @Nullable
+  PactRelationalOperator getRelationalOperator();
+
 }

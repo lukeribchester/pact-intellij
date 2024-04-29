@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface PactMModel extends PsiElement {
 
   @NotNull
-  PactModelAnn getModelAnn();
+  PactModelAnnotation getModelAnnotation();
 
 }

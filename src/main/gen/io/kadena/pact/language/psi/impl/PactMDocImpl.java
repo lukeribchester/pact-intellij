@@ -29,14 +29,14 @@ public class PactMDocImpl extends ASTWrapperPsiElement implements PactMDoc {
 
   @Override
   @Nullable
-  public PactDocAnn getDocAnn() {
-    return findChildByClass(PactDocAnn.class);
+  public PactDocumentationAnnotation getDocumentationAnnotation() {
+    return findChildByClass(PactDocumentationAnnotation.class);
   }
 
   @Override
   @Nullable
-  public PactDocStr getDocStr() {
-    return findChildByClass(PactDocStr.class);
+  public PactDocumentationString getDocumentationString() {
+    return findChildByClass(PactDocumentationString.class);
   }
 
 }

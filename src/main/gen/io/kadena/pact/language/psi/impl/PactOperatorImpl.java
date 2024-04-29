@@ -27,4 +27,34 @@ public class PactOperatorImpl extends ASTWrapperPsiElement implements PactOperat
     else super.accept(visitor);
   }
 
+  @Override
+  @Nullable
+  public PactArithmeticOperator getArithmeticOperator() {
+    return findChildByClass(PactArithmeticOperator.class);
+  }
+
+  @Override
+  @Nullable
+  public PactAssignmentOperator getAssignmentOperator() {
+    return findChildByClass(PactAssignmentOperator.class);
+  }
+
+  @Override
+  @Nullable
+  public PactBitwiseOperator getBitwiseOperator() {
+    return findChildByClass(PactBitwiseOperator.class);
+  }
+
+  @Override
+  @Nullable
+  public PactLogicalOperator getLogicalOperator() {
+    return findChildByClass(PactLogicalOperator.class);
+  }
+
+  @Override
+  @Nullable
+  public PactRelationalOperator getRelationalOperator() {
+    return findChildByClass(PactRelationalOperator.class);
+  }
+
 }

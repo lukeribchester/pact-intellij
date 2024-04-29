@@ -8,10 +8,10 @@ import com.intellij.psi.PsiElement;
 public interface PactIfDefCap extends PsiElement {
 
   @Nullable
-  PactDocAnn getDocAnn();
+  PactDocumentationAnnotation getDocumentationAnnotation();
 
   @Nullable
-  PactDocStr getDocStr();
+  PactDocumentationString getDocumentationString();
 
   @NotNull
   PactMArgs getMArgs();
@@ -23,7 +23,7 @@ public interface PactIfDefCap extends PsiElement {
   PactMTypeAnn getMTypeAnn();
 
   @Nullable
-  PactModelAnn getModelAnn();
+  PactModelAnnotation getModelAnnotation();
 
   @NotNull
   PsiElement getIdentifier();

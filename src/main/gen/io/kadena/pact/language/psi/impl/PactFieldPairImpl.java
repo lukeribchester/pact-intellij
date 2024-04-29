@@ -29,8 +29,8 @@ public class PactFieldPairImpl extends ASTWrapperPsiElement implements PactField
 
   @Override
   @NotNull
-  public PactExpr getExpr() {
-    return findNotNullChildByClass(PactExpr.class);
+  public PactExpression getExpression() {
+    return findNotNullChildByClass(PactExpression.class);
   }
 
   @Override

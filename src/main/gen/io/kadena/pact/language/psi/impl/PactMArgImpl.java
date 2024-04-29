@@ -29,8 +29,8 @@ public class PactMArgImpl extends ASTWrapperPsiElement implements PactMArg {
 
   @Override
   @Nullable
-  public PactType getType() {
-    return findChildByClass(PactType.class);
+  public PactTypeDeclaration getTypeDeclaration() {
+    return findChildByClass(PactTypeDeclaration.class);
   }
 
   @Override

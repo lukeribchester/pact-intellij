@@ -29,8 +29,8 @@ public class PactListImpl extends ASTWrapperPsiElement implements PactList {
 
   @Override
   @Nullable
-  public PactListExprs getListExprs() {
-    return findChildByClass(PactListExprs.class);
+  public PactListExpression getListExpression() {
+    return findChildByClass(PactListExpression.class);
   }
 
 }

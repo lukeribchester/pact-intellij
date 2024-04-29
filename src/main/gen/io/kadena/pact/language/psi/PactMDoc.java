@@ -8,9 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface PactMDoc extends PsiElement {
 
   @Nullable
-  PactDocAnn getDocAnn();
+  PactDocumentationAnnotation getDocumentationAnnotation();
 
   @Nullable
-  PactDocStr getDocStr();
+  PactDocumentationString getDocumentationString();
 
 }

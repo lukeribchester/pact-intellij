@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement;
 public interface PactPropAtom extends PsiElement {
 
   @Nullable
-  PactFVBool getFVBool();
+  PactBoolean getBoolean();
 
   @Nullable
   PactFVDelim getFVDelim();
@@ -17,12 +17,15 @@ public interface PactPropAtom extends PsiElement {
   PactFVKeyword getFVKeyword();
 
   @Nullable
-  PactFVNumber getFVNumber();
+  PactNumber getNumber();
 
   @Nullable
-  PactFVString getFVString();
+  PactOperator getOperator();
 
   @Nullable
-  PactFVVar getFVVar();
+  PactString getString();
+
+  @Nullable
+  PactVariable getVariable();
 
 }

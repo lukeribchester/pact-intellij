@@ -8,9 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface PactMDCapMeta extends PsiElement {
 
   @Nullable
-  PactEvent getEvent();
+  PactEventAnnotation getEventAnnotation();
 
   @Nullable
-  PactManaged getManaged();
+  PactManagedAnnotation getManagedAnnotation();
 
 }

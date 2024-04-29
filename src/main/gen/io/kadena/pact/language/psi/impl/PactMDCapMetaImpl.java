@@ -29,14 +29,14 @@ public class PactMDCapMetaImpl extends ASTWrapperPsiElement implements PactMDCap
 
   @Override
   @Nullable
-  public PactEvent getEvent() {
-    return findChildByClass(PactEvent.class);
+  public PactEventAnnotation getEventAnnotation() {
+    return findChildByClass(PactEventAnnotation.class);
   }
 
   @Override
   @Nullable
-  public PactManaged getManaged() {
-    return findChildByClass(PactManaged.class);
+  public PactManagedAnnotation getManagedAnnotation() {
+    return findChildByClass(PactManagedAnnotation.class);
   }
 
 }

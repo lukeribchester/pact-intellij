@@ -29,8 +29,8 @@ public class PactBlockBodyImpl extends ASTWrapperPsiElement implements PactBlock
 
   @Override
   @NotNull
-  public List<PactExpr> getExprList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactExpr.class);
+  public List<PactExpression> getExpressionList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactExpression.class);
   }
 
 }

@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface PactParsedName extends PsiElement {
 
   @Nullable
-  PactModQual getModQual();
+  PactModuleQualifier getModuleQualifier();
 
 }

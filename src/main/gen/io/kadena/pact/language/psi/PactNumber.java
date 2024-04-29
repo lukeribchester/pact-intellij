@@ -7,4 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface PactNumber extends PsiElement {
 
+  @Nullable
+  PactFloatingPoint getFloatingPoint();
+
+  @Nullable
+  PactInteger getInteger();
+
 }

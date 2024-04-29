@@ -14,7 +14,7 @@ public interface PactReplProgramList extends PsiElement {
   List<PactDefun> getDefunList();
 
   @NotNull
-  List<PactExpr> getExprList();
+  List<PactExpression> getExpressionList();
 
   @NotNull
   List<PactInterface> getInterfaceList();

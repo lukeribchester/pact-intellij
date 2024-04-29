@@ -11,7 +11,7 @@ public interface PactUse extends PsiElement {
   PactImportList getImportList();
 
   @NotNull
-  PactModQual getModQual();
+  PactModuleQualifier getModuleQualifier();
 
   @Nullable
   PsiElement getStr();

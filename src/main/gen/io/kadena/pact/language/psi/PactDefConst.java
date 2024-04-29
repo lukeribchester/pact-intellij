@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement;
 public interface PactDefConst extends PsiElement {
 
   @Nullable
-  PactExpr getExpr();
+  PactExpression getExpression();
 
   @Nullable
   PactMDoc getMDoc();

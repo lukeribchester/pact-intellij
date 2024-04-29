@@ -29,8 +29,8 @@ public class PactObjectBodyImpl extends ASTWrapperPsiElement implements PactObje
 
   @Override
   @NotNull
-  public PactFieldPairs getFieldPairs() {
-    return findNotNullChildByClass(PactFieldPairs.class);
+  public List<PactFieldPair> getFieldPairList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactFieldPair.class);
   }
 
 }

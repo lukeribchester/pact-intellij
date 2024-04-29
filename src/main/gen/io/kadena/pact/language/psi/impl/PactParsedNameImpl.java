@@ -29,8 +29,8 @@ public class PactParsedNameImpl extends ASTWrapperPsiElement implements PactPars
 
   @Override
   @Nullable
-  public PactModQual getModQual() {
-    return findChildByClass(PactModQual.class);
+  public PactModuleQualifier getModuleQualifier() {
+    return findChildByClass(PactModuleQualifier.class);
   }
 
 }

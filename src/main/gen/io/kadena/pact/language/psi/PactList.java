@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface PactList extends PsiElement {
 
   @Nullable
-  PactListExprs getListExprs();
+  PactListExpression getListExpression();
 
 }

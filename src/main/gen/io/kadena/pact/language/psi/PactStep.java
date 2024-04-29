@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement;
 public interface PactStep extends PsiElement {
 
   @NotNull
-  List<PactExpr> getExprList();
+  List<PactExpression> getExpressionList();
 
   @Nullable
   PactMModel getMModel();

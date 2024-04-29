@@ -29,8 +29,8 @@ public class PactReplSpecialImpl extends ASTWrapperPsiElement implements PactRep
 
   @Override
   @Nullable
-  public PactBool getBool() {
-    return findChildByClass(PactBool.class);
+  public PactBoolean getBoolean() {
+    return findChildByClass(PactBoolean.class);
   }
 
   @Override

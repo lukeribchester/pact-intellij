@@ -35,8 +35,8 @@ public class PactUseImpl extends ASTWrapperPsiElement implements PactUse {
 
   @Override
   @NotNull
-  public PactModQual getModQual() {
-    return findNotNullChildByClass(PactModQual.class);
+  public PactModuleQualifier getModuleQualifier() {
+    return findNotNullChildByClass(PactModuleQualifier.class);
   }
 
   @Override

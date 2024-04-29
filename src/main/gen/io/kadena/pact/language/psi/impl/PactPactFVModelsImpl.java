@@ -29,8 +29,8 @@ public class PactPactFVModelsImpl extends ASTWrapperPsiElement implements PactPa
 
   @Override
   @NotNull
-  public PactPropExprList getPropExprList() {
-    return findNotNullChildByClass(PactPropExprList.class);
+  public PactPropExpressionList getPropExpressionList() {
+    return findNotNullChildByClass(PactPropExpressionList.class);
   }
 
 }

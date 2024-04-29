@@ -35,14 +35,14 @@ public class PactDefunImpl extends ASTWrapperPsiElement implements PactDefun {
 
   @Override
   @Nullable
-  public PactDocAnn getDocAnn() {
-    return findChildByClass(PactDocAnn.class);
+  public PactDocumentationAnnotation getDocumentationAnnotation() {
+    return findChildByClass(PactDocumentationAnnotation.class);
   }
 
   @Override
   @Nullable
-  public PactDocStr getDocStr() {
-    return findChildByClass(PactDocStr.class);
+  public PactDocumentationString getDocumentationString() {
+    return findChildByClass(PactDocumentationString.class);
   }
 
   @Override
@@ -59,8 +59,8 @@ public class PactDefunImpl extends ASTWrapperPsiElement implements PactDefun {
 
   @Override
   @Nullable
-  public PactModelAnn getModelAnn() {
-    return findChildByClass(PactModelAnn.class);
+  public PactModelAnnotation getModelAnnotation() {
+    return findChildByClass(PactModelAnnotation.class);
   }
 
   @Override

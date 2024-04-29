@@ -29,8 +29,8 @@ public class PactMModelImpl extends ASTWrapperPsiElement implements PactMModel {
 
   @Override
   @NotNull
-  public PactModelAnn getModelAnn() {
-    return findNotNullChildByClass(PactModelAnn.class);
+  public PactModelAnnotation getModelAnnotation() {
+    return findNotNullChildByClass(PactModelAnnotation.class);
   }
 
 }

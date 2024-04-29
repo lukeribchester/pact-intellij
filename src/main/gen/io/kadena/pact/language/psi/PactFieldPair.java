@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement;
 public interface PactFieldPair extends PsiElement {
 
   @NotNull
-  PactExpr getExpr();
+  PactExpression getExpression();
 
   @Nullable
   PsiElement getStr();

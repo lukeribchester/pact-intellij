@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement;
 public interface PactReplSpecial extends PsiElement {
 
   @Nullable
-  PactBool getBool();
+  PactBoolean getBoolean();
 
   @NotNull
   PsiElement getStr();
