@@ -662,6 +662,7 @@ public class PactParser implements PsiParser, LightPsiParser {
   // "(" SymbolicExpression ")"
   //              | Variable
   //              | DataType
+  //              | Operator
   public static boolean Expression(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Expression")) return false;
     boolean r;
@@ -669,6 +670,7 @@ public class PactParser implements PsiParser, LightPsiParser {
     r = Expression_0(b, l + 1);
     if (!r) r = Variable(b, l + 1);
     if (!r) r = DataType(b, l + 1);
+    if (!r) r = Operator(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -1649,14 +1651,14 @@ public class PactParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // Integer
-  //          | FloatingPoint
+  // FloatingPoint
+  //          | Integer
   public static boolean Number(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Number")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, NUMBER, "<number>");
-    r = Integer(b, l + 1);
-    if (!r) r = FloatingPoint(b, l + 1);
+    r = FloatingPoint(b, l + 1);
+    if (!r) r = Integer(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -1723,6 +1725,8 @@ public class PactParser implements PsiParser, LightPsiParser {
   //            | LogicalOperator
   //            | RelationalOperator
   //            | BitwiseOperator
+  //            | KEYWORD_ENFORCE
+  //            | KEYWORD_ENFORCE_ONE
   public static boolean Operator(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Operator")) return false;
     boolean r;
@@ -1732,6 +1736,8 @@ public class PactParser implements PsiParser, LightPsiParser {
     if (!r) r = LogicalOperator(b, l + 1);
     if (!r) r = RelationalOperator(b, l + 1);
     if (!r) r = BitwiseOperator(b, l + 1);
+    if (!r) r = consumeToken(b, KEYWORD_ENFORCE);
+    if (!r) r = consumeToken(b, KEYWORD_ENFORCE_ONE);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -1813,8 +1819,8 @@ public class PactParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // !<<eof>> ProgramList
-  //           | !<<eof>> ReplProgramList
+  // !<<eof>> ReplProgramList
+  //           | !<<eof>> ProgramList
   static boolean Program(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Program")) return false;
     boolean r;
@@ -1825,13 +1831,13 @@ public class PactParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // !<<eof>> ProgramList
+  // !<<eof>> ReplProgramList
   private static boolean Program_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Program_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = Program_0_0(b, l + 1);
-    r = r && ProgramList(b, l + 1);
+    r = r && ReplProgramList(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -1846,13 +1852,13 @@ public class PactParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // !<<eof>> ReplProgramList
+  // !<<eof>> ProgramList
   private static boolean Program_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Program_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = Program_1_0(b, l + 1);
-    r = r && ReplProgramList(b, l + 1);
+    r = r && ProgramList(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -1997,80 +2003,38 @@ public class PactParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // KEYWORD_LOAD STR Boolean
-  //               | KEYWORD_LOAD STR
+  // "(" KEYWORD_LOAD STR Boolean? ")"
   public static boolean ReplSpecial(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ReplSpecial")) return false;
-    if (!nextTokenIs(b, KEYWORD_LOAD)) return false;
+    if (!nextTokenIs(b, PAREN_OPEN)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = ReplSpecial_0(b, l + 1);
-    if (!r) r = parseTokens(b, 0, KEYWORD_LOAD, STR);
+    r = consumeTokens(b, 0, PAREN_OPEN, KEYWORD_LOAD, STR);
+    r = r && ReplSpecial_3(b, l + 1);
+    r = r && consumeToken(b, PAREN_CLOSE);
     exit_section_(b, m, REPL_SPECIAL, r);
     return r;
   }
 
-  // KEYWORD_LOAD STR Boolean
-  private static boolean ReplSpecial_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "ReplSpecial_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, KEYWORD_LOAD, STR);
-    r = r && Boolean(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
+  // Boolean?
+  private static boolean ReplSpecial_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ReplSpecial_3")) return false;
+    Boolean(b, l + 1);
+    return true;
   }
 
   /* ********************************************************** */
-  // "(" ReplSpecial ")"
-  //                        | "(" Defun ")"
-  //                        | "(" DefConst ")"
+  // ReplSpecial
+  //                        | Defun
+  //                        | DefConst
   //                        | TopLevel
   static boolean ReplTopLevel(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ReplTopLevel")) return false;
     boolean r;
-    Marker m = enter_section_(b);
-    r = ReplTopLevel_0(b, l + 1);
-    if (!r) r = ReplTopLevel_1(b, l + 1);
-    if (!r) r = ReplTopLevel_2(b, l + 1);
+    r = ReplSpecial(b, l + 1);
+    if (!r) r = Defun(b, l + 1);
+    if (!r) r = DefConst(b, l + 1);
     if (!r) r = TopLevel(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // "(" ReplSpecial ")"
-  private static boolean ReplTopLevel_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "ReplTopLevel_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, PAREN_OPEN);
-    r = r && ReplSpecial(b, l + 1);
-    r = r && consumeToken(b, PAREN_CLOSE);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // "(" Defun ")"
-  private static boolean ReplTopLevel_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "ReplTopLevel_1")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, PAREN_OPEN);
-    r = r && Defun(b, l + 1);
-    r = r && consumeToken(b, PAREN_CLOSE);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // "(" DefConst ")"
-  private static boolean ReplTopLevel_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "ReplTopLevel_2")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, PAREN_OPEN);
-    r = r && DefConst(b, l + 1);
-    r = r && consumeToken(b, PAREN_CLOSE);
-    exit_section_(b, m, null, r);
     return r;
   }
 

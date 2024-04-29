@@ -11,6 +11,9 @@ public interface PactExpression extends PsiElement {
   PactDataType getDataType();
 
   @Nullable
+  PactOperator getOperator();
+
+  @Nullable
   PactVariable getVariable();
 
 }

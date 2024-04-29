@@ -28,7 +28,7 @@
     KEYWORD_IMPLEMENTS="implements"
     KEYWORD_INTERFACE="interface"
     KEYWORD_LAMBDA="lambda"
-    KEYWORD_LET="regexp:(let|let\*)"
+    KEYWORD_LET="regexp:(let\*?)"
     KEYWORD_MODULE="module"
     KEYWORD_BLOCK_INTRO="progn"
     KEYWORD_STEP="step"
@@ -125,8 +125,8 @@
   ]
 }
 
-Program ::= !<<eof>> ProgramList
-          | !<<eof>> ReplProgramList
+Program ::= !<<eof>> ReplProgramList
+          | !<<eof>> ProgramList { pin=2 }
 
 /* Top Level */
 
@@ -135,19 +135,18 @@ ProgramList ::= TopLevel+
 private TopLevel ::= Module
                    | Interface
                    | Use
-                   | Expression { pin=1 }
+                   | Expression { pin=4 }
 
 /* Top Level (REPL) */
 
 ReplProgramList ::= ReplTopLevel+
 
-private ReplTopLevel ::= "(" ReplSpecial ")"
-                       | "(" Defun ")"
-                       | "(" DefConst ")"
-                       | TopLevel { pin=1 }
+private ReplTopLevel ::= ReplSpecial
+                       | Defun
+                       | DefConst
+                       | TopLevel { pin=4 }
 
-ReplSpecial ::= KEYWORD_LOAD STR Boolean
-              | KEYWORD_LOAD STR
+ReplSpecial ::= "(" KEYWORD_LOAD STR Boolean? ")"
 
 /* Annotations & Documentation */
 
@@ -244,6 +243,7 @@ BlockBody ::= Expression+
 Expression ::= "(" SymbolicExpression ")"
              | Variable
              | DataType
+             | Operator
 
 private upper SymbolicExpression ::= LambdaExpression
                                    | LetExpression
@@ -358,12 +358,12 @@ FieldPair ::= STR ":" Expression
 
 /* Data Types (Atomic) */
 
-Number ::= Integer
-         | FloatingPoint
+Number ::= FloatingPoint
+         | Integer { pin=2 }
 
-Integer ::= ["+" | "-"] NUM+
+Integer ::= ["+" | "-"] NUM+ { pin=2 }
 
-FloatingPoint ::= ["+" | "-"] NUM+ "." NUM+
+FloatingPoint ::= ["+" | "-"] NUM+ "." NUM+ { pin=4 }
 
 String ::= STR
          | TICK
@@ -378,6 +378,8 @@ Operator ::= ArithmeticOperator
            | LogicalOperator
            | RelationalOperator
            | BitwiseOperator
+           | KEYWORD_ENFORCE
+           | KEYWORD_ENFORCE_ONE
 
 ArithmeticOperator ::= PLUS
                      | MINUS

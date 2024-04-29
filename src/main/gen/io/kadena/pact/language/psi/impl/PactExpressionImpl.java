@@ -35,6 +35,12 @@ public class PactExpressionImpl extends ASTWrapperPsiElement implements PactExpr
 
   @Override
   @Nullable
+  public PactOperator getOperator() {
+    return findChildByClass(PactOperator.class);
+  }
+
+  @Override
+  @Nullable
   public PactVariable getVariable() {
     return findChildByClass(PactVariable.class);
   }
