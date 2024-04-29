@@ -21,7 +21,7 @@ class PactSyntaxHighlighter : SyntaxHighlighterBase() {
             put(PactTypes.COMMENT, PactColors.COMMENT)
             put(PactTypes.STR, PactColors.STRING)
             put(PactTypes.NUM, PactColors.NUM)
-            put(PactTypes.IDENT, PactColors.IDEN)
+            put(PactTypes.IDENTIFIER, PactColors.IDEN)
             put(TokenType.BAD_CHARACTER, PactColors.BAD_CHARACTER)
         }
     }
