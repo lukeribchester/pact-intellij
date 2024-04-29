@@ -141,7 +141,7 @@ private ReplTopLevel ::= "(" ReplSpecial ")"
                        | "(" DefConst ")"
                        | TopLevel { pin=1 }
 
-ReplSpecial ::= "load" STR Bool
+ReplSpecial ::= "load" STR Boolean
               | "load" STR
 
 private Governance ::= StringRaw
@@ -220,7 +220,7 @@ SchemaArg ::= IDENTIFIER (":" Type)?
 
 Type ::= "[" Type "]"
        | "module" "{" ModuleNames "}"
-       | IDENTIFIER "{" ParsedTyName "}"
+       | IDENTIFIER "{" ParsedTypeName "}"
        | IDENTIFIER
 
 ModuleNames ::= ModQual ("," ModQual) *  // Verified
@@ -249,7 +249,8 @@ Block ::= BlockBody
 BlockBody ::= Expr+
 
 Expr ::= "(" SExpr ")"
-       | Atom
+       | DataType
+       | Variable
 
 private upper SExpr ::= LamExpr
                       | LetExpr
@@ -259,10 +260,6 @@ private upper SExpr ::= LamExpr
                       | GenAppExpr
                       | SuspendExpr
                       | CapExpr
-
-List ::= "[" [ListExprs] "]"
-
-ListExprs ::= Expr MCommaExpr? // Check * ?
 
 MCommaExpr ::= "," ExprCommaSep
              | AppList
@@ -309,50 +306,12 @@ BindPair ::= STR ":=" MArg
 
 BindPairs ::= BindPair ("," BindPair)* // Verified
 
-Atom ::= Var
-       | Number
-       | String
-       | List
-       | Bool
-       | Operator
-       | Object
-       | "(" ")"
 
-Operator ::= "and"
-           | "or"
-           | "enforce"
-           | "enforce-one"
 
-Bool ::= TRUE
-       | FALSE
 
-Var ::= IDENTIFIER "." ModQual
-      | IDENTIFIER "::" IDENTIFIER
-      | IDENTIFIER
 
-ParsedName ::= IDENTIFIER "." ModQual
-             | IDENTIFIER "::" IDENTIFIER
-             | IDENTIFIER
 
-ParsedTyName ::= IDENTIFIER "." ModQual
-               | IDENTIFIER
 
-ModQual ::= IDENTIFIER "." IDENTIFIER
-          | IDENTIFIER
-
-Number ::= ["+" | "-"] NUM+ ["." NUM+]
-
-String ::= STR
-         | TICK
-
-Object ::= "{" ObjectBody? "}"
-
-ObjectBody ::= FieldPairs
-
-FieldPair ::= STR ":" Expr
-            | TICK ":" Expr
-
-FieldPairs ::= FieldPair ("," FieldPair)* // Verified
 
 PactFVModels ::= PropExprList
 
@@ -363,12 +322,13 @@ PropExpr ::= PropAtom
            | "(" PropExprList ")"
            | "[" PropExprList "]"
 
-PropAtom ::= FVVar
-           | FVNumber
-           | FVString
+PropAtom ::= Variable
+           | Number
+           | String
            | FVKeyword
            | FVDelim
-           | FVBool
+           | Boolean
+           | Operator
 
 FVKeyword ::= "let"
             | "lambda"
@@ -388,16 +348,111 @@ FVDelim ::= "{"
           | ":"
           | ","
 
-FVBool ::= TRUE
-         | FALSE
 
-FVNumber ::= ["+" | "-"] NUM+ ["." NUM+]
 
-FVString ::= STR
-           | TICK
 
-FVVar ::= IDENTIFIER "." ModQual
-        | IDENTIFIER "::" IDENTIFIER
-        | IDENTIFIER
+/* TODO: Final */
 
-// TODO: https://raw.githubusercontent.com/kadena-io/pact-5/master/pact-tests/pact-tests/yield.repl
+
+/* Variables & Names */
+
+Variable ::= IDENTIFIER "." ModuleQualifier
+           | IDENTIFIER "::" IDENTIFIER
+           | IDENTIFIER
+
+ParsedName ::= IDENTIFIER "." ModuleQualifier
+             | IDENTIFIER "::" IDENTIFIER
+             | IDENTIFIER
+
+ParsedTypeName ::= IDENTIFIER "." ModuleQualifier
+                 | IDENTIFIER
+
+ModuleQualifier ::= IDENTIFIER "." IDENTIFIER
+                  | IDENTIFIER
+
+/* Data Types */
+
+DataType ::= CompositeDataType
+           | AtomicDataType
+           | "(" ")"
+
+CompositeDataType ::= List
+                    | Object
+
+AtomicDataType ::= Number
+                 | String
+                 | Boolean
+
+/* Data Types (Composite) */
+
+List ::= "[" [ListExprs] "]"
+
+ListExprs ::= Expr MCommaExpr? // Check * ?
+
+Object ::= "{" ObjectBody? "}"
+
+ObjectBody ::= FieldPair ("," FieldPair)*
+
+FieldPair ::= STR ":" Expr
+            | TICK ":" Expr
+
+/* Data Types (Atomic) */
+
+Number ::= Integer
+         | FloatingPoint
+
+Integer ::= ["+" | "-"] NUM+
+
+FloatingPoint ::= ["+" | "-"] NUM+ "." NUM+
+
+String ::= STR
+         | TICK
+
+Boolean ::= TRUE
+          | FALSE
+
+/* Operators */
+
+Operator ::= ArithmeticOperator
+           | AssignmentOperator
+           | BitwiseOperator
+           | LogicalOperator
+           | RelationalOperator
+
+ArithmeticOperator ::= PLUS
+                     | MINUS
+                     | MULTIPLY
+                     | DIVIDE
+                     | POW
+                     | ABS
+                     | CEILING
+                     | FLOOR
+                     | LOG
+                     | LN
+                     | DECIMAL
+                     | EXP
+                     | MOD
+                     | ROUND
+                     | SQRT
+
+AssignmentOperator ::= BIND_ASSIGN
+
+BitwiseOperator ::= BITWISE_AND
+                  | BITWISE_OR
+                  | BITWISE_REVERSE
+                  | BITWISE_SHIFT
+                  | BITWISE_XOR
+
+LogicalOperator ::= AND
+                  | AND_SHORT_CIRCUIT
+                  | NOT
+                  | NOT_SHORT_CIRCUIT
+                  | OR
+                  | OR_SHORT_CIRCUIT
+
+RelationalOperator ::= EQUAL
+                     | NOT_EQUAL
+                     | LESS_THAN
+                     | LESS_THAN_OR_EQUAL
+                     | GREATER_THAN
+                     | GREATER_THAN_OR_EQUAL
