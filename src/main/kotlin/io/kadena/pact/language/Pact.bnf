@@ -125,73 +125,17 @@
   ]
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-MDCapMeta ::= Managed
-            | Event
-
-
-
-
-
 MArgs ::= MArg*
 
 MArg ::= IDENTIFIER ":" TypeDeclaration
        | IDENTIFIER
 
-SchemaArgList ::= SchemaArg (SchemaArg) * // Verified
-
-SchemaArg ::= IDENTIFIER (":" TypeDeclaration)?
-
-
-ModuleNames ::= ModQual ("," ModQual) *  // Verified
-
-
-
-MModel ::= ModelAnn
-
-
-
-
-
-MDoc ::= DocAnn
-       | DocStr
-
 MTypeAnn ::= ":" Type
-
-Block ::= BlockBody
-
-BlockBody ::= Expression+
-
-
 
 MCommaExpression ::= "," ExpressionCommaSep
              | AppList
 
 ExpressionCommaSep ::= Expression ("," Expression) * // Verified
-
-
-
-
-
-
-
-
-//Binders ::= Binder (Binder)* // Verified
-//Binder ::= "(" IDENTIFIER [MTypeAnn] Expression ")" // Type annotation fault
-
-//Binders ::= Binder+ // Verified
-Binders ::= ("(" IDENTIFIER [MTypeAnn] Expression ")")+
 
 
 
@@ -275,6 +219,14 @@ private MDocOrModel ::= DocumentationAnnotation ModelAnnotation
                       | ModelAnnotation
                       | DocumentationString
 
+MDCapMeta ::= ManagedAnnotation
+            | EventAnnotation
+
+MModel ::= ModelAnnotation
+
+MDoc ::= DocumentationAnnotation
+       | DocumentationString
+
 DocumentationAnnotation ::= KEYWORD_DOC_ANNOTATION STR
 
 DocumentationString ::= STR
@@ -288,6 +240,8 @@ ModelAnnotation ::= KEYWORD_MODEL_ANNOTATION "[" PactFVModels "]"
 /* Module */
 
 Module ::= "(" KEYWORD_MODULE IDENTIFIER Governance [MDocOrModel] (Definition | Extension)+ ")" { pin=7 }
+
+ModuleNames ::= ModuleQualifier ("," ModuleQualifier)*  // Verified
 
 private Governance ::= String
                      | IDENTIFIER
@@ -316,9 +270,13 @@ private Definition ::= DefCap
 DefCap    ::= "(" KEYWORD_DEF_CAP IDENTIFIER [MTypeAnn] "(" [MArgs] ")" [MDocOrModel] [MDCapMeta] Block ")" { pin=10 }
 DefConst  ::= "(" KEYWORD_DEF_CONST IDENTIFIER [MTypeAnn] Expression [MDoc] ")" { pin=2 }
 DefPact   ::= "(" KEYWORD_DEF_PACT IDENTIFIER [MTypeAnn] "(" MArgs ")" [MDocOrModel] Steps ")" { pin=9 }
-DefSchema ::= "(" KEYWORD_DEF_SCHEMA IDENTIFIER [MDocOrModel] SchemaArgList ")" { pin=2 }
+DefSchema ::= "(" KEYWORD_DEF_SCHEMA IDENTIFIER [MDocOrModel] SchemaArgumentList ")" { pin=2 }
 DefTable  ::= "(" KEYWORD_DEF_TABLE IDENTIFIER ":" "{" ParsedName "}" [MDoc] ")" { pin=2 }
 Defun     ::= "(" KEYWORD_DEFUN IDENTIFIER [MTypeAnn] "(" [MArgs] ")" [MDocOrModel] Block ")" { pin=9 }
+
+SchemaArgumentList ::= SchemaArgument (SchemaArgument) * // Verified
+
+SchemaArgument ::= IDENTIFIER (":" TypeDeclaration)?
 
 /* Definitions (Interface) */
 
@@ -333,6 +291,10 @@ IfDefPact ::= "(" KEYWORD_DEF_PACT IDENTIFIER [MTypeAnn] "(" MArgs ")" [MDocOrMo
 IfDefun   ::= "(" KEYWORD_DEFUN IDENTIFIER [MTypeAnn] "(" MArgs ")" [MDocOrModel] ")" { pin=9 }
 
 /* Expressions */
+
+// TODO: Refactor out.
+Block ::= BlockBody
+BlockBody ::= Expression+
 
 Expression ::= "(" SymbolicExpression ")"
              | Variable
@@ -351,9 +313,15 @@ upper LambdaExpression ::= KEYWORD_LAMBDA "(" LambdaArguments ")" Block
 
 LambdaArguments ::= LambdaArgument (LambdaArgument)*
 
-LambdaArgument ::= IDENTIFIER (":" Type)?
+LambdaArgument ::= IDENTIFIER (":" TypeDeclaration)?
 
 upper LetExpression ::= KEYWORD_LET "(" Binders ")" Block
+
+//Binders ::= Binder (Binder)* // Verified
+//Binder ::= "(" IDENTIFIER [MTypeAnn] Expression ")" // Type annotation fault
+//Binders ::= Binder+ // Verified
+
+Binders ::= ("(" IDENTIFIER [MTypeAnn] Expression ")")+
 
 upper IfExpression ::= KEYWORD_IF Expression Expression Expression
 
