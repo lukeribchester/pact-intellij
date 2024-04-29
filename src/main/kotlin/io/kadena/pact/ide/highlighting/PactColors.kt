@@ -7,7 +7,8 @@ import com.intellij.openapi.editor.colors.TextAttributesKey.createTextAttributes
 object PactColors {
     val COMMENT = createTextAttributesKey("PACT_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT)
     val STRING = createTextAttributesKey("PACT_STRING", DefaultLanguageHighlighterColors.STRING)
-    val NUM = createTextAttributesKey("PACT_NUM", DefaultLanguageHighlighterColors.NUMBER)
+    val INTEGER = createTextAttributesKey("PACT_INTEGER", DefaultLanguageHighlighterColors.NUMBER)
+    val FLOATING_POINT = createTextAttributesKey("PACT_FLOATING_POINT", DefaultLanguageHighlighterColors.NUMBER)
     val IDEN = createTextAttributesKey("PACT_IDEN", DefaultLanguageHighlighterColors.IDENTIFIER)
     val BAD_CHARACTER = createTextAttributesKey("PACT_BAD_CHARACTER", HighlighterColors.BAD_CHARACTER)
 }

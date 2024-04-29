@@ -20,7 +20,8 @@ class PactSyntaxHighlighter : SyntaxHighlighterBase() {
         private val attributes = buildMap<IElementType, TextAttributesKey> {
             put(PactTypes.COMMENT, PactColors.COMMENT)
             put(PactTypes.STR, PactColors.STRING)
-            put(PactTypes.NUM, PactColors.NUM)
+            put(PactTypes.INTEGER, PactColors.INTEGER)
+            put(PactTypes.FLOATING_POINT, PactColors.FLOATING_POINT)
             put(PactTypes.IDENTIFIER, PactColors.IDEN)
             put(TokenType.BAD_CHARACTER, PactColors.BAD_CHARACTER)
         }

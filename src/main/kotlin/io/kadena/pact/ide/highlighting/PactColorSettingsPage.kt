@@ -39,7 +39,8 @@ internal class PactColorSettingsPage : ColorSettingsPage {
 private val DESCRIPTORS = arrayOf(
     AttributesDescriptor("Comment", PactColors.COMMENT),
     AttributesDescriptor("String", PactColors.STRING),
-    AttributesDescriptor("Number", PactColors.NUM),
+    AttributesDescriptor("Integer", PactColors.INTEGER),
+    AttributesDescriptor("Floating point", PactColors.FLOATING_POINT),
     AttributesDescriptor("Identifier", PactColors.IDEN),
     AttributesDescriptor("Bad value", PactColors.BAD_CHARACTER),
 )
