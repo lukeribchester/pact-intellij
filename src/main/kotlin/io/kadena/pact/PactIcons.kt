@@ -1,10 +1,10 @@
 package io.kadena.pact
 
-import com.intellij.openapi.util.IconLoader
+import com.intellij.openapi.util.IconLoader.getIcon
 import javax.swing.Icon
 
-public object PactIcons {
 
-    @JvmField
-    public val FILE: Icon = IconLoader.getIcon("/icons/file.svg", javaClass)
+object PactIcons {
+
+    val FILE: Icon = getIcon("/icons/file.svg", PactIcons::class.java)
 }
