@@ -130,12 +130,7 @@ MArgs ::= MArg*
 MArg ::= IDENTIFIER ":" TypeDeclaration
        | IDENTIFIER
 
-MTypeAnn ::= ":" Type
-
-MCommaExpression ::= "," ExpressionCommaSep
-             | AppList
-
-ExpressionCommaSep ::= Expression ("," Expression) * // Verified
+MTypeAnn ::= ":" TypeDeclaration
 
 
 
@@ -397,6 +392,12 @@ AtomicDataType ::= Number
 List ::= "[" [ListExpression] "]"
 
 ListExpression ::= Expression MCommaExpression? // Check * ?
+
+// TODO: Rename.
+MCommaExpression ::= "," ExpressionCommaSep
+                   | AppList
+
+ExpressionCommaSep ::= Expression ("," Expression) * // Verified
 
 Object ::= "{" ObjectBody? "}"
 
