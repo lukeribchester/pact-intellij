@@ -437,7 +437,7 @@ PropAtom ::= Variable
            | FVKeyword
            | FVDelim
            | Boolean
-           | Operator { pin=7 }
+           | Operator
 
 // TODO: Finalise.
 FVKeyword ::= KEYWORD_LET
