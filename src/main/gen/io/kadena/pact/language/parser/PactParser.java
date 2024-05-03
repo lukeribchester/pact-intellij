@@ -779,23 +779,26 @@ public class PactParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // "let"
-  //             | "lambda"
-  //             | "if"
-  //             | "progn"
-  //             | "suspend"
-  //             | "try"
-  //             | "enforce"
-  //             | "enforce-one"
-  //             | "and"
-  //             | "or"
-  //             | "create-user-guard"
-  //             | "with-capability"
+  // KEYWORD_LET
+  //             | KEYWORD_LAMBDA
+  //             | KEYWORD_IF
+  //             | KEYWORD_BLOCK_INTRO
+  //             | KEYWORD_SUSPEND
+  //             | KEYWORD_TRY
+  //             | KEYWORD_ENFORCE
+  //             | KEYWORD_ENFORCE_ONE
+  //             | AND
+  //             | OR
+  //             | KEYWORD_CREATE_USER_GUARD
+  //             | KEYWORD_WITH_CAPABILITY
+  //             | KEYWORD_DEF_PROPERTY
+  //             | KEYWORD_INVARIANT
+  //             | KEYWORD_PROPERTY
   public static boolean FVKeyword(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "FVKeyword")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, FV_KEYWORD, "<fv keyword>");
-    r = consumeToken(b, "let");
+    r = consumeToken(b, KEYWORD_LET);
     if (!r) r = consumeToken(b, KEYWORD_LAMBDA);
     if (!r) r = consumeToken(b, KEYWORD_IF);
     if (!r) r = consumeToken(b, KEYWORD_BLOCK_INTRO);
@@ -807,6 +810,9 @@ public class PactParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, OR);
     if (!r) r = consumeToken(b, KEYWORD_CREATE_USER_GUARD);
     if (!r) r = consumeToken(b, KEYWORD_WITH_CAPABILITY);
+    if (!r) r = consumeToken(b, KEYWORD_DEF_PROPERTY);
+    if (!r) r = consumeToken(b, KEYWORD_INVARIANT);
+    if (!r) r = consumeToken(b, KEYWORD_PROPERTY);
     exit_section_(b, l, m, r, false, null);
     return r;
   }

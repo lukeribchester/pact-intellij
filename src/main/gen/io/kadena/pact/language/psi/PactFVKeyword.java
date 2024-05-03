@@ -7,4 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface PactFVKeyword extends PsiElement {
 
+  @Nullable
+  PsiElement getKeywordLet();
+
 }

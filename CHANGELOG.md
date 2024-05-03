@@ -4,6 +4,21 @@
 
 ## [Unreleased]
 
+### Added
+
+- Syntax highlighting for:
+  - Comments
+  - Keywords
+  - Annotations
+  - Literals
+  - Identifiers
+  - Operators
+  - Delimiters
+
+### Fixed
+
+- Minor language definition inaccuracies
+
 ## [0.2.0] - 2024-04-29
 
 ### Added
