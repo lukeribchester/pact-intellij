@@ -12,7 +12,7 @@ object PactColors {
     val KEYWORD = createTextAttributesKey("PACT_KEYWORD", DefaultLanguageHighlighterColors.KEYWORD)
 
     /* Annotations */
-    val ANNOTATION = createTextAttributesKey("PACT_ANNOTATION", DefaultLanguageHighlighterColors.DOC_COMMENT_TAG)
+    val ANNOTATION = createTextAttributesKey("PACT_ANNOTATION", DefaultLanguageHighlighterColors.METADATA)
 
     /* Literals */
     val STRING = createTextAttributesKey("PACT_STRING", DefaultLanguageHighlighterColors.STRING)
