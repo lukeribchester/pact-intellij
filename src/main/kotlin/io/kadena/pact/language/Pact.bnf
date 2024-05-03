@@ -437,20 +437,24 @@ PropAtom ::= Variable
            | FVKeyword
            | FVDelim
            | Boolean
-           | Operator
+           | Operator { pin=7 }
 
-FVKeyword ::= "let"
-            | "lambda"
-            | "if"
-            | "progn"
-            | "suspend"
-            | "try"
-            | "enforce"
-            | "enforce-one"
-            | "and"
-            | "or"
-            | "create-user-guard"
-            | "with-capability"
+// TODO: Finalise.
+FVKeyword ::= KEYWORD_LET
+            | KEYWORD_LAMBDA
+            | KEYWORD_IF
+            | KEYWORD_BLOCK_INTRO
+            | KEYWORD_SUSPEND
+            | KEYWORD_TRY
+            | KEYWORD_ENFORCE
+            | KEYWORD_ENFORCE_ONE
+            | AND
+            | OR
+            | KEYWORD_CREATE_USER_GUARD
+            | KEYWORD_WITH_CAPABILITY
+            | KEYWORD_DEF_PROPERTY
+            | KEYWORD_INVARIANT
+            | KEYWORD_PROPERTY
 
 FVDelim ::= "{"
           | "}"

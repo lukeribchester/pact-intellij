@@ -27,4 +27,10 @@ public class PactFVKeywordImpl extends ASTWrapperPsiElement implements PactFVKey
     else super.accept(visitor);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getKeywordLet() {
+    return findChildByType(KEYWORD_LET);
+  }
+
 }
