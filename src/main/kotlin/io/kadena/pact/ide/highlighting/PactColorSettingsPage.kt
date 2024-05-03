@@ -37,10 +37,33 @@ internal class PactColorSettingsPage : ColorSettingsPage {
 }
 
 private val DESCRIPTORS = arrayOf(
+    /* Comments */
     AttributesDescriptor("Comment", PactColors.COMMENT),
-    AttributesDescriptor("String", PactColors.STRING),
-    AttributesDescriptor("Integer", PactColors.INTEGER),
-    AttributesDescriptor("Floating point", PactColors.FLOATING_POINT),
-    AttributesDescriptor("Identifier", PactColors.IDEN),
-    AttributesDescriptor("Bad value", PactColors.BAD_CHARACTER),
+
+    /* Keywords */
+    AttributesDescriptor("Keyword", PactColors.KEYWORD),
+
+    /* Annotations */
+    AttributesDescriptor("Annotation", PactColors.ANNOTATION),
+
+    /* Literals */
+    AttributesDescriptor("Literals//String", PactColors.STRING),
+    AttributesDescriptor("Literals//Integer", PactColors.INTEGER),
+    AttributesDescriptor("Literals//Floating point", PactColors.FLOATING_POINT),
+    AttributesDescriptor("Literals//Boolean", PactColors.BOOLEAN),
+
+    /* Identifiers */
+    AttributesDescriptor("Identifier", PactColors.IDENTIFIER),
+
+    /* Operators */
+    AttributesDescriptor("Operator", PactColors.OPERATOR),
+
+    /* Delimiters */
+    AttributesDescriptor("Delimiters//Parentheses", PactColors.PARENTHESES),
+    AttributesDescriptor("Delimiters//Braces", PactColors.BRACES),
+    AttributesDescriptor("Delimiters//Brackets", PactColors.BRACKETS),
+    AttributesDescriptor("Delimiters//Comma", PactColors.COMMA),
+    AttributesDescriptor("Delimiters//Dot", PactColors.DOT),
+
+    AttributesDescriptor("Bad character", PactColors.BAD_CHARACTER),
 )
