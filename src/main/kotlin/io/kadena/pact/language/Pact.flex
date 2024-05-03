@@ -26,13 +26,16 @@ COMMENT=(;.*\n*)
 KEYWORD_BLESS="bless"
 KEYWORD_ENFORCE="enforce"
 KEYWORD_ENFORCE_ONE="enforce-one"
+KEYWORD_ERROR="error"
 KEYWORD_IF="if"
 KEYWORD_IMPLEMENTS="implements"
 KEYWORD_INTERFACE="interface"
+KEYWORD_INVARIANT="invariant"
 KEYWORD_LAMBDA="lambda"
 KEYWORD_LET=(let\*?)
 KEYWORD_MODULE="module"
 KEYWORD_BLOCK_INTRO="progn"
+KEYWORD_PROPERTY="property"
 KEYWORD_STEP="step"
 KEYWORD_STEP_WITH_ROLLBACK="step-with-rollback"
 KEYWORD_SUSPEND="suspend"
@@ -47,6 +50,7 @@ KEYWORD_WITH_CAPABILITY="with-capability"
 KEYWORD_DEF_CAP="defcap"
 KEYWORD_DEF_CONST="defconst"
 KEYWORD_DEF_PACT="defpact"
+KEYWORD_DEF_PROPERTY="defproperty"
 KEYWORD_DEF_SCHEMA="defschema"
 KEYWORD_DEF_TABLE="deftable"
 KEYWORD_DEFUN="defun"
@@ -137,13 +141,16 @@ DYN_ACC="::"
 <YYINITIAL> {KEYWORD_BLESS}              { yybegin(YYINITIAL); return PactTypes.KEYWORD_BLESS; }
 <YYINITIAL> {KEYWORD_ENFORCE}            { yybegin(YYINITIAL); return PactTypes.KEYWORD_ENFORCE; }
 <YYINITIAL> {KEYWORD_ENFORCE_ONE}        { yybegin(YYINITIAL); return PactTypes.KEYWORD_ENFORCE_ONE; }
+<YYINITIAL> {KEYWORD_ERROR}              { yybegin(YYINITIAL); return PactTypes.KEYWORD_ERROR; }
 <YYINITIAL> {KEYWORD_IF}                 { yybegin(YYINITIAL); return PactTypes.KEYWORD_IF; }
 <YYINITIAL> {KEYWORD_IMPLEMENTS}         { yybegin(YYINITIAL); return PactTypes.KEYWORD_IMPLEMENTS; }
 <YYINITIAL> {KEYWORD_INTERFACE}          { yybegin(YYINITIAL); return PactTypes.KEYWORD_INTERFACE; }
+<YYINITIAL> {KEYWORD_INVARIANT}          { yybegin(YYINITIAL); return PactTypes.KEYWORD_INVARIANT; }
 <YYINITIAL> {KEYWORD_LAMBDA}             { yybegin(YYINITIAL); return PactTypes.KEYWORD_LAMBDA; }
 <YYINITIAL> {KEYWORD_LET}                { yybegin(YYINITIAL); return PactTypes.KEYWORD_LET; }
 <YYINITIAL> {KEYWORD_MODULE}             { yybegin(YYINITIAL); return PactTypes.KEYWORD_MODULE; }
 <YYINITIAL> {KEYWORD_BLOCK_INTRO}        { yybegin(YYINITIAL); return PactTypes.KEYWORD_BLOCK_INTRO; }
+<YYINITIAL> {KEYWORD_PROPERTY}           { yybegin(YYINITIAL); return PactTypes.KEYWORD_PROPERTY; }
 <YYINITIAL> {KEYWORD_STEP}               { yybegin(YYINITIAL); return PactTypes.KEYWORD_STEP; }
 <YYINITIAL> {KEYWORD_STEP_WITH_ROLLBACK} { yybegin(YYINITIAL); return PactTypes.KEYWORD_STEP_WITH_ROLLBACK; }
 <YYINITIAL> {KEYWORD_SUSPEND}            { yybegin(YYINITIAL); return PactTypes.KEYWORD_SUSPEND; }
@@ -155,12 +162,13 @@ DYN_ACC="::"
 <YYINITIAL> {KEYWORD_WITH_CAPABILITY}   { yybegin(YYINITIAL); return PactTypes.KEYWORD_WITH_CAPABILITY; }
 
 /* Keywords (Definitions) */
-<YYINITIAL> {KEYWORD_DEF_CAP}    { yybegin(YYINITIAL); return PactTypes.KEYWORD_DEF_CAP; }
-<YYINITIAL> {KEYWORD_DEF_CONST}  { yybegin(YYINITIAL); return PactTypes.KEYWORD_DEF_CONST; }
-<YYINITIAL> {KEYWORD_DEF_PACT}   { yybegin(YYINITIAL); return PactTypes.KEYWORD_DEF_PACT; }
-<YYINITIAL> {KEYWORD_DEF_SCHEMA} { yybegin(YYINITIAL); return PactTypes.KEYWORD_DEF_SCHEMA; }
-<YYINITIAL> {KEYWORD_DEF_TABLE}  { yybegin(YYINITIAL); return PactTypes.KEYWORD_DEF_TABLE; }
-<YYINITIAL> {KEYWORD_DEFUN}      { yybegin(YYINITIAL); return PactTypes.KEYWORD_DEFUN; }
+<YYINITIAL> {KEYWORD_DEF_CAP}      { yybegin(YYINITIAL); return PactTypes.KEYWORD_DEF_CAP; }
+<YYINITIAL> {KEYWORD_DEF_CONST}    { yybegin(YYINITIAL); return PactTypes.KEYWORD_DEF_CONST; }
+<YYINITIAL> {KEYWORD_DEF_PACT}     { yybegin(YYINITIAL); return PactTypes.KEYWORD_DEF_PACT; }
+<YYINITIAL> {KEYWORD_DEF_PROPERTY} { yybegin(YYINITIAL); return PactTypes.KEYWORD_DEF_PROPERTY; }
+<YYINITIAL> {KEYWORD_DEF_SCHEMA}   { yybegin(YYINITIAL); return PactTypes.KEYWORD_DEF_SCHEMA; }
+<YYINITIAL> {KEYWORD_DEF_TABLE}    { yybegin(YYINITIAL); return PactTypes.KEYWORD_DEF_TABLE; }
+<YYINITIAL> {KEYWORD_DEFUN}        { yybegin(YYINITIAL); return PactTypes.KEYWORD_DEFUN; }
 
 /* Keywords (REPL) */
 <YYINITIAL> {KEYWORD_LOAD} { yybegin(YYINITIAL); return PactTypes.KEYWORD_LOAD; }
