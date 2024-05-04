@@ -43,5 +43,10 @@
         <!-- Language Server (LSP) -->
         <platform.lsp.serverSupportProvider
                 implementation="io.kadena.pact.lsp.PactLspServerSupportProvider"/>
+
+        <!-- Quote Handler -->
+        <lang.quoteHandler
+                language="Pact"
+                implementationClass="io.kadena.pact.ide.editor.PactQuoteHandler"/>
     </extensions>
 </idea-plugin>

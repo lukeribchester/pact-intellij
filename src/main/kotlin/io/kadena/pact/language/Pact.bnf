@@ -63,7 +63,7 @@
     KEYWORD_MODEL_ANNOTATION="@model"
 
     /* Literals */
-    STR="regexp:(\"([^\"\\]|\\\"|\\)*\")"
+    STR="regexp:(\"([^\"\\\n]|\\.|\\\n)*\"?)"
     INTEGER="regexp:([+-]?[0-9]+)"
     FLOATING_POINT="regexp:([+-]?([0-9]+\.[0-9]*|\.[0-9]+)([eE][+-]?[0-9]+)?)"
     TRUE="true"

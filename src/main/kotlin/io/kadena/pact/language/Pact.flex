@@ -65,7 +65,7 @@ KEYWORD_MANAGED_ANNOTATION="@managed"
 KEYWORD_MODEL_ANNOTATION="@model"
 
 /* Literals */
-STR=(\"([^\"\\]|\\\"|\\)*\")
+STR=(\"([^\"\\\n]|\\.|\\\n)*\"?)
 INTEGER=([+-]?[0-9]+)
 FLOATING_POINT=([+-]?([0-9]+\.[0-9]*|\.[0-9]+)([eE][+-]?[0-9]+)?)
 TRUE="true"
