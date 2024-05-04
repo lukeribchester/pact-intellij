@@ -6,7 +6,7 @@
 
 ### Added
 
-- Quote handling
+- Improved string handling
 
 ## [0.3.0] - 2024-05-03
 
