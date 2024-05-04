@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- Enhanced string handling
+
 ## [0.3.0] - 2024-05-03
 
 ### Added
