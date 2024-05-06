@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- Enhanced parenthesis, brace, and bracket handling
+
 ## [0.3.1] - 2024-05-04
 
 ### Added
