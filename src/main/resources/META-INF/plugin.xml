@@ -44,6 +44,11 @@
         <platform.lsp.serverSupportProvider
                 implementation="io.kadena.pact.lsp.PactLspServerSupportProvider"/>
 
+        <!-- Brace Matcher -->
+        <lang.braceMatcher
+                language="Pact"
+                implementationClass="io.kadena.pact.ide.editor.PactBraceMatcher"/>
+
         <!-- Quote Handler -->
         <lang.quoteHandler
                 language="Pact"
