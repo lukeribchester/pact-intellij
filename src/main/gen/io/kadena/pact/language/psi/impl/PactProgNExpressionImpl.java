@@ -29,8 +29,8 @@ public class PactProgNExpressionImpl extends ASTWrapperPsiElement implements Pac
 
   @Override
   @NotNull
-  public PactBlockBody getBlockBody() {
-    return findNotNullChildByClass(PactBlockBody.class);
+  public List<PactExpression> getExpressionList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactExpression.class);
   }
 
 }

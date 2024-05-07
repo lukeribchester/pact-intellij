@@ -28,45 +28,15 @@ public class PactDefPactImpl extends ASTWrapperPsiElement implements PactDefPact
   }
 
   @Override
-  @Nullable
-  public PactDocumentationAnnotation getDocumentationAnnotation() {
-    return findChildByClass(PactDocumentationAnnotation.class);
-  }
-
-  @Override
-  @Nullable
-  public PactDocumentationString getDocumentationString() {
-    return findChildByClass(PactDocumentationString.class);
+  @NotNull
+  public PactDefinitionBody getDefinitionBody() {
+    return findNotNullChildByClass(PactDefinitionBody.class);
   }
 
   @Override
   @NotNull
-  public PactMArgs getMArgs() {
-    return findNotNullChildByClass(PactMArgs.class);
-  }
-
-  @Override
-  @Nullable
-  public PactMTypeAnn getMTypeAnn() {
-    return findChildByClass(PactMTypeAnn.class);
-  }
-
-  @Override
-  @Nullable
-  public PactModelAnnotation getModelAnnotation() {
-    return findChildByClass(PactModelAnnotation.class);
-  }
-
-  @Override
-  @NotNull
-  public PactSteps getSteps() {
-    return findNotNullChildByClass(PactSteps.class);
-  }
-
-  @Override
-  @NotNull
-  public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
+  public PactDefinitionHeader getDefinitionHeader() {
+    return findNotNullChildByClass(PactDefinitionHeader.class);
   }
 
 }

@@ -47,14 +47,6 @@ public class PactVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitBlock(@NotNull PactBlock o) {
-    visitPsiElement(o);
-  }
-
-  public void visitBlockBody(@NotNull PactBlockBody o) {
-    visitPsiElement(o);
-  }
-
   public void visitBoolean(@NotNull PactBoolean o) {
     visitPsiElement(o);
   }
@@ -92,6 +84,14 @@ public class PactVisitor extends PsiElementVisitor {
   }
 
   public void visitDefTable(@NotNull PactDefTable o) {
+    visitPsiElement(o);
+  }
+
+  public void visitDefinitionBody(@NotNull PactDefinitionBody o) {
+    visitPsiElement(o);
+  }
+
+  public void visitDefinitionHeader(@NotNull PactDefinitionHeader o) {
     visitPsiElement(o);
   }
 

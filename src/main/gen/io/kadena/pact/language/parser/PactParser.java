@@ -280,33 +280,6 @@ public class PactParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // BlockBody
-  public static boolean Block(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "Block")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, BLOCK, "<block>");
-    r = BlockBody(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // Expression+
-  public static boolean BlockBody(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "BlockBody")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, BLOCK_BODY, "<block body>");
-    r = Expression(b, l + 1);
-    while (r) {
-      int c = current_position_(b);
-      if (!Expression(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "BlockBody", c)) break;
-    }
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  /* ********************************************************** */
   // TRUE
   //           | FALSE
   public static boolean Boolean(PsiBuilder b, int l) {
@@ -333,7 +306,7 @@ public class PactParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // KEYWORD_WITH_CAPABILITY Expression Block
+  // KEYWORD_WITH_CAPABILITY Expression Expression+
   //                  | KEYWORD_CREATE_USER_GUARD "(" ParsedName AppList ")"
   public static boolean CapabilityForm(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CapabilityForm")) return false;
@@ -346,14 +319,29 @@ public class PactParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // KEYWORD_WITH_CAPABILITY Expression Block
+  // KEYWORD_WITH_CAPABILITY Expression Expression+
   private static boolean CapabilityForm_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CapabilityForm_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, KEYWORD_WITH_CAPABILITY);
     r = r && Expression(b, l + 1);
-    r = r && Block(b, l + 1);
+    r = r && CapabilityForm_0_2(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // Expression+
+  private static boolean CapabilityForm_0_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "CapabilityForm_0_2")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = Expression(b, l + 1);
+    while (r) {
+      int c = current_position_(b);
+      if (!Expression(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "CapabilityForm_0_2", c)) break;
+    }
     exit_section_(b, m, null, r);
     return r;
   }
@@ -401,162 +389,221 @@ public class PactParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // "(" KEYWORD_DEF_CAP IDENTIFIER [MTypeAnn] "(" [MArgs] ")" [MDocOrModel] [MDCapMeta] Block ")"
+  // "(" <<DefinitionHeader "defcap" ([MTypeAnn] "(" [MArgs] ")" [MDocOrModel] [MDCapMeta])>>
+  //                   <<DefinitionBody Expression+>> ")"
   public static boolean DefCap(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "DefCap")) return false;
     if (!nextTokenIs(b, PAREN_OPEN)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, DEF_CAP, null);
-    r = consumeTokens(b, 0, PAREN_OPEN, KEYWORD_DEF_CAP, IDENTIFIER);
-    r = r && DefCap_3(b, l + 1);
-    r = r && consumeToken(b, PAREN_OPEN);
-    r = r && DefCap_5(b, l + 1);
-    r = r && consumeToken(b, PAREN_CLOSE);
-    r = r && DefCap_7(b, l + 1);
-    r = r && DefCap_8(b, l + 1);
-    r = r && Block(b, l + 1);
-    p = r; // pin = 10
+    r = consumeToken(b, PAREN_OPEN);
+    r = r && DefinitionHeader(b, l + 1, KEYWORD_DEF_CAP_parser_, PactParser::DefCap_1_1);
+    r = r && DefinitionBody(b, l + 1, PactParser::DefCap_2_0);
+    p = r; // pin = 3
     r = r && consumeToken(b, PAREN_CLOSE);
     exit_section_(b, l, m, r, p, null);
     return r || p;
   }
 
+  // [MTypeAnn] "(" [MArgs] ")" [MDocOrModel] [MDCapMeta]
+  private static boolean DefCap_1_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "DefCap_1_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = DefCap_1_1_0(b, l + 1);
+    r = r && consumeToken(b, PAREN_OPEN);
+    r = r && DefCap_1_1_2(b, l + 1);
+    r = r && consumeToken(b, PAREN_CLOSE);
+    r = r && DefCap_1_1_4(b, l + 1);
+    r = r && DefCap_1_1_5(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
   // [MTypeAnn]
-  private static boolean DefCap_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "DefCap_3")) return false;
+  private static boolean DefCap_1_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "DefCap_1_1_0")) return false;
     MTypeAnn(b, l + 1);
     return true;
   }
 
   // [MArgs]
-  private static boolean DefCap_5(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "DefCap_5")) return false;
+  private static boolean DefCap_1_1_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "DefCap_1_1_2")) return false;
     MArgs(b, l + 1);
     return true;
   }
 
   // [MDocOrModel]
-  private static boolean DefCap_7(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "DefCap_7")) return false;
+  private static boolean DefCap_1_1_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "DefCap_1_1_4")) return false;
     MDocOrModel(b, l + 1);
     return true;
   }
 
   // [MDCapMeta]
-  private static boolean DefCap_8(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "DefCap_8")) return false;
+  private static boolean DefCap_1_1_5(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "DefCap_1_1_5")) return false;
     MDCapMeta(b, l + 1);
     return true;
   }
 
+  // Expression+
+  private static boolean DefCap_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "DefCap_2_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = Expression(b, l + 1);
+    while (r) {
+      int c = current_position_(b);
+      if (!Expression(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "DefCap_2_0", c)) break;
+    }
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
   /* ********************************************************** */
-  // "(" KEYWORD_DEF_CONST IDENTIFIER [MTypeAnn] Expression [MDoc] ")"
+  // "(" <<DefinitionHeader "defconst" ([MTypeAnn] Expression [MDoc])>> ")"
   public static boolean DefConst(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "DefConst")) return false;
     if (!nextTokenIs(b, PAREN_OPEN)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, DEF_CONST, null);
-    r = consumeTokens(b, 2, PAREN_OPEN, KEYWORD_DEF_CONST, IDENTIFIER);
+    r = consumeToken(b, PAREN_OPEN);
+    r = r && DefinitionHeader(b, l + 1, KEYWORD_DEF_CONST_parser_, PactParser::DefConst_1_1);
     p = r; // pin = 2
-    r = r && report_error_(b, DefConst_3(b, l + 1));
-    r = p && report_error_(b, Expression(b, l + 1)) && r;
-    r = p && report_error_(b, DefConst_5(b, l + 1)) && r;
-    r = p && consumeToken(b, PAREN_CLOSE) && r;
+    r = r && consumeToken(b, PAREN_CLOSE);
     exit_section_(b, l, m, r, p, null);
     return r || p;
   }
 
+  // [MTypeAnn] Expression [MDoc]
+  private static boolean DefConst_1_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "DefConst_1_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = DefConst_1_1_0(b, l + 1);
+    r = r && Expression(b, l + 1);
+    r = r && DefConst_1_1_2(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
   // [MTypeAnn]
-  private static boolean DefConst_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "DefConst_3")) return false;
+  private static boolean DefConst_1_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "DefConst_1_1_0")) return false;
     MTypeAnn(b, l + 1);
     return true;
   }
 
   // [MDoc]
-  private static boolean DefConst_5(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "DefConst_5")) return false;
+  private static boolean DefConst_1_1_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "DefConst_1_1_2")) return false;
     MDoc(b, l + 1);
     return true;
   }
 
   /* ********************************************************** */
-  // "(" KEYWORD_DEF_PACT IDENTIFIER [MTypeAnn] "(" MArgs ")" [MDocOrModel] Steps ")"
+  // "(" <<DefinitionHeader "defpact" ([MTypeAnn] "(" MArgs ")" [MDocOrModel])>>
+  //                   <<DefinitionBody Steps>> ")"
   public static boolean DefPact(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "DefPact")) return false;
     if (!nextTokenIs(b, PAREN_OPEN)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, DEF_PACT, null);
-    r = consumeTokens(b, 0, PAREN_OPEN, KEYWORD_DEF_PACT, IDENTIFIER);
-    r = r && DefPact_3(b, l + 1);
-    r = r && consumeToken(b, PAREN_OPEN);
-    r = r && MArgs(b, l + 1);
-    r = r && consumeToken(b, PAREN_CLOSE);
-    r = r && DefPact_7(b, l + 1);
-    r = r && Steps(b, l + 1);
-    p = r; // pin = 9
+    r = consumeToken(b, PAREN_OPEN);
+    r = r && DefinitionHeader(b, l + 1, KEYWORD_DEF_PACT_parser_, PactParser::DefPact_1_1);
+    r = r && DefinitionBody(b, l + 1, PactParser::Steps);
+    p = r; // pin = 3
     r = r && consumeToken(b, PAREN_CLOSE);
     exit_section_(b, l, m, r, p, null);
     return r || p;
   }
 
+  // [MTypeAnn] "(" MArgs ")" [MDocOrModel]
+  private static boolean DefPact_1_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "DefPact_1_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = DefPact_1_1_0(b, l + 1);
+    r = r && consumeToken(b, PAREN_OPEN);
+    r = r && MArgs(b, l + 1);
+    r = r && consumeToken(b, PAREN_CLOSE);
+    r = r && DefPact_1_1_4(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
   // [MTypeAnn]
-  private static boolean DefPact_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "DefPact_3")) return false;
+  private static boolean DefPact_1_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "DefPact_1_1_0")) return false;
     MTypeAnn(b, l + 1);
     return true;
   }
 
   // [MDocOrModel]
-  private static boolean DefPact_7(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "DefPact_7")) return false;
+  private static boolean DefPact_1_1_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "DefPact_1_1_4")) return false;
     MDocOrModel(b, l + 1);
     return true;
   }
 
   /* ********************************************************** */
-  // "(" KEYWORD_DEF_SCHEMA IDENTIFIER [MDocOrModel] SchemaArgumentList ")"
+  // "(" <<DefinitionHeader "defschema" [MDocOrModel]>>
+  //                   <<DefinitionBody SchemaArgumentList>> ")"
   public static boolean DefSchema(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "DefSchema")) return false;
     if (!nextTokenIs(b, PAREN_OPEN)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, DEF_SCHEMA, null);
-    r = consumeTokens(b, 2, PAREN_OPEN, KEYWORD_DEF_SCHEMA, IDENTIFIER);
-    p = r; // pin = 2
-    r = r && report_error_(b, DefSchema_3(b, l + 1));
-    r = p && report_error_(b, SchemaArgumentList(b, l + 1)) && r;
-    r = p && consumeToken(b, PAREN_CLOSE) && r;
+    r = consumeToken(b, PAREN_OPEN);
+    r = r && DefinitionHeader(b, l + 1, KEYWORD_DEF_SCHEMA_parser_, PactParser::DefSchema_1_1);
+    r = r && DefinitionBody(b, l + 1, PactParser::SchemaArgumentList);
+    p = r; // pin = 3
+    r = r && consumeToken(b, PAREN_CLOSE);
     exit_section_(b, l, m, r, p, null);
     return r || p;
   }
 
   // [MDocOrModel]
-  private static boolean DefSchema_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "DefSchema_3")) return false;
+  private static boolean DefSchema_1_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "DefSchema_1_1")) return false;
     MDocOrModel(b, l + 1);
     return true;
   }
 
   /* ********************************************************** */
-  // "(" KEYWORD_DEF_TABLE IDENTIFIER ":" "{" ParsedName "}" [MDoc] ")"
+  // "(" <<DefinitionHeader "deftable" (":" "{" ParsedName "}" [MDoc])>> ")"
   public static boolean DefTable(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "DefTable")) return false;
     if (!nextTokenIs(b, PAREN_OPEN)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, DEF_TABLE, null);
-    r = consumeTokens(b, 2, PAREN_OPEN, KEYWORD_DEF_TABLE, IDENTIFIER, COLON, BRACE_OPEN);
+    r = consumeToken(b, PAREN_OPEN);
+    r = r && DefinitionHeader(b, l + 1, KEYWORD_DEF_TABLE_parser_, PactParser::DefTable_1_1);
     p = r; // pin = 2
-    r = r && report_error_(b, ParsedName(b, l + 1));
-    r = p && report_error_(b, consumeToken(b, BRACE_CLOSE)) && r;
-    r = p && report_error_(b, DefTable_7(b, l + 1)) && r;
-    r = p && consumeToken(b, PAREN_CLOSE) && r;
+    r = r && consumeToken(b, PAREN_CLOSE);
     exit_section_(b, l, m, r, p, null);
     return r || p;
   }
 
+  // ":" "{" ParsedName "}" [MDoc]
+  private static boolean DefTable_1_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "DefTable_1_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, COLON, BRACE_OPEN);
+    r = r && ParsedName(b, l + 1);
+    r = r && consumeToken(b, BRACE_CLOSE);
+    r = r && DefTable_1_1_4(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
   // [MDoc]
-  private static boolean DefTable_7(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "DefTable_7")) return false;
+  private static boolean DefTable_1_1_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "DefTable_1_1_4")) return false;
     MDoc(b, l + 1);
     return true;
   }
@@ -582,44 +629,95 @@ public class PactParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // "(" KEYWORD_DEFUN IDENTIFIER [MTypeAnn] "(" [MArgs] ")" [MDocOrModel] Block ")"
+  // <<Elements>>
+  public static boolean DefinitionBody(PsiBuilder b, int l, Parser _Elements) {
+    if (!recursion_guard_(b, l, "DefinitionBody")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = _Elements.parse(b, l);
+    exit_section_(b, m, DEFINITION_BODY, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // <<Keyword>> IDENTIFIER <<Elements>>
+  public static boolean DefinitionHeader(PsiBuilder b, int l, Parser _Keyword, Parser _Elements) {
+    if (!recursion_guard_(b, l, "DefinitionHeader")) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, DEFINITION_HEADER, null);
+    r = _Keyword.parse(b, l);
+    p = r; // pin = 1
+    r = r && report_error_(b, consumeToken(b, IDENTIFIER));
+    r = p && _Elements.parse(b, l) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
+  }
+
+  /* ********************************************************** */
+  // "(" <<DefinitionHeader "defun" ([MTypeAnn] "(" [MArgs] ")" [MDocOrModel])>>
+  //                   <<DefinitionBody Expression+>> ")"
   public static boolean Defun(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Defun")) return false;
     if (!nextTokenIs(b, PAREN_OPEN)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, DEFUN, null);
-    r = consumeTokens(b, 0, PAREN_OPEN, KEYWORD_DEFUN, IDENTIFIER);
-    r = r && Defun_3(b, l + 1);
-    r = r && consumeToken(b, PAREN_OPEN);
-    r = r && Defun_5(b, l + 1);
-    r = r && consumeToken(b, PAREN_CLOSE);
-    r = r && Defun_7(b, l + 1);
-    r = r && Block(b, l + 1);
-    p = r; // pin = 9
+    r = consumeToken(b, PAREN_OPEN);
+    r = r && DefinitionHeader(b, l + 1, KEYWORD_DEFUN_parser_, PactParser::Defun_1_1);
+    r = r && DefinitionBody(b, l + 1, PactParser::Defun_2_0);
+    p = r; // pin = 3
     r = r && consumeToken(b, PAREN_CLOSE);
     exit_section_(b, l, m, r, p, null);
     return r || p;
   }
 
+  // [MTypeAnn] "(" [MArgs] ")" [MDocOrModel]
+  private static boolean Defun_1_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Defun_1_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = Defun_1_1_0(b, l + 1);
+    r = r && consumeToken(b, PAREN_OPEN);
+    r = r && Defun_1_1_2(b, l + 1);
+    r = r && consumeToken(b, PAREN_CLOSE);
+    r = r && Defun_1_1_4(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
   // [MTypeAnn]
-  private static boolean Defun_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "Defun_3")) return false;
+  private static boolean Defun_1_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Defun_1_1_0")) return false;
     MTypeAnn(b, l + 1);
     return true;
   }
 
   // [MArgs]
-  private static boolean Defun_5(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "Defun_5")) return false;
+  private static boolean Defun_1_1_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Defun_1_1_2")) return false;
     MArgs(b, l + 1);
     return true;
   }
 
   // [MDocOrModel]
-  private static boolean Defun_7(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "Defun_7")) return false;
+  private static boolean Defun_1_1_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Defun_1_1_4")) return false;
     MDocOrModel(b, l + 1);
     return true;
+  }
+
+  // Expression+
+  private static boolean Defun_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Defun_2_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = Expression(b, l + 1);
+    while (r) {
+      int c = current_position_(b);
+      if (!Expression(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "Defun_2_0", c)) break;
+    }
+    exit_section_(b, m, null, r);
+    return r;
   }
 
   /* ********************************************************** */
@@ -877,105 +975,135 @@ public class PactParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // "(" KEYWORD_DEF_CAP IDENTIFIER [MTypeAnn] "(" MArgs ")" [MDocOrModel] [MDCapMeta] ")"
+  // "(" <<DefinitionHeader "defcap" ([MTypeAnn] "(" MArgs ")" [MDocOrModel] [MDCapMeta])>> ")"
   public static boolean IfDefCap(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "IfDefCap")) return false;
     if (!nextTokenIs(b, PAREN_OPEN)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, PAREN_OPEN, KEYWORD_DEF_CAP, IDENTIFIER);
-    r = r && IfDefCap_3(b, l + 1);
-    r = r && consumeToken(b, PAREN_OPEN);
-    r = r && MArgs(b, l + 1);
-    r = r && consumeToken(b, PAREN_CLOSE);
-    r = r && IfDefCap_7(b, l + 1);
-    r = r && IfDefCap_8(b, l + 1);
+    r = consumeToken(b, PAREN_OPEN);
+    r = r && DefinitionHeader(b, l + 1, KEYWORD_DEF_CAP_parser_, PactParser::IfDefCap_1_1);
     r = r && consumeToken(b, PAREN_CLOSE);
     exit_section_(b, m, IF_DEF_CAP, r);
     return r;
   }
 
+  // [MTypeAnn] "(" MArgs ")" [MDocOrModel] [MDCapMeta]
+  private static boolean IfDefCap_1_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "IfDefCap_1_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = IfDefCap_1_1_0(b, l + 1);
+    r = r && consumeToken(b, PAREN_OPEN);
+    r = r && MArgs(b, l + 1);
+    r = r && consumeToken(b, PAREN_CLOSE);
+    r = r && IfDefCap_1_1_4(b, l + 1);
+    r = r && IfDefCap_1_1_5(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
   // [MTypeAnn]
-  private static boolean IfDefCap_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "IfDefCap_3")) return false;
+  private static boolean IfDefCap_1_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "IfDefCap_1_1_0")) return false;
     MTypeAnn(b, l + 1);
     return true;
   }
 
   // [MDocOrModel]
-  private static boolean IfDefCap_7(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "IfDefCap_7")) return false;
+  private static boolean IfDefCap_1_1_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "IfDefCap_1_1_4")) return false;
     MDocOrModel(b, l + 1);
     return true;
   }
 
   // [MDCapMeta]
-  private static boolean IfDefCap_8(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "IfDefCap_8")) return false;
+  private static boolean IfDefCap_1_1_5(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "IfDefCap_1_1_5")) return false;
     MDCapMeta(b, l + 1);
     return true;
   }
 
   /* ********************************************************** */
-  // "(" KEYWORD_DEF_PACT IDENTIFIER [MTypeAnn] "(" MArgs ")" [MDocOrModel] ")"
+  // "(" <<DefinitionHeader "defpact" ([MTypeAnn] "(" MArgs ")" [MDocOrModel])>> ")"
   public static boolean IfDefPact(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "IfDefPact")) return false;
     if (!nextTokenIs(b, PAREN_OPEN)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, PAREN_OPEN, KEYWORD_DEF_PACT, IDENTIFIER);
-    r = r && IfDefPact_3(b, l + 1);
-    r = r && consumeToken(b, PAREN_OPEN);
-    r = r && MArgs(b, l + 1);
-    r = r && consumeToken(b, PAREN_CLOSE);
-    r = r && IfDefPact_7(b, l + 1);
+    r = consumeToken(b, PAREN_OPEN);
+    r = r && DefinitionHeader(b, l + 1, KEYWORD_DEF_PACT_parser_, PactParser::IfDefPact_1_1);
     r = r && consumeToken(b, PAREN_CLOSE);
     exit_section_(b, m, IF_DEF_PACT, r);
     return r;
   }
 
+  // [MTypeAnn] "(" MArgs ")" [MDocOrModel]
+  private static boolean IfDefPact_1_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "IfDefPact_1_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = IfDefPact_1_1_0(b, l + 1);
+    r = r && consumeToken(b, PAREN_OPEN);
+    r = r && MArgs(b, l + 1);
+    r = r && consumeToken(b, PAREN_CLOSE);
+    r = r && IfDefPact_1_1_4(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
   // [MTypeAnn]
-  private static boolean IfDefPact_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "IfDefPact_3")) return false;
+  private static boolean IfDefPact_1_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "IfDefPact_1_1_0")) return false;
     MTypeAnn(b, l + 1);
     return true;
   }
 
   // [MDocOrModel]
-  private static boolean IfDefPact_7(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "IfDefPact_7")) return false;
+  private static boolean IfDefPact_1_1_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "IfDefPact_1_1_4")) return false;
     MDocOrModel(b, l + 1);
     return true;
   }
 
   /* ********************************************************** */
-  // "(" KEYWORD_DEFUN IDENTIFIER [MTypeAnn] "(" MArgs ")" [MDocOrModel] ")"
+  // "(" <<DefinitionHeader "defun" ([MTypeAnn] "(" MArgs ")" [MDocOrModel])>> ")"
   public static boolean IfDefun(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "IfDefun")) return false;
     if (!nextTokenIs(b, PAREN_OPEN)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, PAREN_OPEN, KEYWORD_DEFUN, IDENTIFIER);
-    r = r && IfDefun_3(b, l + 1);
-    r = r && consumeToken(b, PAREN_OPEN);
-    r = r && MArgs(b, l + 1);
-    r = r && consumeToken(b, PAREN_CLOSE);
-    r = r && IfDefun_7(b, l + 1);
+    r = consumeToken(b, PAREN_OPEN);
+    r = r && DefinitionHeader(b, l + 1, KEYWORD_DEFUN_parser_, PactParser::IfDefun_1_1);
     r = r && consumeToken(b, PAREN_CLOSE);
     exit_section_(b, m, IF_DEFUN, r);
     return r;
   }
 
+  // [MTypeAnn] "(" MArgs ")" [MDocOrModel]
+  private static boolean IfDefun_1_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "IfDefun_1_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = IfDefun_1_1_0(b, l + 1);
+    r = r && consumeToken(b, PAREN_OPEN);
+    r = r && MArgs(b, l + 1);
+    r = r && consumeToken(b, PAREN_CLOSE);
+    r = r && IfDefun_1_1_4(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
   // [MTypeAnn]
-  private static boolean IfDefun_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "IfDefun_3")) return false;
+  private static boolean IfDefun_1_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "IfDefun_1_1_0")) return false;
     MTypeAnn(b, l + 1);
     return true;
   }
 
   // [MDocOrModel]
-  private static boolean IfDefun_7(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "IfDefun_7")) return false;
+  private static boolean IfDefun_1_1_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "IfDefun_1_1_4")) return false;
     MDocOrModel(b, l + 1);
     return true;
   }
@@ -1032,45 +1160,47 @@ public class PactParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // "(" KEYWORD_INTERFACE IDENTIFIER [MDocOrModel] (InterfaceDefinition | Use)+ ")"
+  // "(" <<DefinitionHeader "interface" [MDocOrModel]>>
+  //                   <<DefinitionBody (InterfaceDefinition | Use)+>> ")"
   public static boolean Interface(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Interface")) return false;
     if (!nextTokenIs(b, PAREN_OPEN)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, PAREN_OPEN, KEYWORD_INTERFACE, IDENTIFIER);
-    r = r && Interface_3(b, l + 1);
-    r = r && Interface_4(b, l + 1);
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, INTERFACE, null);
+    r = consumeToken(b, PAREN_OPEN);
+    r = r && DefinitionHeader(b, l + 1, KEYWORD_INTERFACE_parser_, PactParser::Interface_1_1);
+    r = r && DefinitionBody(b, l + 1, PactParser::Interface_2_0);
+    p = r; // pin = 3
     r = r && consumeToken(b, PAREN_CLOSE);
-    exit_section_(b, m, INTERFACE, r);
-    return r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   // [MDocOrModel]
-  private static boolean Interface_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "Interface_3")) return false;
+  private static boolean Interface_1_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Interface_1_1")) return false;
     MDocOrModel(b, l + 1);
     return true;
   }
 
   // (InterfaceDefinition | Use)+
-  private static boolean Interface_4(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "Interface_4")) return false;
+  private static boolean Interface_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Interface_2_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = Interface_4_0(b, l + 1);
+    r = Interface_2_0_0(b, l + 1);
     while (r) {
       int c = current_position_(b);
-      if (!Interface_4_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "Interface_4", c)) break;
+      if (!Interface_2_0_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "Interface_2_0", c)) break;
     }
     exit_section_(b, m, null, r);
     return r;
   }
 
   // InterfaceDefinition | Use
-  private static boolean Interface_4_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "Interface_4_0")) return false;
+  private static boolean Interface_2_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Interface_2_0_0")) return false;
     boolean r;
     r = InterfaceDefinition(b, l + 1);
     if (!r) r = Use(b, l + 1);
@@ -1161,7 +1291,7 @@ public class PactParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // KEYWORD_LAMBDA "(" LambdaArguments ")" Block
+  // KEYWORD_LAMBDA "(" LambdaArguments ")" Expression+
   public static boolean LambdaExpression(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "LambdaExpression")) return false;
     if (!nextTokenIs(b, KEYWORD_LAMBDA)) return false;
@@ -1170,13 +1300,28 @@ public class PactParser implements PsiParser, LightPsiParser {
     r = consumeTokens(b, 0, KEYWORD_LAMBDA, PAREN_OPEN);
     r = r && LambdaArguments(b, l + 1);
     r = r && consumeToken(b, PAREN_CLOSE);
-    r = r && Block(b, l + 1);
+    r = r && LambdaExpression_4(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
+  // Expression+
+  private static boolean LambdaExpression_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "LambdaExpression_4")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = Expression(b, l + 1);
+    while (r) {
+      int c = current_position_(b);
+      if (!Expression(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "LambdaExpression_4", c)) break;
+    }
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
   /* ********************************************************** */
-  // KEYWORD_LET "(" Binders ")" Block
+  // KEYWORD_LET "(" Binders ")" Expression+
   public static boolean LetExpression(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "LetExpression")) return false;
     if (!nextTokenIs(b, KEYWORD_LET)) return false;
@@ -1185,8 +1330,23 @@ public class PactParser implements PsiParser, LightPsiParser {
     r = consumeTokens(b, 0, KEYWORD_LET, PAREN_OPEN);
     r = r && Binders(b, l + 1);
     r = r && consumeToken(b, PAREN_CLOSE);
-    r = r && Block(b, l + 1);
+    r = r && LetExpression_4(b, l + 1);
     exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // Expression+
+  private static boolean LetExpression_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "LetExpression_4")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = Expression(b, l + 1);
+    while (r) {
+      int c = current_position_(b);
+      if (!Expression(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "LetExpression_4", c)) break;
+    }
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -1458,46 +1618,57 @@ public class PactParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // "(" KEYWORD_MODULE IDENTIFIER Governance [MDocOrModel] (Definition | Extension)+ ")"
+  // "(" <<DefinitionHeader "module" (Governance [MDocOrModel])>>
+  //                <<DefinitionBody ((Definition | Extension)+)>> ")"
   public static boolean Module(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Module")) return false;
     if (!nextTokenIs(b, PAREN_OPEN)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, PAREN_OPEN, KEYWORD_MODULE, IDENTIFIER);
-    r = r && Governance(b, l + 1);
-    r = r && Module_4(b, l + 1);
-    r = r && Module_5(b, l + 1);
+    r = consumeToken(b, PAREN_OPEN);
+    r = r && DefinitionHeader(b, l + 1, KEYWORD_MODULE_parser_, PactParser::Module_1_1);
+    r = r && DefinitionBody(b, l + 1, PactParser::Module_2_0);
     r = r && consumeToken(b, PAREN_CLOSE);
     exit_section_(b, m, MODULE, r);
     return r;
   }
 
+  // Governance [MDocOrModel]
+  private static boolean Module_1_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Module_1_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = Governance(b, l + 1);
+    r = r && Module_1_1_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
   // [MDocOrModel]
-  private static boolean Module_4(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "Module_4")) return false;
+  private static boolean Module_1_1_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Module_1_1_1")) return false;
     MDocOrModel(b, l + 1);
     return true;
   }
 
   // (Definition | Extension)+
-  private static boolean Module_5(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "Module_5")) return false;
+  private static boolean Module_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Module_2_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = Module_5_0(b, l + 1);
+    r = Module_2_0_0(b, l + 1);
     while (r) {
       int c = current_position_(b);
-      if (!Module_5_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "Module_5", c)) break;
+      if (!Module_2_0_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "Module_2_0", c)) break;
     }
     exit_section_(b, m, null, r);
     return r;
   }
 
   // Definition | Extension
-  private static boolean Module_5_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "Module_5_0")) return false;
+  private static boolean Module_2_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Module_2_0_0")) return false;
     boolean r;
     r = Definition(b, l + 1);
     if (!r) r = Extension(b, l + 1);
@@ -1710,15 +1881,30 @@ public class PactParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // KEYWORD_BLOCK_INTRO BlockBody
+  // KEYWORD_BLOCK_INTRO Expression+
   public static boolean ProgNExpression(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ProgNExpression")) return false;
     if (!nextTokenIs(b, KEYWORD_BLOCK_INTRO)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _UPPER_, PROG_N_EXPRESSION, null);
     r = consumeToken(b, KEYWORD_BLOCK_INTRO);
-    r = r && BlockBody(b, l + 1);
+    r = r && ProgNExpression_1(b, l + 1);
     exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // Expression+
+  private static boolean ProgNExpression_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ProgNExpression_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = Expression(b, l + 1);
+    while (r) {
+      int c = current_position_(b);
+      if (!Expression(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "ProgNExpression_1", c)) break;
+    }
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -2008,10 +2194,8 @@ public class PactParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // "(" KEYWORD_STEP Expression [MModel] ")"
-  //        | "(" KEYWORD_STEP Expression Expression [MModel] ")"
-  //        | "(" KEYWORD_STEP_WITH_ROLLBACK Expression Expression [MModel] ")"
-  //        | "(" KEYWORD_STEP_WITH_ROLLBACK Expression Expression Expression [MModel] ")"
+  // "(" KEYWORD_STEP Expression [Expression] [MModel] ")"
+  //        | "(" KEYWORD_STEP_WITH_ROLLBACK Expression [Expression] [Expression] [MModel] ")"
   public static boolean Step(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Step")) return false;
     if (!nextTokenIs(b, PAREN_OPEN)) return false;
@@ -2019,13 +2203,11 @@ public class PactParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b);
     r = Step_0(b, l + 1);
     if (!r) r = Step_1(b, l + 1);
-    if (!r) r = Step_2(b, l + 1);
-    if (!r) r = Step_3(b, l + 1);
     exit_section_(b, m, STEP, r);
     return r;
   }
 
-  // "(" KEYWORD_STEP Expression [MModel] ")"
+  // "(" KEYWORD_STEP Expression [Expression] [MModel] ")"
   private static boolean Step_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Step_0")) return false;
     boolean r;
@@ -2033,78 +2215,58 @@ public class PactParser implements PsiParser, LightPsiParser {
     r = consumeTokens(b, 0, PAREN_OPEN, KEYWORD_STEP);
     r = r && Expression(b, l + 1);
     r = r && Step_0_3(b, l + 1);
+    r = r && Step_0_4(b, l + 1);
     r = r && consumeToken(b, PAREN_CLOSE);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // [MModel]
+  // [Expression]
   private static boolean Step_0_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Step_0_3")) return false;
+    Expression(b, l + 1);
+    return true;
+  }
+
+  // [MModel]
+  private static boolean Step_0_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Step_0_4")) return false;
     MModel(b, l + 1);
     return true;
   }
 
-  // "(" KEYWORD_STEP Expression Expression [MModel] ")"
+  // "(" KEYWORD_STEP_WITH_ROLLBACK Expression [Expression] [Expression] [MModel] ")"
   private static boolean Step_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Step_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, PAREN_OPEN, KEYWORD_STEP);
+    r = consumeTokens(b, 0, PAREN_OPEN, KEYWORD_STEP_WITH_ROLLBACK);
     r = r && Expression(b, l + 1);
-    r = r && Expression(b, l + 1);
+    r = r && Step_1_3(b, l + 1);
     r = r && Step_1_4(b, l + 1);
+    r = r && Step_1_5(b, l + 1);
     r = r && consumeToken(b, PAREN_CLOSE);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // [MModel]
+  // [Expression]
+  private static boolean Step_1_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Step_1_3")) return false;
+    Expression(b, l + 1);
+    return true;
+  }
+
+  // [Expression]
   private static boolean Step_1_4(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Step_1_4")) return false;
-    MModel(b, l + 1);
+    Expression(b, l + 1);
     return true;
   }
 
-  // "(" KEYWORD_STEP_WITH_ROLLBACK Expression Expression [MModel] ")"
-  private static boolean Step_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "Step_2")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, PAREN_OPEN, KEYWORD_STEP_WITH_ROLLBACK);
-    r = r && Expression(b, l + 1);
-    r = r && Expression(b, l + 1);
-    r = r && Step_2_4(b, l + 1);
-    r = r && consumeToken(b, PAREN_CLOSE);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
   // [MModel]
-  private static boolean Step_2_4(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "Step_2_4")) return false;
-    MModel(b, l + 1);
-    return true;
-  }
-
-  // "(" KEYWORD_STEP_WITH_ROLLBACK Expression Expression Expression [MModel] ")"
-  private static boolean Step_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "Step_3")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, PAREN_OPEN, KEYWORD_STEP_WITH_ROLLBACK);
-    r = r && Expression(b, l + 1);
-    r = r && Expression(b, l + 1);
-    r = r && Expression(b, l + 1);
-    r = r && Step_3_5(b, l + 1);
-    r = r && consumeToken(b, PAREN_CLOSE);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // [MModel]
-  private static boolean Step_3_5(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "Step_3_5")) return false;
+  private static boolean Step_1_5(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Step_1_5")) return false;
     MModel(b, l + 1);
     return true;
   }
@@ -2315,4 +2477,12 @@ public class PactParser implements PsiParser, LightPsiParser {
     return r;
   }
 
+  static final Parser KEYWORD_DEFUN_parser_ = (b, l) -> consumeToken(b, KEYWORD_DEFUN);
+  static final Parser KEYWORD_DEF_CAP_parser_ = (b, l) -> consumeToken(b, KEYWORD_DEF_CAP);
+  static final Parser KEYWORD_DEF_CONST_parser_ = (b, l) -> consumeToken(b, KEYWORD_DEF_CONST);
+  static final Parser KEYWORD_DEF_PACT_parser_ = (b, l) -> consumeToken(b, KEYWORD_DEF_PACT);
+  static final Parser KEYWORD_DEF_SCHEMA_parser_ = (b, l) -> consumeToken(b, KEYWORD_DEF_SCHEMA);
+  static final Parser KEYWORD_DEF_TABLE_parser_ = (b, l) -> consumeToken(b, KEYWORD_DEF_TABLE);
+  static final Parser KEYWORD_INTERFACE_parser_ = (b, l) -> consumeToken(b, KEYWORD_INTERFACE);
+  static final Parser KEYWORD_MODULE_parser_ = (b, l) -> consumeToken(b, KEYWORD_MODULE);
 }

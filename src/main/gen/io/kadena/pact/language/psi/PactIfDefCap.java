@@ -7,25 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface PactIfDefCap extends PsiElement {
 
-  @Nullable
-  PactDocumentationAnnotation getDocumentationAnnotation();
-
-  @Nullable
-  PactDocumentationString getDocumentationString();
-
   @NotNull
-  PactMArgs getMArgs();
-
-  @Nullable
-  PactMDCapMeta getMDCapMeta();
-
-  @Nullable
-  PactMTypeAnn getMTypeAnn();
-
-  @Nullable
-  PactModelAnnotation getModelAnnotation();
-
-  @NotNull
-  PsiElement getIdentifier();
+  PactDefinitionHeader getDefinitionHeader();
 
 }

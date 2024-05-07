@@ -7,16 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface PactDefConst extends PsiElement {
 
-  @Nullable
-  PactExpression getExpression();
-
-  @Nullable
-  PactMDoc getMDoc();
-
-  @Nullable
-  PactMTypeAnn getMTypeAnn();
-
-  @Nullable
-  PsiElement getIdentifier();
+  @NotNull
+  PactDefinitionHeader getDefinitionHeader();
 
 }

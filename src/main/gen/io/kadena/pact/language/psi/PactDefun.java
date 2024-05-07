@@ -8,24 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface PactDefun extends PsiElement {
 
   @NotNull
-  PactBlock getBlock();
-
-  @Nullable
-  PactDocumentationAnnotation getDocumentationAnnotation();
-
-  @Nullable
-  PactDocumentationString getDocumentationString();
-
-  @Nullable
-  PactMArgs getMArgs();
-
-  @Nullable
-  PactMTypeAnn getMTypeAnn();
-
-  @Nullable
-  PactModelAnnotation getModelAnnotation();
+  PactDefinitionBody getDefinitionBody();
 
   @NotNull
-  PsiElement getIdentifier();
+  PactDefinitionHeader getDefinitionHeader();
 
 }

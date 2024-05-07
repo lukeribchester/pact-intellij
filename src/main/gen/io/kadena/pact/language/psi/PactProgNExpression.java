@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface PactProgNExpression extends PsiElement {
 
   @NotNull
-  PactBlockBody getBlockBody();
+  List<PactExpression> getExpressionList();
 
 }

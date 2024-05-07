@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement;
 public interface PactLambdaExpression extends PsiElement {
 
   @NotNull
-  PactBlock getBlock();
+  List<PactExpression> getExpressionList();
 
   @NotNull
   PactLambdaArguments getLambdaArguments();

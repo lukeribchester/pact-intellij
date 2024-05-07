@@ -11,7 +11,7 @@ public interface PactLetExpression extends PsiElement {
   PactBinders getBinders();
 
   @NotNull
-  PactBlock getBlock();
+  List<PactExpression> getExpressionList();
 
   @NotNull
   PsiElement getKeywordLet();

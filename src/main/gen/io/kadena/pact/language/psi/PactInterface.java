@@ -8,33 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface PactInterface extends PsiElement {
 
   @NotNull
-  List<PactDefConst> getDefConstList();
+  PactDefinitionBody getDefinitionBody();
 
   @NotNull
-  List<PactDefSchema> getDefSchemaList();
-
-  @Nullable
-  PactDocumentationAnnotation getDocumentationAnnotation();
-
-  @Nullable
-  PactDocumentationString getDocumentationString();
-
-  @NotNull
-  List<PactIfDefCap> getIfDefCapList();
-
-  @NotNull
-  List<PactIfDefPact> getIfDefPactList();
-
-  @NotNull
-  List<PactIfDefun> getIfDefunList();
-
-  @Nullable
-  PactModelAnnotation getModelAnnotation();
-
-  @NotNull
-  List<PactUse> getUseList();
-
-  @NotNull
-  PsiElement getIdentifier();
+  PactDefinitionHeader getDefinitionHeader();
 
 }

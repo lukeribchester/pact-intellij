@@ -10,11 +10,8 @@ public interface PactCapabilityForm extends PsiElement {
   @Nullable
   PactAppList getAppList();
 
-  @Nullable
-  PactBlock getBlock();
-
-  @Nullable
-  PactExpression getExpression();
+  @NotNull
+  List<PactExpression> getExpressionList();
 
   @Nullable
   PactParsedName getParsedName();

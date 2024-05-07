@@ -7,19 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface PactDefSchema extends PsiElement {
 
-  @Nullable
-  PactDocumentationAnnotation getDocumentationAnnotation();
+  @NotNull
+  PactDefinitionBody getDefinitionBody();
 
-  @Nullable
-  PactDocumentationString getDocumentationString();
-
-  @Nullable
-  PactModelAnnotation getModelAnnotation();
-
-  @Nullable
-  PactSchemaArgumentList getSchemaArgumentList();
-
-  @Nullable
-  PsiElement getIdentifier();
+  @NotNull
+  PactDefinitionHeader getDefinitionHeader();
 
 }

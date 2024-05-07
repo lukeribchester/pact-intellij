@@ -34,15 +34,9 @@ public class PactCapabilityFormImpl extends ASTWrapperPsiElement implements Pact
   }
 
   @Override
-  @Nullable
-  public PactBlock getBlock() {
-    return findChildByClass(PactBlock.class);
-  }
-
-  @Override
-  @Nullable
-  public PactExpression getExpression() {
-    return findChildByClass(PactExpression.class);
+  @NotNull
+  public List<PactExpression> getExpressionList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactExpression.class);
   }
 
   @Override

@@ -11,14 +11,14 @@ import static io.kadena.pact.language.psi.PactTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import io.kadena.pact.language.psi.*;
 
-public class PactBlockBodyImpl extends ASTWrapperPsiElement implements PactBlockBody {
+public class PactDefinitionHeaderImpl extends ASTWrapperPsiElement implements PactDefinitionHeader {
 
-  public PactBlockBodyImpl(@NotNull ASTNode node) {
+  public PactDefinitionHeaderImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull PactVisitor visitor) {
-    visitor.visitBlockBody(this);
+    visitor.visitDefinitionHeader(this);
   }
 
   @Override
@@ -28,9 +28,9 @@ public class PactBlockBodyImpl extends ASTWrapperPsiElement implements PactBlock
   }
 
   @Override
-  @NotNull
-  public List<PactExpression> getExpressionList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactExpression.class);
+  @Nullable
+  public PsiElement getIdentifier() {
+    return findChildByType(IDENTIFIER);
   }
 
 }
