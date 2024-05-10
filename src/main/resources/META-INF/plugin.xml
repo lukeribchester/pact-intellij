@@ -53,5 +53,9 @@
         <lang.quoteHandler
                 language="Pact"
                 implementationClass="io.kadena.pact.ide.editor.PactQuoteHandler"/>
+
+        <!-- Run Configuration Type -->
+        <configurationType
+                implementation="io.kadena.pact.ide.runner.PactRunConfigurationType"/>
     </extensions>
 </idea-plugin>
