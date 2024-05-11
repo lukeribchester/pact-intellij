@@ -25,10 +25,16 @@ class PactRunConfiguration constructor(
         return super.getOptions() as PactRunConfigurationOptions
     }
 
-    var scriptName: String
-        get() = options.scriptName
-        set(scriptName) {
-            options.scriptName = scriptName
+    var compilerPath: String
+        get() = options.compilerPath
+        set(newCompilerPath) {
+            options.compilerPath = newCompilerPath
+        }
+
+    var modulePath: String
+        get() = options.modulePath
+        set(newModulePath) {
+            options.modulePath = newModulePath
         }
 
     @NotNull
@@ -45,7 +51,7 @@ class PactRunConfiguration constructor(
             @NotNull
             @Throws(ExecutionException::class)
             override fun startProcess(): ProcessHandler {
-                val commandLine: GeneralCommandLine = GeneralCommandLine(options.scriptName)
+                val commandLine: GeneralCommandLine = GeneralCommandLine(options.compilerPath)
                 val processHandler = ProcessHandlerFactory.getInstance().createColoredProcessHandler(commandLine)
 
                 ProcessTerminatedListener.attach(processHandler)

@@ -11,25 +11,35 @@ import javax.swing.JPanel
 
 class PactSettingsEditor : SettingsEditor<PactRunConfiguration>() {
     private val panel: JPanel
-    private val scriptPathField = TextFieldWithBrowseButton()
+
+    private val compilerPathField = TextFieldWithBrowseButton()
+    private val modulePathField = TextFieldWithBrowseButton()
 
     init {
-        scriptPathField.addBrowseFolderListener(
-            "Select Script File", null, null,
+        compilerPathField.addBrowseFolderListener(
+            "Select a Pact Compiler", null, null,
+            FileChooserDescriptorFactory.createSingleFileDescriptor()
+        )
+
+        modulePathField.addBrowseFolderListener(
+            "Select a Pact Module", null, null,
             FileChooserDescriptorFactory.createSingleFileDescriptor()
         )
 
         panel = FormBuilder.createFormBuilder()
-            .addLabeledComponent("Script file", scriptPathField)
+            .addLabeledComponent("Pact compiler:", compilerPathField)
+            .addLabeledComponent("Pact module:", modulePathField)
             .panel
     }
 
     override fun resetEditorFrom(pactRunConfiguration: PactRunConfiguration) {
-        scriptPathField.text = pactRunConfiguration.scriptName
+        compilerPathField.text = pactRunConfiguration.compilerPath
+        modulePathField.text = pactRunConfiguration.modulePath
     }
 
     override fun applyEditorTo(@NotNull pactRunConfiguration: PactRunConfiguration) {
-        pactRunConfiguration.scriptName = scriptPathField.text
+        pactRunConfiguration.compilerPath = compilerPathField.text
+        pactRunConfiguration.modulePath = modulePathField.text
     }
 
     @NotNull
