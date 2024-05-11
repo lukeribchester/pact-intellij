@@ -51,7 +51,11 @@ class PactRunConfiguration constructor(
             @NotNull
             @Throws(ExecutionException::class)
             override fun startProcess(): ProcessHandler {
-                val commandLine: GeneralCommandLine = GeneralCommandLine(options.compilerPath)
+                val commandLine: GeneralCommandLine = GeneralCommandLine(compilerPath, modulePath).apply {
+                    withParentEnvironmentType(GeneralCommandLine.ParentEnvironmentType.CONSOLE)
+                    withCharset(Charsets.UTF_8)
+                }
+
                 val processHandler = ProcessHandlerFactory.getInstance().createColoredProcessHandler(commandLine)
 
                 ProcessTerminatedListener.attach(processHandler)
