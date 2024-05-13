@@ -19,7 +19,14 @@ class PactRunConfigurationProducer : LazyRunConfigurationProducer<PactRunConfigu
     ): Boolean {
         val file = context.psiLocation?.containingFile
 
-        return file?.virtualFile?.extension == "pact"
+        if (file?.virtualFile?.extension == "pact") {
+            configuration.name = file.virtualFile.nameWithoutExtension
+            configuration.modulePath = file.virtualFile.path
+
+            return true
+        }
+
+        return false
     }
 
     override fun isConfigurationFromContext(
