@@ -35,8 +35,8 @@ public class PactLetExpressionImpl extends ASTWrapperPsiElement implements PactL
 
   @Override
   @NotNull
-  public PactBlock getBlock() {
-    return findNotNullChildByClass(PactBlock.class);
+  public List<PactExpression> getExpressionList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactExpression.class);
   }
 
   @Override

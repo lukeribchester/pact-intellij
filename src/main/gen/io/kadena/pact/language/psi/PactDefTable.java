@@ -7,13 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface PactDefTable extends PsiElement {
 
-  @Nullable
-  PactMDoc getMDoc();
-
-  @Nullable
-  PactParsedName getParsedName();
-
-  @Nullable
-  PsiElement getIdentifier();
+  @NotNull
+  PactDefinitionHeader getDefinitionHeader();
 
 }

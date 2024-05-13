@@ -153,6 +153,12 @@ private ReplTopLevel ::= ReplSpecial
 
 ReplSpecial ::= "(" KEYWORD_LOAD STR Boolean? ")"
 
+/* Meta */
+
+meta DefinitionHeader ::= <<Keyword>> IDENTIFIER <<Elements>> { pin=1 }
+
+meta DefinitionBody ::= <<Elements>> { pin=1 }
+
 /* Annotations & Documentation */
 
 private MDocOrModel ::= DocumentationAnnotation ModelAnnotation
@@ -181,14 +187,18 @@ ModelAnnotation ::= KEYWORD_MODEL_ANNOTATION "[" PactFVModels "]"
 
 /* Module */
 
-Module ::= "(" KEYWORD_MODULE IDENTIFIER Governance [MDocOrModel] (Definition | Extension)+ ")" { pin=7 }
+Module ::= "(" <<DefinitionHeader "module" (Governance [MDocOrModel])>>
+               <<DefinitionBody ((Definition | Extension)+)>> ")" { pin=4 }
 
 ModuleNames ::= ModuleQualifier ("," ModuleQualifier)*  // Verified
 
 private Governance ::= String
                      | IDENTIFIER
 
-Interface ::= "(" KEYWORD_INTERFACE IDENTIFIER [MDocOrModel] (InterfaceDefinition | Use)+ ")" { pin=6 }
+/* Interface */
+
+Interface ::= "(" <<DefinitionHeader "interface" [MDocOrModel]>>
+                  <<DefinitionBody (InterfaceDefinition | Use)+>> ")" { pin=3 }
 
 /* Extensions */
 
@@ -209,12 +219,21 @@ private Definition ::= DefCap
                      | DefTable
                      | Defun
 
-DefCap    ::= "(" KEYWORD_DEF_CAP IDENTIFIER [MTypeAnn] "(" [MArgs] ")" [MDocOrModel] [MDCapMeta] Block ")" { pin=10 }
-DefConst  ::= "(" KEYWORD_DEF_CONST IDENTIFIER [MTypeAnn] Expression [MDoc] ")" { pin=2 }
-DefPact   ::= "(" KEYWORD_DEF_PACT IDENTIFIER [MTypeAnn] "(" MArgs ")" [MDocOrModel] Steps ")" { pin=9 }
-DefSchema ::= "(" KEYWORD_DEF_SCHEMA IDENTIFIER [MDocOrModel] SchemaArgumentList ")" { pin=2 }
-DefTable  ::= "(" KEYWORD_DEF_TABLE IDENTIFIER ":" "{" ParsedName "}" [MDoc] ")" { pin=2 }
-Defun     ::= "(" KEYWORD_DEFUN IDENTIFIER [MTypeAnn] "(" [MArgs] ")" [MDocOrModel] Block ")" { pin=9 }
+DefCap    ::= "(" <<DefinitionHeader "defcap" ([MTypeAnn] "(" [MArgs] ")" [MDocOrModel] [MDCapMeta])>>
+                  <<DefinitionBody Expression+>> ")" { pin=3 }
+
+DefConst  ::= "(" <<DefinitionHeader "defconst" ([MTypeAnn] Expression [MDoc])>> ")" { pin=2 }
+
+DefPact   ::= "(" <<DefinitionHeader "defpact" ([MTypeAnn] "(" MArgs ")" [MDocOrModel])>>
+                  <<DefinitionBody Steps>> ")" { pin=3 }
+
+DefSchema ::= "(" <<DefinitionHeader "defschema" [MDocOrModel]>>
+                  <<DefinitionBody SchemaArgumentList>> ")" { pin=3 }
+
+DefTable  ::= "(" <<DefinitionHeader "deftable" (":" "{" ParsedName "}" [MDoc])>> ")" { pin=2 }
+
+Defun     ::= "(" <<DefinitionHeader "defun" ([MTypeAnn] "(" [MArgs] ")" [MDocOrModel])>>
+                  <<DefinitionBody Expression+>> ")" { pin=3 }
 
 MArgs ::= MArg*
 
@@ -235,15 +254,13 @@ private InterfaceDefinition ::= IfDefCap
                               | DefSchema
                               | IfDefun
 
-IfDefCap  ::= "(" KEYWORD_DEF_CAP IDENTIFIER [MTypeAnn] "(" MArgs ")" [MDocOrModel] [MDCapMeta] ")" { pin=10 }
-IfDefPact ::= "(" KEYWORD_DEF_PACT IDENTIFIER [MTypeAnn] "(" MArgs ")" [MDocOrModel] ")" { pin=9 }
-IfDefun   ::= "(" KEYWORD_DEFUN IDENTIFIER [MTypeAnn] "(" MArgs ")" [MDocOrModel] ")" { pin=9 }
+IfDefCap  ::= "(" <<DefinitionHeader "defcap" ([MTypeAnn] "(" MArgs ")" [MDocOrModel] [MDCapMeta])>> ")" { pin=3 }
+
+IfDefPact ::= "(" <<DefinitionHeader "defpact" ([MTypeAnn] "(" MArgs ")" [MDocOrModel])>> ")" { pin=3 }
+
+IfDefun   ::= "(" <<DefinitionHeader "defun" ([MTypeAnn] "(" MArgs ")" [MDocOrModel])>> ")" { pin=3 }
 
 /* Expressions */
-
-// TODO: Refactor out.
-Block ::= BlockBody
-BlockBody ::= Expression+
 
 Expression ::= "(" SymbolicExpression ")"
              | Variable
@@ -259,13 +276,13 @@ private upper SymbolicExpression ::= LambdaExpression
                                    | CapabilityExpression
                                    | GenericExpression
 
-upper LambdaExpression ::= KEYWORD_LAMBDA "(" LambdaArguments ")" Block
+upper LambdaExpression ::= KEYWORD_LAMBDA "(" LambdaArguments ")" Expression+
 
 LambdaArguments ::= LambdaArgument (LambdaArgument)*
 
 LambdaArgument ::= IDENTIFIER (":" TypeDeclaration)?
 
-upper LetExpression ::= KEYWORD_LET "(" Binders ")" Block
+upper LetExpression ::= KEYWORD_LET "(" Binders ")" Expression+
 
 //Binders ::= Binder (Binder)* // Verified
 //Binder ::= "(" IDENTIFIER [MTypeAnn] Expression ")" // Type annotation fault
@@ -279,11 +296,11 @@ upper TryExpression ::= KEYWORD_TRY Expression Expression
 
 upper SuspendExpression ::= KEYWORD_SUSPEND Expression
 
-upper ProgNExpression ::= KEYWORD_BLOCK_INTRO BlockBody
+upper ProgNExpression ::= KEYWORD_BLOCK_INTRO Expression+
 
 upper CapabilityExpression ::= CapabilityForm
 
-CapabilityForm ::= KEYWORD_WITH_CAPABILITY Expression Block
+CapabilityForm ::= KEYWORD_WITH_CAPABILITY Expression Expression+
                  | KEYWORD_CREATE_USER_GUARD "(" ParsedName AppList ")"
 
 AppList ::= Expression* // Was +
@@ -303,10 +320,8 @@ BindPair ::= STR ":=" MArg
 
 Steps ::= Step+
 
-Step ::= "(" KEYWORD_STEP Expression [MModel] ")"
-       | "(" KEYWORD_STEP Expression Expression [MModel] ")"
-       | "(" KEYWORD_STEP_WITH_ROLLBACK Expression Expression [MModel] ")"
-       | "(" KEYWORD_STEP_WITH_ROLLBACK Expression Expression Expression [MModel] ")"
+Step ::= "(" KEYWORD_STEP Expression [Expression] [MModel] ")"
+       | "(" KEYWORD_STEP_WITH_ROLLBACK Expression [Expression] [Expression] [MModel] ")"
 
 /* Variables & Names */
 

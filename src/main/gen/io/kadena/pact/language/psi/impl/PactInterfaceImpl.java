@@ -29,62 +29,14 @@ public class PactInterfaceImpl extends ASTWrapperPsiElement implements PactInter
 
   @Override
   @NotNull
-  public List<PactDefConst> getDefConstList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactDefConst.class);
+  public PactDefinitionBody getDefinitionBody() {
+    return findNotNullChildByClass(PactDefinitionBody.class);
   }
 
   @Override
   @NotNull
-  public List<PactDefSchema> getDefSchemaList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactDefSchema.class);
-  }
-
-  @Override
-  @Nullable
-  public PactDocumentationAnnotation getDocumentationAnnotation() {
-    return findChildByClass(PactDocumentationAnnotation.class);
-  }
-
-  @Override
-  @Nullable
-  public PactDocumentationString getDocumentationString() {
-    return findChildByClass(PactDocumentationString.class);
-  }
-
-  @Override
-  @NotNull
-  public List<PactIfDefCap> getIfDefCapList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactIfDefCap.class);
-  }
-
-  @Override
-  @NotNull
-  public List<PactIfDefPact> getIfDefPactList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactIfDefPact.class);
-  }
-
-  @Override
-  @NotNull
-  public List<PactIfDefun> getIfDefunList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactIfDefun.class);
-  }
-
-  @Override
-  @Nullable
-  public PactModelAnnotation getModelAnnotation() {
-    return findChildByClass(PactModelAnnotation.class);
-  }
-
-  @Override
-  @NotNull
-  public List<PactUse> getUseList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactUse.class);
-  }
-
-  @Override
-  @NotNull
-  public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
+  public PactDefinitionHeader getDefinitionHeader() {
+    return findNotNullChildByClass(PactDefinitionHeader.class);
   }
 
 }

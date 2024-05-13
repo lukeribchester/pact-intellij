@@ -18,13 +18,13 @@ public interface PactTypes {
   IElementType BIND_PAIR = new PactElementType("BIND_PAIR");
   IElementType BIND_PAIRS = new PactElementType("BIND_PAIRS");
   IElementType BITWISE_OPERATOR = new PactElementType("BITWISE_OPERATOR");
-  IElementType BLOCK = new PactElementType("BLOCK");
-  IElementType BLOCK_BODY = new PactElementType("BLOCK_BODY");
   IElementType BOOLEAN = new PactElementType("BOOLEAN");
   IElementType CAPABILITY_EXPRESSION = new PactElementType("CAPABILITY_EXPRESSION");
   IElementType CAPABILITY_FORM = new PactElementType("CAPABILITY_FORM");
   IElementType COMPOSITE_DATA_TYPE = new PactElementType("COMPOSITE_DATA_TYPE");
   IElementType DATA_TYPE = new PactElementType("DATA_TYPE");
+  IElementType DEFINITION_BODY = new PactElementType("DEFINITION_BODY");
+  IElementType DEFINITION_HEADER = new PactElementType("DEFINITION_HEADER");
   IElementType DEFUN = new PactElementType("DEFUN");
   IElementType DEF_CAP = new PactElementType("DEF_CAP");
   IElementType DEF_CONST = new PactElementType("DEF_CONST");
@@ -209,12 +209,6 @@ public interface PactTypes {
       else if (type == BITWISE_OPERATOR) {
         return new PactBitwiseOperatorImpl(node);
       }
-      else if (type == BLOCK) {
-        return new PactBlockImpl(node);
-      }
-      else if (type == BLOCK_BODY) {
-        return new PactBlockBodyImpl(node);
-      }
       else if (type == BOOLEAN) {
         return new PactBooleanImpl(node);
       }
@@ -229,6 +223,12 @@ public interface PactTypes {
       }
       else if (type == DATA_TYPE) {
         return new PactDataTypeImpl(node);
+      }
+      else if (type == DEFINITION_BODY) {
+        return new PactDefinitionBodyImpl(node);
+      }
+      else if (type == DEFINITION_HEADER) {
+        return new PactDefinitionHeaderImpl(node);
       }
       else if (type == DEFUN) {
         return new PactDefunImpl(node);

@@ -29,8 +29,8 @@ public class PactLambdaExpressionImpl extends ASTWrapperPsiElement implements Pa
 
   @Override
   @NotNull
-  public PactBlock getBlock() {
-    return findNotNullChildByClass(PactBlock.class);
+  public List<PactExpression> getExpressionList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PactExpression.class);
   }
 
   @Override

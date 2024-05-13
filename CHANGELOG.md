@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- Support for Run Configurations
+
 ## [0.3.2] - 2024-05-06
 
 ### Added
