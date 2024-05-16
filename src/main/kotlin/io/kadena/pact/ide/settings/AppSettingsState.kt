@@ -19,8 +19,8 @@ import org.jetbrains.annotations.Nullable
     storages = [Storage("PactPlugin.xml")]
 )
 class AppSettingsState : PersistentStateComponent<AppSettingsState> {
-    var pactPath: String = ""
-    var pactLanguageServerPath: String = ""
+    var compilerPath: String = ""
+    var languageServerPath: String = ""
 
     private val listeners = mutableSetOf<AppSettingsStateListener>()
 

@@ -41,7 +41,7 @@ class PactLspServerDescriptor(project: Project) : ProjectWideLspServerDescriptor
 
     override fun createCommandLine(): GeneralCommandLine {
         // Retrieve the configured Pact Language Server executable path
-        val pactLanguageServerPath = AppSettingsState.instance.pactLanguageServerPath
+        val pactLanguageServerPath = AppSettingsState.instance.languageServerPath
 
         if (pactLanguageServerPath == "" || !doesExecutableExist(pactLanguageServerPath)) {
             throw ExecutionException("Pact Language Server (LSP) executable not found")
@@ -57,7 +57,7 @@ class PactLspServerDescriptor(project: Project) : ProjectWideLspServerDescriptor
 
     override fun createInitializationOptions(): String {
         // Retrieve the configured Pact executable path
-        val pactPath = AppSettingsState.instance.pactPath
+        val pactPath = AppSettingsState.instance.compilerPath
 
         val pactExe = JsonObject()
         pactExe.addProperty("pactExe", pactPath)

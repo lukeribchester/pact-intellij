@@ -25,53 +25,53 @@ import javax.swing.JPanel
 class AppSettingsComponent {
     val panel: JPanel
 
-    private val pactPathLabel = JBLabel("Pact:")
-    private val pactPathField = ComboBox<String>()
-    private val pactPathBrowseButton = JButton("...")
+    private val compilerPathLabel = JBLabel("Pact:")
+    private val compilerPathField = ComboBox<String>()
+    private val compilerPathBrowseButton = JButton("...")
 
-    private val pactLanguageServerPathLabel = JBLabel("Language Server (LSP):")
-    private val pactLanguageServerPathField = ComboBox<String>()
-    private val pactLanguageServerPathBrowseButton = JButton("...")
+    private val languageServerPathLabel = JBLabel("Language Server (LSP):")
+    private val languageServerPathField = ComboBox<String>()
+    private val languageServerPathBrowseButton = JButton("...")
 
     init {
         panel = FormBuilder.createFormBuilder()
-            .addComponent(pactPathPanel())
-            .addComponent(pactLanguageServerPathPanel())
+            .addComponent(compilerPathPanel())
+            .addComponent(languageServerPathPanel())
             .addComponentFillVertically(JPanel(), 0)
             .panel
     }
 
     val preferredFocusedComponent: JComponent
-        get() = pactPathField
+        get() = compilerPathField
 
     @get:NotNull
-    var pactPath: String?
-        get() = pactPathField.selectedItem?.toString()
+    var compilerPath: String?
+        get() = compilerPathField.selectedItem?.toString()
         set(newPath) {
-            pactPathField.selectedItem = newPath
+            compilerPathField.selectedItem = newPath
         }
 
     @get:NotNull
-    var pactLanguageServerPath: String?
-        get() = pactLanguageServerPathField.selectedItem?.toString()
+    var languageServerPath: String?
+        get() = languageServerPathField.selectedItem?.toString()
         set(newPath) {
-            pactLanguageServerPathField.selectedItem = newPath
+            languageServerPathField.selectedItem = newPath
         }
 
-    private fun pactPathPanel(): JBPanel<JBPanel<*>> {
-        pactPathField.apply {
+    private fun compilerPathPanel(): JBPanel<JBPanel<*>> {
+        compilerPathField.apply {
             addItem("/path/to/pact")
             isEditable = true
             preferredWidth = 300
         }
-        pactPathBrowseButton.addActionListener {
-            onBrowseForPactPath(
+        compilerPathBrowseButton.addActionListener {
+            onBrowseForPath(
                 "Select a Pact Compiler",
                 "Choose an executable file",
-                pactPathField
+                compilerPathField
             )
         }
-        pactPathBrowseButton.apply {
+        compilerPathBrowseButton.apply {
             preferredWidth = 30
             minimumWidth = 30
             maximumWidth = 30
@@ -83,27 +83,27 @@ class AppSettingsComponent {
 
             val gap = Box.createRigidArea(Dimension(10, 0))
 
-            add(pactPathLabel)
+            add(compilerPathLabel)
             add(gap)
-            add(pactPathField)
-            add(pactPathBrowseButton)
+            add(compilerPathField)
+            add(compilerPathBrowseButton)
         }
     }
 
-    private fun pactLanguageServerPathPanel(): JBPanel<JBPanel<*>> {
-        pactLanguageServerPathField.apply {
+    private fun languageServerPathPanel(): JBPanel<JBPanel<*>> {
+        languageServerPathField.apply {
             addItem("/path/to/pact-lsp")
             isEditable = true
             preferredWidth = 300
         }
-        pactLanguageServerPathBrowseButton.addActionListener {
-            onBrowseForPactPath(
+        languageServerPathBrowseButton.addActionListener {
+            onBrowseForPath(
                 "Select a Pact Language Server (LSP)",
                 "Choose an executable file",
-                pactLanguageServerPathField
+                languageServerPathField
             )
         }
-        pactLanguageServerPathBrowseButton.apply {
+        languageServerPathBrowseButton.apply {
             preferredWidth = 30
             minimumWidth = 30
             maximumWidth = 30
@@ -115,14 +115,14 @@ class AppSettingsComponent {
 
             val gap = Box.createRigidArea(Dimension(10, 0))
 
-            add(pactLanguageServerPathLabel)
+            add(languageServerPathLabel)
             add(gap)
-            add(pactLanguageServerPathField)
-            add(pactLanguageServerPathBrowseButton)
+            add(languageServerPathField)
+            add(languageServerPathBrowseButton)
         }
     }
 
-    private fun onBrowseForPactPath(title: String, description: String, field: ComboBox<String>) {
+    private fun onBrowseForPath(title: String, description: String, field: ComboBox<String>) {
         // Configure the file browser window
         val fileChooserDescriptor = FileChooserDescriptor(
             true,

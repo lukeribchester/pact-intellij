@@ -9,7 +9,7 @@ class PactRunConfigurationOptions : RunConfigurationOptions() {
     private val settings: AppSettingsState = AppSettingsState.instance
 
     private val _compilerPath: StoredProperty<String?> =
-        string(settings.pactPath.takeIf { it.isNotBlank() } ?: "")
+        string(settings.compilerPath.takeIf { it.isNotBlank() } ?: "")
             .provideDelegate(this, "compilerPath")
 
     private val _modulePath: StoredProperty<String?> =

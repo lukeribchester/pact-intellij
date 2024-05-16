@@ -27,22 +27,22 @@ internal class AppSettingsConfigurable : Configurable {
 
     override fun isModified(): Boolean {
         val settings: AppSettingsState = AppSettingsState.instance
-        var modified: Boolean = !appSettingsComponent?.pactPath.equals(settings.pactPath)
-        modified = modified or (!appSettingsComponent?.pactLanguageServerPath.equals(settings.pactLanguageServerPath))
+        var modified: Boolean = !appSettingsComponent?.compilerPath.equals(settings.compilerPath)
+        modified = modified or (!appSettingsComponent?.languageServerPath.equals(settings.languageServerPath))
         return modified
     }
 
     override fun apply() {
         val settings: AppSettingsState = AppSettingsState.instance
-        settings.pactPath = appSettingsComponent?.pactPath.toString()
-        settings.pactLanguageServerPath = appSettingsComponent?.pactLanguageServerPath.toString()
+        settings.compilerPath = appSettingsComponent?.compilerPath.toString()
+        settings.languageServerPath = appSettingsComponent?.languageServerPath.toString()
         settings.notifyAppSettingsStateChanged(settings)
     }
 
     override fun reset() {
         val settings: AppSettingsState = AppSettingsState.instance
-        appSettingsComponent?.pactPath = settings.pactPath
-        appSettingsComponent?.pactLanguageServerPath = settings.pactLanguageServerPath
+        appSettingsComponent?.compilerPath = settings.compilerPath
+        appSettingsComponent?.languageServerPath = settings.languageServerPath
     }
 
     override fun disposeUIResources() {
