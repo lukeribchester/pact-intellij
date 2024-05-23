@@ -4,6 +4,7 @@ import com.intellij.icons.AllIcons
 import com.intellij.openapi.fileChooser.FileChooser
 import com.intellij.openapi.fileChooser.FileChooserDescriptor
 import com.intellij.openapi.ui.ComboBox
+import com.intellij.openapi.vfs.LocalFileSystem
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.ui.components.fields.ExtendableTextComponent
 import com.intellij.ui.components.fields.ExtendableTextField
@@ -30,8 +31,11 @@ fun createComboBox(title: String, description: String): ComboBox<String> {
             .withTitle(title)
             .withDescription(description)
 
+        // Set the initial file browser window directory
+        val directory = LocalFileSystem.getInstance().findFileByPath(comboBox.selectedItem as? String ?: "/")
+
         // Open the file browser window
-        val file: VirtualFile? = FileChooser.chooseFile(fileChooserDescriptor, null, null)
+        val file: VirtualFile? = FileChooser.chooseFile(fileChooserDescriptor, null, null, directory)
 
         file?.let {
             // Add the path to the ComboBox and select it
