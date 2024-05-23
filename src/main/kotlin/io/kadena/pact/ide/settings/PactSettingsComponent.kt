@@ -16,7 +16,7 @@ import com.intellij.ui.dsl.builder.panel as dslPanel
 /**
  * Supports creating and managing a [JPanel] for the Settings Dialog.
  */
-class AppSettingsComponent {
+class PactSettingsComponent {
     val panel: JPanel
 
     private val compilerPathField: ComboBox<String> = createComboBox(
