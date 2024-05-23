@@ -1,22 +1,16 @@
 package io.kadena.pact.ide.settings
 
-import com.intellij.openapi.fileChooser.FileChooser
-import com.intellij.openapi.fileChooser.FileChooserDescriptor
 import com.intellij.openapi.ui.ComboBox
-import com.intellij.openapi.vfs.VirtualFile
-import com.intellij.ui.components.JBLabel
-import com.intellij.ui.components.JBPanel
-import com.intellij.ui.util.maximumWidth
-import com.intellij.ui.util.minimumWidth
-import com.intellij.ui.util.preferredWidth
-import com.intellij.util.ui.FormBuilder
+import com.intellij.ui.dsl.builder.Align
+import com.intellij.ui.dsl.builder.RowLayout
+import com.intellij.ui.dsl.builder.TopGap
 import org.jetbrains.annotations.NotNull
-import java.awt.Dimension
-import javax.swing.Box
-import javax.swing.BoxLayout
-import javax.swing.JButton
+import java.awt.Image
+import javax.swing.ImageIcon
 import javax.swing.JComponent
+import javax.swing.JLabel
 import javax.swing.JPanel
+import com.intellij.ui.dsl.builder.panel as dslPanel
 
 
 /**
@@ -25,20 +19,54 @@ import javax.swing.JPanel
 class AppSettingsComponent {
     val panel: JPanel
 
-    private val compilerPathLabel = JBLabel("Pact:")
-    private val compilerPathField = ComboBox<String>()
-    private val compilerPathBrowseButton = JButton("...")
+    private val compilerPathField: ComboBox<String> = createComboBox(
+        "Select a Pact Compiler", "Choose an executable file"
+    )
 
-    private val languageServerPathLabel = JBLabel("Language Server (LSP):")
-    private val languageServerPathField = ComboBox<String>()
-    private val languageServerPathBrowseButton = JButton("...")
+    private val languageServerPathField: ComboBox<String> = createComboBox(
+        "Select a Pact Language Server", "Choose an executable file"
+    )
 
     init {
-        panel = FormBuilder.createFormBuilder()
-            .addComponent(compilerPathPanel())
-            .addComponent(languageServerPathPanel())
-            .addComponentFillVertically(JPanel(), 0)
-            .panel
+        val logo = ImageIcon(javaClass.getResource("/icons/logo.png"))
+            .image.getScaledInstance(64, 64, Image.SCALE_SMOOTH)
+
+        panel = dslPanel {
+            // Compiler path
+            row("Pact compiler:") {
+                cell(compilerPathField)
+                    .comment("Pact compiler versions 4.x.x and 5.x.x are supported".trimIndent())
+                    .align(Align.FILL)
+                    .resizableColumn()
+            }.layout(RowLayout.LABEL_ALIGNED)
+
+            // Language server path
+            row("Pact language server:") {
+                cell(languageServerPathField)
+                    .comment("Specify a Pact 5 compiler path or a standalone Pact 4 language server path".trimIndent())
+                    .align(Align.FILL)
+                    .resizableColumn()
+            }.layout(RowLayout.LABEL_ALIGNED)
+
+            separator().topGap(TopGap.SMALL)
+
+            // Check for updates
+            row {
+                cell(JLabel(ImageIcon(logo)))
+                text(
+                    """
+                     <h3 style="margin: 6px 0 4px 0">Check for updates</h3>
+                     Visit the 
+                     <a href="https://github.com/kadena-io/pact/releases">Pact 4<icon src="AllIcons.Ide.External_link_arrow"></a>
+                     and
+                     <a href="https://github.com/kadena-io/pact-5/releases">Pact 5<icon src="AllIcons.Ide.External_link_arrow"></a> 
+                     repositories 
+                     <br>
+                     to stay up to date with the latest versions
+                     """.trimIndent()
+                )
+            }
+        }
     }
 
     val preferredFocusedComponent: JComponent
@@ -57,92 +85,4 @@ class AppSettingsComponent {
         set(newPath) {
             languageServerPathField.selectedItem = newPath
         }
-
-    private fun compilerPathPanel(): JBPanel<JBPanel<*>> {
-        compilerPathField.apply {
-            addItem("/path/to/pact")
-            isEditable = true
-            preferredWidth = 300
-        }
-        compilerPathBrowseButton.addActionListener {
-            onBrowseForPath(
-                "Select a Pact Compiler",
-                "Choose an executable file",
-                compilerPathField
-            )
-        }
-        compilerPathBrowseButton.apply {
-            preferredWidth = 30
-            minimumWidth = 30
-            maximumWidth = 30
-        }
-
-        return JBPanel<JBPanel<*>>().apply {
-            // Align the components horizontally
-            layout = BoxLayout(this, BoxLayout.X_AXIS)
-
-            val gap = Box.createRigidArea(Dimension(10, 0))
-
-            add(compilerPathLabel)
-            add(gap)
-            add(compilerPathField)
-            add(compilerPathBrowseButton)
-        }
-    }
-
-    private fun languageServerPathPanel(): JBPanel<JBPanel<*>> {
-        languageServerPathField.apply {
-            addItem("/path/to/pact-lsp")
-            isEditable = true
-            preferredWidth = 300
-        }
-        languageServerPathBrowseButton.addActionListener {
-            onBrowseForPath(
-                "Select a Pact Language Server (LSP)",
-                "Choose an executable file",
-                languageServerPathField
-            )
-        }
-        languageServerPathBrowseButton.apply {
-            preferredWidth = 30
-            minimumWidth = 30
-            maximumWidth = 30
-        }
-
-        return JBPanel<JBPanel<*>>().apply {
-            // Align the components horizontally
-            layout = BoxLayout(this, BoxLayout.X_AXIS)
-
-            val gap = Box.createRigidArea(Dimension(10, 0))
-
-            add(languageServerPathLabel)
-            add(gap)
-            add(languageServerPathField)
-            add(languageServerPathBrowseButton)
-        }
-    }
-
-    private fun onBrowseForPath(title: String, description: String, field: ComboBox<String>) {
-        // Configure the file browser window
-        val fileChooserDescriptor = FileChooserDescriptor(
-            true,
-            true,
-            false,
-            false,
-            false,
-            false
-        )
-            .withTitle(title)
-            .withDescription(description)
-
-        // Open the file browser window
-        val file: VirtualFile? = FileChooser.chooseFile(fileChooserDescriptor, null, null)
-        file?.let {
-            val path = it.path
-
-            // Add the path to the ComboBox and select it
-            field.addItem(path)
-            field.selectedItem = path
-        }
-    }
 }
