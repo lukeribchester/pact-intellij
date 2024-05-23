@@ -2,6 +2,7 @@ package io.kadena.pact.ide.runner
 
 import com.intellij.openapi.options.SettingsEditor
 import com.intellij.openapi.ui.ComboBox
+import com.intellij.openapi.ui.TextFieldWithBrowseButton
 import com.intellij.ui.dsl.builder.Align
 import com.intellij.ui.dsl.builder.RowLayout
 import io.kadena.pact.ide.settings.createComboBox
@@ -18,9 +19,7 @@ class PactSettingsEditor : SettingsEditor<PactRunConfiguration>() {
         "Select a Pact Compiler", "Choose an executable file"
     )
 
-    private val modulePathField: ComboBox<String> = createComboBox(
-        "Select a Pact Module", "Choose an executable file"
-    )
+    private val modulePathField = TextFieldWithBrowseButton()
 
     init {
         panel = dslPanel {
@@ -42,12 +41,12 @@ class PactSettingsEditor : SettingsEditor<PactRunConfiguration>() {
 
     override fun resetEditorFrom(pactRunConfiguration: PactRunConfiguration) {
         compilerPathField.selectedItem = pactRunConfiguration.compilerPath
-        modulePathField.selectedItem = pactRunConfiguration.modulePath
+        modulePathField.text = pactRunConfiguration.modulePath
     }
 
     override fun applyEditorTo(@NotNull pactRunConfiguration: PactRunConfiguration) {
         pactRunConfiguration.compilerPath = compilerPathField.selectedItem?.toString() ?: ""
-        pactRunConfiguration.modulePath = modulePathField.selectedItem?.toString() ?: ""
+        pactRunConfiguration.modulePath = modulePathField.text
     }
 
     @NotNull
