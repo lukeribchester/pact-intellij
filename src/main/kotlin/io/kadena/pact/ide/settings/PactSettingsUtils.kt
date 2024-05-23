@@ -32,7 +32,9 @@ fun createComboBox(title: String, description: String): ComboBox<String> {
             .withDescription(description)
 
         // Set the initial file browser window directory
-        val directory = LocalFileSystem.getInstance().findFileByPath(comboBox.selectedItem as? String ?: "/")
+        val directory = LocalFileSystem.getInstance().findFileByPath(
+            comboBox.selectedItem as? String ?: System.getProperty("user.home")
+        )
 
         // Open the file browser window
         val file: VirtualFile? = FileChooser.chooseFile(fileChooserDescriptor, null, null, directory)
