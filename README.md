@@ -123,7 +123,7 @@ Configuration is required to enable functionality from the Pact Language Server:
 
 1. Navigate to <kbd>Settings/Preferences</kbd>
 2. Select <kbd>Languages & Frameworks</kbd> > <kbd>Pact</kbd>
-3. Specify your <kbd>Pact</kbd> and <kbd>Pact Language Server</kbd> paths
+3. Specify your <kbd>Pact Compiler</kbd> and <kbd>Pact Language Server</kbd> paths
 
 #### Homebrew
 
