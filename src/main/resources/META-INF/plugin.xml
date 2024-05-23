@@ -22,8 +22,8 @@
 
         <applicationConfigurable
                 parentId="language"
-                instance="io.kadena.pact.ide.settings.AppSettingsConfigurable"
-                id="io.kadena.pact.ide.settings.AppSettingsConfigurable"
+                instance="io.kadena.pact.ide.settings.PactSettingsConfigurable"
+                id="io.kadena.pact.ide.settings.PactSettingsConfigurable"
                 displayName="Pact"/>
 
         <!-- Parser -->

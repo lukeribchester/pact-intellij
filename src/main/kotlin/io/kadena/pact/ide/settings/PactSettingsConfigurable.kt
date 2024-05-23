@@ -8,7 +8,7 @@ import javax.swing.JComponent
 /**
  * Provides controller functionality for application settings.
  */
-internal class AppSettingsConfigurable : Configurable {
+internal class PactSettingsConfigurable : Configurable {
     private var pactSettingsComponent: PactSettingsComponent? = null
 
     override fun getDisplayName(): String {
