@@ -26,21 +26,21 @@ internal class PactSettingsConfigurable : Configurable {
     }
 
     override fun isModified(): Boolean {
-        val settings: AppSettingsState = AppSettingsState.instance
+        val settings: PactSettingsState = PactSettingsState.instance
         var modified: Boolean = !pactSettingsComponent?.compilerPath.equals(settings.compilerPath)
         modified = modified or (!pactSettingsComponent?.languageServerPath.equals(settings.languageServerPath))
         return modified
     }
 
     override fun apply() {
-        val settings: AppSettingsState = AppSettingsState.instance
+        val settings: PactSettingsState = PactSettingsState.instance
         settings.compilerPath = pactSettingsComponent?.compilerPath.toString()
         settings.languageServerPath = pactSettingsComponent?.languageServerPath.toString()
         settings.notifyAppSettingsStateChanged(settings)
     }
 
     override fun reset() {
-        val settings: AppSettingsState = AppSettingsState.instance
+        val settings: PactSettingsState = PactSettingsState.instance
         pactSettingsComponent?.compilerPath = settings.compilerPath
         pactSettingsComponent?.languageServerPath = settings.languageServerPath
     }

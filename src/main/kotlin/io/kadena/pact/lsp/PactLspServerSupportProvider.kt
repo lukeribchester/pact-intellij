@@ -4,14 +4,14 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.platform.lsp.api.LspServerManager
 import com.intellij.platform.lsp.api.LspServerSupportProvider
-import io.kadena.pact.ide.settings.AppSettingsState
+import io.kadena.pact.ide.settings.PactSettingsState
 
-class PactLspServerSupportProvider : LspServerSupportProvider, AppSettingsState.AppSettingsStateListener {
+class PactLspServerSupportProvider : LspServerSupportProvider, PactSettingsState.AppSettingsStateListener {
 
     private var _project: Project? = null
 
     init {
-        val settings = AppSettingsState.instance
+        val settings = PactSettingsState.instance
         settings.addAppSettingsStateListener(this)
     }
 
@@ -26,7 +26,7 @@ class PactLspServerSupportProvider : LspServerSupportProvider, AppSettingsState.
         }
     }
 
-    override fun onAppSettingsStateChanged(state: AppSettingsState) {
+    override fun onAppSettingsStateChanged(state: PactSettingsState) {
         restart()
     }
 

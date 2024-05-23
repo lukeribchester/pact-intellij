@@ -7,7 +7,7 @@ import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.platform.lsp.api.ProjectWideLspServerDescriptor
-import io.kadena.pact.ide.settings.AppSettingsState
+import io.kadena.pact.ide.settings.PactSettingsState
 import java.io.File
 
 class PactLspServerDescriptor(project: Project) : ProjectWideLspServerDescriptor(project, "Pact") {
@@ -41,7 +41,7 @@ class PactLspServerDescriptor(project: Project) : ProjectWideLspServerDescriptor
 
     override fun createCommandLine(): GeneralCommandLine {
         // Retrieve the configured Pact Language Server executable path
-        val pactLanguageServerPath = AppSettingsState.instance.languageServerPath
+        val pactLanguageServerPath = PactSettingsState.instance.languageServerPath
 
         if (pactLanguageServerPath == "" || !doesExecutableExist(pactLanguageServerPath)) {
             throw ExecutionException("Pact Language Server (LSP) executable not found")
@@ -57,7 +57,7 @@ class PactLspServerDescriptor(project: Project) : ProjectWideLspServerDescriptor
 
     override fun createInitializationOptions(): String {
         // Retrieve the configured Pact executable path
-        val pactPath = AppSettingsState.instance.compilerPath
+        val pactPath = PactSettingsState.instance.compilerPath
 
         val pactExe = JsonObject()
         pactExe.addProperty("pactExe", pactPath)

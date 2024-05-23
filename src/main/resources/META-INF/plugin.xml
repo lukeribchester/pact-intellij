@@ -18,7 +18,7 @@
 
         <!-- Application Settings -->
         <applicationService
-                serviceImplementation="io.kadena.pact.ide.settings.AppSettingsState"/>
+                serviceImplementation="io.kadena.pact.ide.settings.PactSettingsState"/>
 
         <applicationConfigurable
                 parentId="language"

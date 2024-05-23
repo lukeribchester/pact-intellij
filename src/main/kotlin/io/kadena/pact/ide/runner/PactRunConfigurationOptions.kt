@@ -2,11 +2,11 @@ package io.kadena.pact.ide.runner
 
 import com.intellij.execution.configurations.RunConfigurationOptions
 import com.intellij.openapi.components.StoredProperty
-import io.kadena.pact.ide.settings.AppSettingsState
+import io.kadena.pact.ide.settings.PactSettingsState
 
 
 class PactRunConfigurationOptions : RunConfigurationOptions() {
-    private val settings: AppSettingsState = AppSettingsState.instance
+    private val settings: PactSettingsState = PactSettingsState.instance
 
     private val _compilerPath: StoredProperty<String?> =
         string(settings.compilerPath.takeIf { it.isNotBlank() } ?: "")
