@@ -32,26 +32,30 @@ class PactLspServerDescriptor(project: Project) : ProjectWideLspServerDescriptor
 //        return pluginPath?.let { Paths.get(it, executableRelativePath).toString() }
 //    }
 
-    fun doesExecutableExist(executablePath: String): Boolean {
+    private fun doesExecutableExist(executablePath: String): Boolean {
         val file = File(executablePath)
         return file.exists() && file.isFile
+    }
+
+    private fun isIntegratedLanguageServer(): Boolean {
+        return PactSettingsState.instance.languageServerPath == PactSettingsState.instance.compilerPath
     }
 
     override fun isSupportedFile(file: VirtualFile) = file.extension == "pact"
 
     override fun createCommandLine(): GeneralCommandLine {
         // Retrieve the configured Pact Language Server executable path
-        val pactLanguageServerPath = PactSettingsState.instance.languageServerPath
+        val languageServerPath = PactSettingsState.instance.languageServerPath
 
-        if (pactLanguageServerPath == "" || !doesExecutableExist(pactLanguageServerPath)) {
+        if (languageServerPath == "" || !doesExecutableExist(languageServerPath)) {
             throw ExecutionException("Pact Language Server (LSP) executable not found")
         }
 
         // Start the Pact Language Server
-        return GeneralCommandLine(pactLanguageServerPath).apply {
+        return GeneralCommandLine(languageServerPath).apply {
             withParentEnvironmentType(GeneralCommandLine.ParentEnvironmentType.CONSOLE)
             withCharset(Charsets.UTF_8)
-            addParameter("--stdio")
+            if (isIntegratedLanguageServer()) addParameter("--lsp")
         }
     }
 
