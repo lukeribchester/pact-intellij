@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- Support for the [Pact 5 Language Server (LSP)](https://github.com/kadena-io/pact-5)
+
 ## [0.4.0] - 2024-05-13
 
 ### Added
