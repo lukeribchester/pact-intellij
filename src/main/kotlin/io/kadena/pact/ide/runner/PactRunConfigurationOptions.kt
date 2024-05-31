@@ -2,14 +2,14 @@ package io.kadena.pact.ide.runner
 
 import com.intellij.execution.configurations.RunConfigurationOptions
 import com.intellij.openapi.components.StoredProperty
-import io.kadena.pact.ide.settings.AppSettingsState
+import io.kadena.pact.ide.settings.PactSettingsState
 
 
 class PactRunConfigurationOptions : RunConfigurationOptions() {
-    private val settings: AppSettingsState = AppSettingsState.instance
+    private val settings: PactSettingsState = PactSettingsState.instance
 
     private val _compilerPath: StoredProperty<String?> =
-        string(settings.pactPath.takeIf { it.isNotBlank() } ?: "")
+        string(settings.compilerPath.takeIf { it.isNotBlank() } ?: "")
             .provideDelegate(this, "compilerPath")
 
     private val _modulePath: StoredProperty<String?> =
@@ -17,13 +17,13 @@ class PactRunConfigurationOptions : RunConfigurationOptions() {
             .provideDelegate(this, "modulePath")
 
     var compilerPath: String
-        get() = _compilerPath.getValue(this).toString()
+        get() = _compilerPath.getValue(this).takeIf { !it.equals(null) } ?: ""
         set(newCompilerPath) {
             _compilerPath.setValue(this, newCompilerPath)
         }
 
     var modulePath: String
-        get() = _modulePath.getValue(this).toString()
+        get() = _modulePath.getValue(this).takeIf { !it.equals(null) } ?: ""
         set(newModulePath) {
             _modulePath.setValue(this, newModulePath)
         }

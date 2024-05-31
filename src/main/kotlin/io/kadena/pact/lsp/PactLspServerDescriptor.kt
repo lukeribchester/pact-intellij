@@ -7,7 +7,7 @@ import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.platform.lsp.api.ProjectWideLspServerDescriptor
-import io.kadena.pact.ide.settings.AppSettingsState
+import io.kadena.pact.ide.settings.PactSettingsState
 import java.io.File
 
 class PactLspServerDescriptor(project: Project) : ProjectWideLspServerDescriptor(project, "Pact") {
@@ -32,32 +32,36 @@ class PactLspServerDescriptor(project: Project) : ProjectWideLspServerDescriptor
 //        return pluginPath?.let { Paths.get(it, executableRelativePath).toString() }
 //    }
 
-    fun doesExecutableExist(executablePath: String): Boolean {
+    private fun doesExecutableExist(executablePath: String): Boolean {
         val file = File(executablePath)
         return file.exists() && file.isFile
+    }
+
+    private fun isIntegratedLanguageServer(): Boolean {
+        return PactSettingsState.instance.languageServerPath == PactSettingsState.instance.compilerPath
     }
 
     override fun isSupportedFile(file: VirtualFile) = file.extension == "pact"
 
     override fun createCommandLine(): GeneralCommandLine {
         // Retrieve the configured Pact Language Server executable path
-        val pactLanguageServerPath = AppSettingsState.instance.pactLanguageServerPath
+        val languageServerPath = PactSettingsState.instance.languageServerPath
 
-        if (pactLanguageServerPath == "" || !doesExecutableExist(pactLanguageServerPath)) {
+        if (languageServerPath == "" || !doesExecutableExist(languageServerPath)) {
             throw ExecutionException("Pact Language Server (LSP) executable not found")
         }
 
         // Start the Pact Language Server
-        return GeneralCommandLine(pactLanguageServerPath).apply {
+        return GeneralCommandLine(languageServerPath).apply {
             withParentEnvironmentType(GeneralCommandLine.ParentEnvironmentType.CONSOLE)
             withCharset(Charsets.UTF_8)
-            addParameter("--stdio")
+            if (isIntegratedLanguageServer()) addParameter("--lsp")
         }
     }
 
     override fun createInitializationOptions(): String {
         // Retrieve the configured Pact executable path
-        val pactPath = AppSettingsState.instance.pactPath
+        val pactPath = PactSettingsState.instance.compilerPath
 
         val pactExe = JsonObject()
         pactExe.addProperty("pactExe", pactPath)

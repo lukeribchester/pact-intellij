@@ -15,40 +15,40 @@ import org.jetbrains.annotations.Nullable
  * these persistent application settings are stored.
  */
 @State(
-    name = "io.kadena.pact.ide.settings.AppSettingsState",
+    name = "io.kadena.pact.ide.settings.PactSettingsState",
     storages = [Storage("PactPlugin.xml")]
 )
-class AppSettingsState : PersistentStateComponent<AppSettingsState> {
-    var pactPath: String = ""
-    var pactLanguageServerPath: String = ""
+class PactSettingsState : PersistentStateComponent<PactSettingsState> {
+    var compilerPath: String = ""
+    var languageServerPath: String = ""
 
     private val listeners = mutableSetOf<AppSettingsStateListener>()
 
     @Nullable
-    override fun getState(): AppSettingsState {
+    override fun getState(): PactSettingsState {
         return this
     }
 
-    override fun loadState(@NotNull state: AppSettingsState) {
+    override fun loadState(@NotNull state: PactSettingsState) {
         XmlSerializerUtil.copyBean(state, this)
     }
 
     companion object {
-        val instance: AppSettingsState
-            get() = ApplicationManager.getApplication().getService(AppSettingsState::class.java)
+        val instance: PactSettingsState
+            get() = ApplicationManager.getApplication().getService(PactSettingsState::class.java)
     }
 
     fun addAppSettingsStateListener(listener: AppSettingsStateListener) {
         listeners.add(listener)
     }
 
-    fun notifyAppSettingsStateChanged(state: AppSettingsState) {
+    fun notifyAppSettingsStateChanged(state: PactSettingsState) {
         for (listener in listeners) {
             listener.onAppSettingsStateChanged(state)
         }
     }
 
     interface AppSettingsStateListener {
-        fun onAppSettingsStateChanged(state: AppSettingsState)
+        fun onAppSettingsStateChanged(state: PactSettingsState)
     }
 }
