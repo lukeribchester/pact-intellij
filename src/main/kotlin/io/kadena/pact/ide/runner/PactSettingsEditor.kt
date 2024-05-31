@@ -1,5 +1,6 @@
 package io.kadena.pact.ide.runner
 
+import com.intellij.openapi.fileChooser.FileChooserDescriptor
 import com.intellij.openapi.options.SettingsEditor
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.TextFieldWithBrowseButton
@@ -19,7 +20,21 @@ class PactSettingsEditor : SettingsEditor<PactRunConfiguration>() {
         "Select a Pact Compiler", "Choose an executable file"
     )
 
-    private val modulePathField = TextFieldWithBrowseButton()
+    private val modulePathField = TextFieldWithBrowseButton().apply {
+        addBrowseFolderListener(
+            "Select a Pact Module",
+            "Choose a Pact file",
+            null,
+            FileChooserDescriptor(
+                true,
+                false,
+                false,
+                false,
+                false,
+                false
+            )
+        )
+    }
 
     init {
         panel = dslPanel {
