@@ -17,13 +17,13 @@ class PactRunConfigurationOptions : RunConfigurationOptions() {
             .provideDelegate(this, "modulePath")
 
     var compilerPath: String
-        get() = _compilerPath.getValue(this).toString()
+        get() = _compilerPath.getValue(this).takeIf { !it.equals(null) } ?: ""
         set(newCompilerPath) {
             _compilerPath.setValue(this, newCompilerPath)
         }
 
     var modulePath: String
-        get() = _modulePath.getValue(this).toString()
+        get() = _modulePath.getValue(this).takeIf { !it.equals(null) } ?: ""
         set(newModulePath) {
             _modulePath.setValue(this, newModulePath)
         }
