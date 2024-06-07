@@ -142,15 +142,25 @@ from disk through your IDE:
 
 ## Configuration ⚙️
 
-Configuration is required to enable functionality from the Pact Language Server:
+Configuration is required to enable functionality from the Pact language server:
 
 1. Navigate to <kbd>Settings/Preferences</kbd>
 2. Select <kbd>Languages & Frameworks</kbd> > <kbd>Pact</kbd>
-3. Specify your <kbd>Pact Compiler</kbd> and <kbd>Pact Language Server</kbd> paths
+3. Specify your <kbd>Pact interpreter</kbd> and <kbd>Pact language server</kbd> paths
+
+#### Pactup
+
+If you installed Pact 5 via [Pactup](https://github.com/kadena-community/pactup) then run the following command to 
+retrieve the path of the interpreter and integrated language server:
+
+```bash
+npx pactup which development-latest
+```
 
 #### Homebrew
 
-If you installed Pact via Homebrew then run the following command to retrieve the path of the executable:
+If you installed Pact 4 via [Homebrew](https://brew.sh) then run the following command to retrieve the path of the 
+interpreter:
 
 ```bash
 brew info pact
