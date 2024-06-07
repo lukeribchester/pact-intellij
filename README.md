@@ -5,7 +5,7 @@
     </picture>
 </p>
 
-# Pact Language Support for the IntelliJ Platform 🚀
+# Pact Language Support for JetBrains IDEs 🚀
 
 ![Build](https://github.com/lukeribchester/pact-intellij/workflows/Build/badge.svg)
 [![Version](https://img.shields.io/jetbrains/plugin/v/23581.svg)](https://plugins.jetbrains.com/plugin/23581)
