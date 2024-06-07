@@ -69,7 +69,7 @@ _**Note:** Support for Language Server Protocol features on the IntelliJ Platfor
 
 ---
 
-## Requirements
+## Requirements 📋
 
 ### Pact 4
 
@@ -118,7 +118,7 @@ npx pactup which development-latest
 
 The Pact 5 interpreter contains an integrated language server, therefore separate installation is not required.
 
-## Installation
+## Installation 💿
 
 ### JetBrains Marketplace
 
@@ -140,7 +140,7 @@ from disk through your IDE:
 2. Select <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install Plugin from Disk...</kbd>
 3. Open the downloaded `.zip` file
 
-## Configuration
+## Configuration ⚙️
 
 Configuration is required to enable functionality from the Pact Language Server:
 
