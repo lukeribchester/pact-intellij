@@ -58,13 +58,16 @@ _**Note:** Support for Language Server Protocol features on the IntelliJ Platfor
 
 ### Native (IntelliJ Platform)
 
-- In progress
+- Syntax highlighting
+- Error highlighting
+- Code assistance
+- Run configurations
 
 ## Roadmap
 
-1. Support for the [Pact Language Server (LSP)](https://github.com/kadena-io/pact-lsp/tree/main#supported-features)
-2. Pact support via the
-   [IntelliJ Platform Language API](https://plugins.jetbrains.com/docs/intellij/custom-language-support.html)
+Please refer to the [project overview](https://github.com/users/lukeribchester/projects/1) for a full list
+of planned features.
+
 <!-- Plugin description end -->
 
 ---
