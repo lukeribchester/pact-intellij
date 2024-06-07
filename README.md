@@ -79,8 +79,9 @@ Install [Pact 4](https://github.com/kadena-io/pact) by downloading a
 [prebuilt binary](https://github.com/kadena-io/pact#binary-downloads) or by 
 [building from source](https://github.com/kadena-io/pact#building-from-source).
 
-> [!TIP] The easiest way to install Pact 4 on **macOS** is by using the [Homebrew](https://brew.sh) package manager. 
-> With Homebrew installed, run the following commands:
+> [!TIP]
+> The easiest way to install Pact 4 on **macOS** is by using the [Homebrew](https://brew.sh) package manager. With 
+> Homebrew installed, run the following commands:
 
 ```bash
 brew update
@@ -103,7 +104,8 @@ Install [Pact 5](https://github.com/kadena-io/pact-5) by downloading a
 [prebuilt binary](https://github.com/kadena-io/pact-5?tab=readme-ov-file#binary-downloads) or by
 [building from source](https://github.com/kadena-io/pact-5?tab=readme-ov-file#building-from-source).
 
-> [!TIP] The easiest way to install Pact 5 on **macOS** or **Linux** is by using the 
+> [!TIP]
+> The easiest way to install Pact 5 on **macOS** or **Linux** is by using the 
 > [Pactup](https://github.com/kadena-community/pactup) version manager. With [Node](https://nodejs.org) installed, run 
 > the following commands:
 
