@@ -1,11 +1,11 @@
-# Pact Language Support for the IntelliJ Platform 🚀
-
 <p align="center">
     <picture>
         <source srcset="./images/kadena-logotype-light.svg" media="(prefers-color-scheme: dark)"/>
         <img src="./images/kadena-logotype-dark.svg" width="830" alt="Kadena logo" />
     </picture>
 </p>
+
+# Pact Language Support for the IntelliJ Platform 🚀
 
 ![Build](https://github.com/lukeribchester/pact-intellij/workflows/Build/badge.svg)
 [![Version](https://img.shields.io/jetbrains/plugin/v/23581.svg)](https://plugins.jetbrains.com/plugin/23581)
@@ -71,29 +71,50 @@ _**Note:** Support for Language Server Protocol features on the IntelliJ Platfor
 
 ## Requirements
 
-### 1. Pact
+### Pact 4
 
-Install [Pact](https://github.com/kadena-io/pact) by downloading a 
+#### 1. Pact Interpreter
+
+Install [Pact 4](https://github.com/kadena-io/pact) by downloading a 
 [prebuilt binary](https://github.com/kadena-io/pact#binary-downloads) or by 
 [building from source](https://github.com/kadena-io/pact#building-from-source).
 
-#### macOS
-
-The easiest way to install Pact on macOS is by using the [Homebrew](https://brew.sh) package manager. With Homebrew 
-installed, run the following commands:
+> [!TIP] The easiest way to install Pact 4 on **macOS** is by using the [Homebrew](https://brew.sh) package manager. 
+> With Homebrew installed, run the following commands:
 
 ```bash
 brew update
 brew install kadena-io/pact/pact
 ```
 
-### 2. Pact Language Server (LSP)
+#### 2. Pact Language Server (LSP)
 
-The latest [Pact Language Server](https://github.com/kadena-io/pact-lsp) releases for macOS, Linux, and Windows are included with this plugin. 
+The latest [Pact 4 Language Server](https://github.com/kadena-io/pact-lsp) releases for macOS, Linux, and Windows are included with this plugin. 
 
 Alternatively you can install a different version by downloading a 
 [prebuilt binary](https://github.com/kadena-io/pact-lsp/releases/latest) or by 
 [building from source](https://github.com/kadena-io/pact-lsp#building-from-source).
+
+### Pact 5 (Alpha)
+
+#### 1. Pact Interpreter
+
+Install [Pact 5](https://github.com/kadena-io/pact-5) by downloading a
+[prebuilt binary](https://github.com/kadena-io/pact-5?tab=readme-ov-file#binary-downloads) or by
+[building from source](https://github.com/kadena-io/pact-5?tab=readme-ov-file#building-from-source).
+
+> [!TIP] The easiest way to install Pact 5 on **macOS** or **Linux** is by using the 
+> [Pactup](https://github.com/kadena-community/pactup) version manager. With [Node](https://nodejs.org) installed, run 
+> the following commands:
+
+```bash
+npx pactup install development-latest
+npx pactup which development-latest
+```
+
+#### 2. Pact Language Server (LSP)
+
+The Pact 5 interpreter contains an integrated language server, therefore separate installation is not required.
 
 ## Installation
 
