@@ -72,7 +72,7 @@ of planned features.
 
 ---
 
-## Requirements 📋
+## Requirements ✅
 
 ### Pact 4
 
