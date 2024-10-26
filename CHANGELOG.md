@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- Support for IntelliJ Platform 2024.3
+
 ## [0.5.0] - 2024-05-31
 
 ### Added
